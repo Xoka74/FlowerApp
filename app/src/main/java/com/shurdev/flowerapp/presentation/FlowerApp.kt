@@ -5,9 +5,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shurdev.flowerapp.presentation.ui.screens.home.HomeRoute
+import com.shurdev.home.navigation.HomeRoute
+import com.shurdev.home.navigation.homeScreen
 
 @Composable
 fun FlowerApp() {
@@ -17,11 +17,13 @@ fun FlowerApp() {
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
-            startDestination = "home",
+            startDestination = HomeRoute,
         ) {
-            composable("home") {
-                HomeRoute()
-            }
+            homeScreen(
+                onFlowerClick = {
+                    // Navigate to details screen
+                }
+            )
         }
     }
 }

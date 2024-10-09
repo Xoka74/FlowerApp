@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -19,6 +21,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Flower App"
+rootProject.name = "FlowerApp"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":features:home")
+include(":ui_kit")
