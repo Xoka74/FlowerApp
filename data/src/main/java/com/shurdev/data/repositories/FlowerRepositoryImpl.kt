@@ -13,7 +13,7 @@ class FlowerRepositoryImpl @Inject constructor() : FlowerRepository {
         val link = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
         emit(
             (0..20).map {
-                Flower("Flower${it}", link)
+                Flower("Flower${it}", "Description${it}", link)
             }
         )
     }
