@@ -61,6 +61,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(project(":features:gallery")) // TODO remove
     ksp(libs.hilt.android.compiler)
 
     // Hilt Navigation
