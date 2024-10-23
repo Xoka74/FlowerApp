@@ -25,6 +25,5 @@ rootProject.name = "FlowerApp"
 include(":app")
 include(":domain")
 include(":data")
-include(":features:home")
-include(":features")
+include(":features:my_plants")
 include(":ui_kit")

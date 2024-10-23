@@ -1,4 +1,4 @@
-package com.shurdev.flowerapp.presentation.ui.theme
+package com.shurdev.ui_kit.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

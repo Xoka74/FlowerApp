@@ -1,11 +1,10 @@
-package com.shurdev.home.your_flowers
+package com.shurdev.my_plants.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,21 +21,18 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.shurdev.domain.models.Flower
-import com.shurdev.home.FlowerCardBackgroundColor
-import com.shurdev.home.FlowerCardContentColor
-import com.shurdev.home.R
+import com.shurdev.my_plants.R
+import com.shurdev.ui_kit.theme.FlowerCardBackgroundColor
+import com.shurdev.ui_kit.theme.FlowerCardContentColor
 
 @Composable
-fun YourFlowerItem(
+fun MyPlantItem(
     modifier: Modifier = Modifier,
     flower: Flower,
-    onItemClick: (Flower) -> Unit
+    onItemClick: (Flower) -> Unit,
 ) {
-
     Card(
-        modifier = modifier
-            .width(340.dp)
-            .height(221.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = FlowerCardBackgroundColor,
@@ -44,38 +40,37 @@ fun YourFlowerItem(
         ),
         onClick = { onItemClick(flower) }
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(12.dp),
+            verticalAlignment = Alignment.Top,
         ) {
-            Text(
+            AsyncImage(
                 modifier = Modifier
-                    .padding(horizontal = 17.dp)
-                    .padding(top = 12.dp),
-                text = flower.name,
-                fontSize = 22.sp
+                    .fillMaxWidth(0.25f)
+                    .aspectRatio(1F)
+                    .clip(RoundedCornerShape(12.dp)),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(flower.imageLink)
+                    .placeholder(R.drawable.flower_placeholder_1)
+                    .build(),
+                contentDescription = "Your Flower",
+                contentScale = ContentScale.Crop
             )
 
-            Row(
-                modifier = Modifier
-                    .padding(12.dp),
-                verticalAlignment = Alignment.Top,
+            Column(
+                Modifier
+                    .padding(horizontal = 17.dp)
+                    .padding(top = 12.dp)
             ) {
-                AsyncImage(
-                    modifier = Modifier
-                        .width(173.dp)
-                        .height(161.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(flower.imageLink)
-                        .placeholder(R.drawable.flower_placeholder_1)
-                        .build(),
-                    contentDescription = "Your Flower",
-                    contentScale = ContentScale.Crop
+                Text(
+                    text = flower.name,
+                    fontSize = 22.sp
                 )
 
-                YourFlowerItemDescription(
-                    flower = flower
+                Text(
+                    text = flower.description,
                 )
             }
         }
@@ -84,8 +79,8 @@ fun YourFlowerItem(
 
 @Composable
 @Preview
-fun YourFlowerItemPreview() {
-    YourFlowerItem(
+fun MyPlantItemPreview() {
+    MyPlantItem(
         flower = Flower(
             name = "Пахира Акватика",
             description = "Дата следующего полива",

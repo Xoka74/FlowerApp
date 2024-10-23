@@ -57,7 +57,8 @@ dependencies {
     // Local dependencies
     implementation(projects.domain)
     implementation(projects.data)
-    implementation(projects.features.home)
+    implementation(projects.features.myPlants)
+    implementation(projects.uiKit)
 
     // Hilt
     implementation(libs.hilt.android)

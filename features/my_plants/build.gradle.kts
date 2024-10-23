@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.shurdev.home"
+    namespace = "com.shurdev.my_plants"
     compileSdk = 34
 
     defaultConfig {

@@ -1,22 +1,22 @@
-package com.shurdev.home.navigation
+package com.shurdev.my_plants.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.shurdev.domain.models.Flower
-import com.shurdev.home.HomeRoute
+import com.shurdev.my_plants.MyPlantsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-object HomeRoute
+object MyPlantsRoute
 
-fun NavController.navigateToHomeScreen() = navigate(HomeRoute)
+fun NavController.navigateToMyPlants() = navigate(MyPlantsRoute)
 
-fun NavGraphBuilder.homeScreen(
+fun NavGraphBuilder.myPlantsScreen(
     onFlowerClick: (Flower) -> Unit,
 ) {
-    composable<HomeRoute> {
-        HomeRoute(
+    composable<MyPlantsRoute> {
+        MyPlantsRoute(
             onFlowerClick = onFlowerClick,
         )
     }
