@@ -28,6 +28,9 @@ fun FlowerApp() {
             galleryScreen(
                 onFlowerClick = {
                     // Navigate to details screen
+                },
+                onCategoryClick = {
+                    // Filter by category
                 }
             )
         }

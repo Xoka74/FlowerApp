@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = flowersRepository.flowers
         .combine(_searchText) { flowers, text ->
             flowers.filter { flower ->
-                flower.doesMathSearchQuery(text)
+                doesMatchSearchQuery(flower, text)
             }
         }
         .map<List<Flower>, HomeUiState> { HomeLoadedState(it) }
@@ -42,5 +42,10 @@ class HomeViewModel @Inject constructor(
 
     fun onSearchTextChange(text: String) {
         _searchText.value = text
+    }
+
+    private fun doesMatchSearchQuery(flower: Flower, query: String): Boolean{
+        return flower.name.contains(query, ignoreCase = true)
+                || flower.description.contains(query, ignoreCase = true)
     }
 }
