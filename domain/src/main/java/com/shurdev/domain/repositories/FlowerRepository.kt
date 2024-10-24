@@ -1,8 +1,10 @@
 package com.shurdev.domain.repositories
 
 import com.shurdev.domain.models.Flower
-import kotlinx.coroutines.flow.Flow
+import com.shurdev.domain.models.FlowerFilters
 
 interface FlowerRepository {
-    val flowers: Flow<List<Flower>>
+    suspend fun getFlowers(): List<Flower>
+
+    suspend fun getFlowersByFilters(filters: FlowerFilters): List<Flower>
 }
