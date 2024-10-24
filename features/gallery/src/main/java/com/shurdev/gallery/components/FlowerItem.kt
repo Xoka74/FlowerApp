@@ -22,15 +22,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.shurdev.domain.models.Flower
 import com.shurdev.gallery.R
+import com.shurdev.gallery.mocks.FLOWERS
 
 @Composable
-fun FlowerItem(
+internal fun FlowerItem(
+    modifier: Modifier = Modifier,
     flower: Flower,
     onFlowerClick: (Flower) -> Unit
 ) {
@@ -39,7 +42,7 @@ fun FlowerItem(
     val imageSize = (screenWidth * 0.2f).value.dp
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(Color.Transparent),
         onClick = { onFlowerClick(flower) },
@@ -52,7 +55,7 @@ fun FlowerItem(
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
 
-        ),
+            ),
     ) {
         Row(
             modifier = Modifier
@@ -112,4 +115,13 @@ fun FlowerItem(
             }
         }
     }
+}
+
+@Preview
+@Composable
+internal fun FlowerItemPreview() {
+    FlowerItem(
+        flower = FLOWERS[0],
+        onFlowerClick = {}
+    )
 }

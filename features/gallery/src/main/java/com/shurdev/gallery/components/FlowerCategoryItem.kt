@@ -9,16 +9,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.shurdev.gallery.mocks.CATEGORIES
 
 @Composable
-fun FlowerCategoryItem(
+internal fun FlowerCategoryItem(
+    modifier: Modifier = Modifier,
     category: String,
     onCategoryClick: (String) -> Unit
 ) {
     OutlinedCard(
-        modifier = Modifier
+        modifier = modifier
             .padding(end = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
@@ -38,4 +41,13 @@ fun FlowerCategoryItem(
             )
         }
     }
+}
+
+@Preview
+@Composable
+internal fun FlowerCategoryItemPreview() {
+    FlowerCategoryItem(
+        category = CATEGORIES[0],
+        onCategoryClick = {}
+    )
 }

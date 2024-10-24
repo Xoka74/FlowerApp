@@ -58,10 +58,10 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.data)
     implementation(projects.features.home)
+    implementation(projects.features.gallery)
 
     // Hilt
     implementation(libs.hilt.android)
-    implementation(project(":features:gallery")) // TODO remove
     ksp(libs.hilt.android.compiler)
 
     // Hilt Navigation

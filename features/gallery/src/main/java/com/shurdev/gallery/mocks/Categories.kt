@@ -1,6 +1,5 @@
-package com.shurdev.gallery
+package com.shurdev.gallery.mocks
 
-// Пока что это просто захардкоженные данные. Потом уберем их в репозитории :)
-val categories = listOf(
+val CATEGORIES = listOf(
     "Неприхотливые", "Суккуленты", "Любят свет", "Много вредителей", "Часто поливать", "Долго цветут", "Колючие"
 )

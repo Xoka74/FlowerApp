@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.hilt.android)
+    debugImplementation(libs.ui.tooling)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)

@@ -22,13 +22,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.models.Flower
 import com.shurdev.gallery.components.FlowerCategoriesList
 import com.shurdev.gallery.components.FlowersList
+import com.shurdev.gallery.mocks.CATEGORIES
+import com.shurdev.gallery.mocks.FLOWERS
 import com.shurdev.gallery.view_model.GalleryLoadedState
 import com.shurdev.gallery.view_model.GalleryLoadingErrorState
 import com.shurdev.gallery.view_model.GalleryLoadingState
@@ -80,15 +84,10 @@ internal fun GalleryScreen(
                 ) {
                     Text(
                         modifier = Modifier,
-                        text = "Поиск",
+                        text = stringResource(R.string.search),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
-
-                    /*Icon(
-                        imageVector = Icons.Sharp.Warning,
-                        contentDescription = "Photo",
-                    )*/
                 }
 
                 Box(
@@ -105,7 +104,7 @@ internal fun GalleryScreen(
                         value = searchText,
                         onValueChange = onSearchTextChange,
                         placeholder = {
-                            Text("Растения, статьи, советы и другое")
+                            Text(stringResource(R.string.search_hint))
                         },
                         leadingIcon = {
                             Icon(Icons.Filled.Search, contentDescription = "Search Icon")
@@ -120,9 +119,9 @@ internal fun GalleryScreen(
                 }
 
                 FlowerCategoriesList(
-                    categories = categories,
+                    categories = CATEGORIES,
                     onCategoryClick = {
-                        Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show() // TODO snackbar
                         onCategoryClick(it)
                     }
                 )
@@ -131,7 +130,7 @@ internal fun GalleryScreen(
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .padding(horizontal = 16.dp),
-                    text = "Популярные растения",
+                    text = stringResource(R.string.popular_plants),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Normal
                 )
@@ -149,4 +148,18 @@ internal fun GalleryScreen(
         GalleryLoadingErrorState -> ErrorView()
         GalleryLoadingState -> Loader()
     }
+}
+
+@Preview
+@Composable
+internal fun GalleryScreenPreview() {
+    GalleryScreen(
+        uiState = GalleryLoadedState(
+            flowers = FLOWERS
+        ),
+        onFlowerClick = {},
+        onCategoryClick = {},
+        onSearchTextChange = {},
+        searchText = ""
+    )
 }

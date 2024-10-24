@@ -9,12 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun FlowerCategoriesList(
+internal fun FlowerCategoriesList(
+    modifier: Modifier = Modifier,
     categories: List<String>,
     onCategoryClick: (String) -> Unit
 ) {
     LazyRow(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 12.dp),
         contentPadding = PaddingValues(start = 16.dp)
     ) {
