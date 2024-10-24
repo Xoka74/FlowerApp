@@ -1,6 +1,5 @@
 package com.shurdev.gallery
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,15 +12,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +44,7 @@ import com.shurdev.gallery.view_model.GalleryUiState
 import com.shurdev.gallery.view_model.GalleryViewModel
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.loaders.Loader
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun GalleryRoute(
@@ -68,85 +73,102 @@ internal fun GalleryScreen(
     searchText: String,
     onSearchTextChange: (String) -> Unit,
 ) {
-    when (uiState) {
-        is GalleryLoadedState -> {
-            val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
-            Column(
-                modifier = Modifier
-            ) {
-                Row(
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { padding ->
+        when (uiState) {
+            is GalleryLoadedState -> {
+                Column(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 20.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        modifier = Modifier,
-                        text = stringResource(R.string.search),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                    Row(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 20.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            modifier = Modifier,
+                            text = stringResource(R.string.search),
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(top = 10.dp)
-                        .padding(horizontal = 16.dp)
-                ) {
-                    TextField(
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.LightGray, RoundedCornerShape(16.dp)),
-                        value = searchText,
-                        onValueChange = onSearchTextChange,
-                        placeholder = {
-                            Text(stringResource(R.string.search_hint))
-                        },
-                        leadingIcon = {
-                            Icon(Icons.Filled.Search, contentDescription = "Search Icon")
-                        },
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent
-                        ),
-                        shape = RoundedCornerShape(12.dp),
+                            .wrapContentHeight()
+                            .padding(top = 10.dp)
+                            .padding(horizontal = 16.dp)
+                    ) {
+                        TextField(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.LightGray, RoundedCornerShape(16.dp)),
+                            value = searchText,
+                            onValueChange = onSearchTextChange,
+                            placeholder = {
+                                Text(stringResource(R.string.search_hint))
+                            },
+                            leadingIcon = {
+                                Icon(Icons.Filled.Search, contentDescription = "Search Icon")
+                            },
+                            colors = TextFieldDefaults.colors(
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor = Color.Transparent
+                            ),
+                            shape = RoundedCornerShape(12.dp),
+                        )
+                    }
+
+                    FlowerCategoriesList(
+                        categories = CATEGORIES,
+                        onCategoryClick = {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = it.toString(),
+                                    duration = SnackbarDuration.Short
+                                )
+                            }
+
+                            onCategoryClick(it)
+                        }
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 20.dp)
+                            .padding(horizontal = 16.dp),
+                        text = stringResource(R.string.popular_plants),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+
+                    FlowersList(
+                        flowers = uiState.flowers,
+                        onFlowerClick = {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = it.toString(),
+                                    duration = SnackbarDuration.Short
+                                )
+                            }
+
+                            onFlowerClick(it)
+                        }
                     )
                 }
-
-                FlowerCategoriesList(
-                    categories = CATEGORIES,
-                    onCategoryClick = {
-                        Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show() // TODO snackbar
-                        onCategoryClick(it)
-                    }
-                )
-
-                Text(
-                    modifier = Modifier
-                        .padding(top = 20.dp)
-                        .padding(horizontal = 16.dp),
-                    text = stringResource(R.string.popular_plants),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Normal
-                )
-
-                FlowersList(
-                    flowers = uiState.flowers,
-                    onFlowerClick = {
-                        Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
-                        onFlowerClick(it)
-                    }
-                )
             }
-        }
 
-        GalleryLoadingErrorState -> ErrorView()
-        GalleryLoadingState -> Loader()
+            GalleryLoadingErrorState -> ErrorView()
+            GalleryLoadingState -> Loader()
+        }
     }
 }
 
