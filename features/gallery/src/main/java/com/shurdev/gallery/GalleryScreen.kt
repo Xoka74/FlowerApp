@@ -51,17 +51,17 @@ internal fun GalleryRoute(
     onFlowerClick: (Flower) -> Unit,
     onCategoryClick: (String) -> Unit
 ) {
-    val homeViewModel = hiltViewModel<GalleryViewModel>()
+    val galleryViewModel = hiltViewModel<GalleryViewModel>()
 
-    val uiState by homeViewModel.uiState.collectAsState()
-    val searchText by homeViewModel.searchText.collectAsState()
+    val uiState by galleryViewModel.uiState.collectAsState()
+    val searchText by galleryViewModel.searchText.collectAsState()
 
     GalleryScreen(
         uiState = uiState,
         onFlowerClick = onFlowerClick,
         onCategoryClick = onCategoryClick,
         searchText = searchText,
-        onSearchTextChange = homeViewModel::onSearchTextChange
+        onSearchTextChange = galleryViewModel::onSearchTextChange
     )
 }
 

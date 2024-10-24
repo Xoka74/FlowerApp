@@ -2,47 +2,63 @@ package com.shurdev.gallery.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.models.Flower
+import com.shurdev.domain.models.FlowerFilters
 import com.shurdev.domain.repositories.FlowerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
-    flowersRepository: FlowerRepository,
+    private val flowersRepository: FlowerRepository,
 ) : ViewModel() {
 
     private var _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
 
-    val uiState: StateFlow<GalleryUiState> = flowersRepository.flowers
-        .combine(_searchText) { flowers, text ->
-            flowers.filter { flower ->
-                doesMatchSearchQuery(flower, text)
-            }
-        }
-        .map<List<Flower>, GalleryUiState> { GalleryLoadedState(it) }
-        .catch { emit(GalleryLoadingErrorState) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = GalleryLoadingState
-        )
+    private var _uiState = MutableStateFlow<GalleryUiState>(GalleryLoadingState)
+    val uiState: StateFlow<GalleryUiState> = _uiState.asStateFlow()
+
+    init {
+        getAllFlowers()
+    }
 
     fun onSearchTextChange(text: String) {
         _searchText.value = text
+        getFlowersBySearchQuery(text)
     }
 
-    private fun doesMatchSearchQuery(flower: Flower, query: String): Boolean{
-        return flower.name.contains(query, ignoreCase = true)
-                || flower.description.contains(query, ignoreCase = true)
+    private fun getAllFlowers() {
+        _uiState.value = GalleryLoadingState
+        viewModelScope.launch {
+            runCatching {
+                val flowers = flowersRepository.getFlowers()
+                _uiState.update { GalleryLoadedState(flowers = flowers) }
+            }.onFailure {
+                _uiState.update { GalleryLoadingErrorState }
+            }
+        }
+    }
+
+    private fun getFlowersBySearchQuery(query: String) {
+        _uiState.value = GalleryLoadingState
+        viewModelScope.launch {
+            runCatching {
+                val flowers = flowersRepository.getFlowersByFilters(
+                    filters = FlowerFilters(
+                        name = query,
+                        description = query
+                    )
+                )
+
+                _uiState.update { GalleryLoadedState(flowers = flowers) }
+            }.onFailure {
+                _uiState.update { GalleryLoadingErrorState }
+            }
+        }
     }
 }
