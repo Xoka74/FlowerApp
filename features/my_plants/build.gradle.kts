@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.shurdev.home"
+    namespace = "com.shurdev.my_plants"
     compileSdk = 34
 
     defaultConfig {
@@ -31,6 +31,7 @@ dependencies {
     // Local dependencies
     implementation(projects.domain)
     implementation(projects.uiKit)
+    implementation(projects.utils)
 
     // Coil
     implementation(libs.coil.compose)
