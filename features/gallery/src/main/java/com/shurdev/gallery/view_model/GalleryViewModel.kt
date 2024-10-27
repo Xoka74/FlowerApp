@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.FlowerFilters
 import com.shurdev.domain.repositories.FlowerRepository
+import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,8 +43,9 @@ class GalleryViewModel @Inject constructor(
 
     private fun getFlowersBySearchQuery(query: String) {
         _uiState.value = GalleryLoadingState
+
         viewModelScope.launch {
-            runCatching {
+            runSuspendCatching {
                 val flowers = flowersRepository.getFlowersByFilters(
                     filters = FlowerFilters(
                         name = query,
