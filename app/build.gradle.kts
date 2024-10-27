@@ -58,6 +58,7 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.data)
     implementation(projects.features.myPlants)
+    implementation(projects.features.gallery)
     implementation(projects.uiKit)
 
     // Hilt

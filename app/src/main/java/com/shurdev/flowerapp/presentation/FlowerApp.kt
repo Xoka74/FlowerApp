@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.shurdev.gallery.navigation.GalleryRoute
+import com.shurdev.gallery.navigation.galleryScreen
 import com.shurdev.my_plants.navigation.MyPlantsRoute
 import com.shurdev.my_plants.navigation.myPlantsScreen
 
@@ -22,6 +24,14 @@ fun FlowerApp() {
             myPlantsScreen(
                 onFlowerClick = {
                     // Navigate to details screen
+                }
+            )
+            galleryScreen(
+                onFlowerClick = {
+                    // Navigate to details screen
+                },
+                onCategoryClick = {
+                    // Filter by category
                 }
             )
         }
