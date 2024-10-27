@@ -17,9 +17,6 @@ class GalleryViewModel @Inject constructor(
     private val flowersRepository: FlowerRepository,
 ) : ViewModel() {
 
-    private var _searchText = MutableStateFlow("")
-    val searchText = _searchText.asStateFlow()
-
     private var _uiState = MutableStateFlow<GalleryUiState>(GalleryLoadingState)
     val uiState: StateFlow<GalleryUiState> = _uiState.asStateFlow()
 
@@ -28,7 +25,6 @@ class GalleryViewModel @Inject constructor(
     }
 
     fun onSearchTextChange(text: String) {
-        _searchText.value = text
         getFlowersBySearchQuery(text)
     }
 
