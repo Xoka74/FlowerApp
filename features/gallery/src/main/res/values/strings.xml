@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Поиск</string>
+    <string name="search_hint">Растения, статьи, советы и другое</string>
+    <string name="popular_plants">Популярные растения</string>
+</resources>

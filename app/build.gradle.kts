@@ -58,6 +58,7 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.data)
     implementation(projects.features.home)
+    implementation(projects.features.gallery)
 
     // Hilt
     implementation(libs.hilt.android)
