@@ -4,15 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,12 +28,10 @@ import com.shurdev.gallery.view_model.GalleryViewModel
 import com.shurdev.ui_kit.components.SearchField
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.loaders.Loader
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun GalleryRoute(
     onFlowerClick: (Flower) -> Unit,
-    onCategoryClick: (String) -> Unit
 ) {
     val galleryViewModel = hiltViewModel<GalleryViewModel>()
 
@@ -47,7 +40,7 @@ internal fun GalleryRoute(
     GalleryScreen(
         uiState = uiState,
         onFlowerClick = onFlowerClick,
-        onCategoryClick = onCategoryClick,
+        onCategoryClick = {},
         onSearchTextChange = galleryViewModel::onSearchTextChange
     )
 }
@@ -59,12 +52,8 @@ internal fun GalleryScreen(
     onCategoryClick: (String) -> Unit,
     onSearchTextChange: (String) -> Unit,
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) }
-    ) { padding ->
+    Scaffold { padding ->
         when (uiState) {
             is GalleryLoadedState -> {
                 Column(
@@ -91,16 +80,7 @@ internal fun GalleryScreen(
 
                     FlowerCategoriesList(
                         categories = CATEGORIES,
-                        onCategoryClick = {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = it.toString(),
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
-
-                            onCategoryClick(it)
-                        }
+                        onCategoryClick = onCategoryClick
                     )
 
                     Text(
@@ -114,16 +94,7 @@ internal fun GalleryScreen(
 
                     FlowersList(
                         flowers = uiState.flowers,
-                        onFlowerClick = {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = it.toString(),
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
-
-                            onFlowerClick(it)
-                        }
+                        onFlowerClick = onFlowerClick
                     )
                 }
             }
