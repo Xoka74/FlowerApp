@@ -32,14 +32,18 @@ fun FlowerApp() {
         ) {
 
             galleryNavGraph(
-                onFlowerClick = {
-                    navController.navigateToGalleryFlowerDetailsScreen()
+                onFlowerClick = { flower ->
+                    flower.id?.let {
+                        navController.navigateToGalleryFlowerDetailsScreen(flowerId = it)
+                    }
                 }
             )
 
             myPlantsNavGraph(
-                onFlowerClick = {
-                    navController.navigateToMyPlantDetailsScreen()
+                onFlowerClick = { flower ->
+                    flower.id?.let {
+                        navController.navigateToMyPlantDetailsScreen(plantId = it)
+                    }
                 }
             )
         }

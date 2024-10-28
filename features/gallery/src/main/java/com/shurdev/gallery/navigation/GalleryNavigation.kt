@@ -4,10 +4,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.toRoute
 import com.shurdev.domain.models.Flower
+import com.shurdev.gallery.GalleryFlowerDetailsRoute
 import com.shurdev.gallery.GalleryRoute
 import kotlinx.serialization.Serializable
-import com.shurdev.gallery.GalleryFlowerDetailsRoute
 
 
 @Serializable
@@ -19,11 +20,12 @@ fun NavGraphBuilder.galleryNavGraph(
     onFlowerClick: (Flower) -> Unit
 ) {
     navigation<GalleryNavGraph>(
-        startDestination = GalleryRoute
+        startDestination = GalleryRoute,
     ) {
         galleryScreen(
             onFlowerClick = onFlowerClick,
         )
+
 
         galleryFlowerDetailsScreen()
     }
@@ -46,12 +48,20 @@ fun NavGraphBuilder.galleryScreen(
 
 
 @Serializable
-object GalleryFlowerDetailsRoute
+data class GalleryFlowerDetails(
+    val flowerId: Int
+)
 
-fun NavController.navigateToGalleryFlowerDetailsScreen() = navigate(GalleryFlowerDetailsRoute)
+fun NavController.navigateToGalleryFlowerDetailsScreen(flowerId: Int) =
+    navigate(GalleryFlowerDetails(flowerId))
 
 fun NavGraphBuilder.galleryFlowerDetailsScreen() {
-    composable<GalleryFlowerDetailsRoute> {
-        GalleryFlowerDetailsRoute()
+
+    composable<GalleryFlowerDetails> { backStackEntry ->
+        val flowerDetails: GalleryFlowerDetails = backStackEntry.toRoute()
+
+        GalleryFlowerDetailsRoute(
+            flowerId = flowerDetails.flowerId
+        )
     }
 }

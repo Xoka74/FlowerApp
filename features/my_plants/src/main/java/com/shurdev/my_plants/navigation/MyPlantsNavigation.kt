@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.toRoute
 import com.shurdev.domain.models.Flower
 import com.shurdev.my_plants.MyPlantDetailsRoute
 import com.shurdev.my_plants.MyPlantsRoute
@@ -44,12 +45,19 @@ fun NavGraphBuilder.myPlantsScreen(
 }
 
 @Serializable
-object MyPlantDetailsRoute
+data class MyPlantDetails(
+    val plantId: Int
+)
 
-fun NavController.navigateToMyPlantDetailsScreen() = navigate(MyPlantDetailsRoute)
+fun NavController.navigateToMyPlantDetailsScreen(plantId: Int) =
+    navigate(MyPlantDetails(plantId))
 
 fun NavGraphBuilder.myPlantDetailsScreen() {
-    composable<MyPlantDetailsRoute> {
-        MyPlantDetailsRoute()
+    composable<MyPlantDetails> { backStackEntry ->
+        val plantDetails: MyPlantDetails = backStackEntry.toRoute<MyPlantDetails>()
+
+        MyPlantDetailsRoute(
+            plantId = plantDetails.plantId
+        )
     }
 }
