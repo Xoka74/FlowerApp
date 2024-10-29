@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.components
+package com.shurdev.uiKit.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

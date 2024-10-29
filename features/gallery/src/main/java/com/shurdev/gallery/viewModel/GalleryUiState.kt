@@ -1,4 +1,4 @@
-package com.shurdev.gallery.view_model
+package com.shurdev.gallery.viewModel
 
 import androidx.compose.runtime.Stable
 import com.shurdev.domain.models.Flower

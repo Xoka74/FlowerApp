@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.components.buttons
+package com.shurdev.uiKit.components.buttons
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.shurdev.ui_kit.theme.Black
-import com.shurdev.ui_kit.theme.Green
+import com.shurdev.uiKit.theme.Black
+import com.shurdev.uiKit.theme.Green
 
 @Composable
 fun PrimaryButton(

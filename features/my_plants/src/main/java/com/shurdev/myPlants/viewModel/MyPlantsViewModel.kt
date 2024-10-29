@@ -1,4 +1,4 @@
-package com.shurdev.my_plants.view_model
+package com.shurdev.myPlants.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,7 +27,6 @@ class MyPlantsViewModel @Inject constructor(
 
         viewModelScope.launch {
             runSuspendCatching {
-
                 val flowers = flowersRepository.getFlowers()
                 _uiState.update { MyPlantsLoadedState(flowers) }
             }.onFailure {

@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.shurdev.gallery.navigation.galleryScreen
-import com.shurdev.my_plants.navigation.MyPlantsRoute
-import com.shurdev.my_plants.navigation.myPlantsScreen
+import com.shurdev.myPlants.navigation.MyPlantsRoute
+import com.shurdev.myPlants.navigation.myPlantsScreen
 
 @Composable
 fun FlowerApp() {

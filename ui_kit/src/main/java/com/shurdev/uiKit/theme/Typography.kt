@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.theme
+package com.shurdev.uiKit.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.Font
@@ -50,5 +50,5 @@ val Typography = Typography(
 
     labelLarge = defaultTypography.labelLarge.copy(fontFamily = epilogueFamily),
     labelMedium = defaultTypography.labelMedium.copy(fontFamily = epilogueFamily),
-    labelSmall = defaultTypography.labelSmall.copy(fontFamily = epilogueFamily)
+    labelSmall = defaultTypography.labelSmall.copy(fontFamily = epilogueFamily),
 )

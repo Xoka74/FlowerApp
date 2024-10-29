@@ -1,8 +1,8 @@
-package com.shurdev.ui_kit.loaders
+package com.shurdev.uiKit.loaders
 
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import com.shurdev.ui_kit.components.Center
+import com.shurdev.uiKit.components.Center
 
 @Composable
 fun Loader() {

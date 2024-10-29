@@ -1,10 +1,10 @@
-package com.shurdev.my_plants.navigation
+package com.shurdev.myPlants.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.shurdev.domain.models.Flower
-import com.shurdev.my_plants.MyPlantsRoute
+import com.shurdev.myPlants.MyPlantsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

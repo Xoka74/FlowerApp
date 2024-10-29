@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.utils
+package com.shurdev.uiKit.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

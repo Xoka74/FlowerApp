@@ -25,14 +25,14 @@ import com.shurdev.gallery.components.FlowerCategoriesList
 import com.shurdev.gallery.components.FlowersList
 import com.shurdev.gallery.mocks.CATEGORIES
 import com.shurdev.gallery.mocks.FLOWERS
-import com.shurdev.gallery.view_model.GalleryLoadedState
-import com.shurdev.gallery.view_model.GalleryLoadingErrorState
-import com.shurdev.gallery.view_model.GalleryLoadingState
-import com.shurdev.gallery.view_model.GalleryUiState
-import com.shurdev.gallery.view_model.GalleryViewModel
-import com.shurdev.ui_kit.components.SearchField
-import com.shurdev.ui_kit.errors.ErrorView
-import com.shurdev.ui_kit.loaders.Loader
+import com.shurdev.gallery.viewModel.GalleryLoadedState
+import com.shurdev.gallery.viewModel.GalleryLoadingErrorState
+import com.shurdev.gallery.viewModel.GalleryLoadingState
+import com.shurdev.gallery.viewModel.GalleryUiState
+import com.shurdev.gallery.viewModel.GalleryViewModel
+import com.shurdev.uiKit.components.SearchField
+import com.shurdev.uiKit.errors.ErrorView
+import com.shurdev.uiKit.loaders.Loader
 import kotlinx.coroutines.launch
 
 @Composable

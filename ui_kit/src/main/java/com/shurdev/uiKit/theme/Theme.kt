@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.theme
+package com.shurdev.uiKit.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

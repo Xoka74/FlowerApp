@@ -1,4 +1,4 @@
-package com.shurdev.my_plants.components
+package com.shurdev.myPlants.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,8 +22,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.shurdev.domain.models.Flower
 import com.shurdev.my_plants.R
-import com.shurdev.ui_kit.theme.FlowerCardBackgroundColor
-import com.shurdev.ui_kit.theme.FlowerCardContentColor
+import com.shurdev.uiKit.theme.FlowerCardBackgroundColor
+import com.shurdev.uiKit.theme.FlowerCardContentColor
 
 @Composable
 fun MyPlantItem(
@@ -36,9 +36,9 @@ fun MyPlantItem(
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = FlowerCardBackgroundColor,
-            contentColor = FlowerCardContentColor
+            contentColor = FlowerCardContentColor,
         ),
-        onClick = { onItemClick(flower) }
+        onClick = { onItemClick(flower) },
     ) {
         Row(
             modifier = Modifier
@@ -56,17 +56,17 @@ fun MyPlantItem(
                     .placeholder(R.drawable.flower_placeholder_1)
                     .build(),
                 contentDescription = "Your Flower",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             Column(
                 Modifier
                     .padding(horizontal = 17.dp)
-                    .padding(top = 12.dp)
+                    .padding(top = 12.dp),
             ) {
                 Text(
                     text = flower.name,
-                    fontSize = 22.sp
+                    fontSize = 22.sp,
                 )
 
                 Text(
@@ -79,13 +79,13 @@ fun MyPlantItem(
 
 @Composable
 @Preview
-fun MyPlantItemPreview() {
+private fun MyPlantItemPreview() {
     MyPlantItem(
         flower = Flower(
             name = "Пахира Акватика",
             description = "Дата следующего полива",
-            imageLink = ""
+            imageLink = "",
         ),
-        onItemClick = {}
+        onItemClick = {},
     )
 }

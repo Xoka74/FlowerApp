@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.theme
+package com.shurdev.uiKit.theme
 
 import androidx.compose.ui.graphics.Color
 
