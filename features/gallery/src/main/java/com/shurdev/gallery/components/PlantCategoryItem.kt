@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.shurdev.gallery.mocks.CATEGORIES
 
 @Composable
-internal fun FlowerCategoryItem(
+internal fun PlantCategoryItem(
     modifier: Modifier = Modifier,
     category: String,
     onCategoryClick: (String) -> Unit
@@ -45,8 +45,8 @@ internal fun FlowerCategoryItem(
 
 @Preview
 @Composable
-internal fun FlowerCategoryItemPreview() {
-    FlowerCategoryItem(
+internal fun PlantCategoryItemPreview() {
+    PlantCategoryItem(
         category = CATEGORIES[0],
         onCategoryClick = {}
     )

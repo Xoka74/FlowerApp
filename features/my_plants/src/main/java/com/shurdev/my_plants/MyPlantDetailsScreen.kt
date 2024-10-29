@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.Flower
+import com.shurdev.domain.models.Plant
 import com.shurdev.my_plants.view_model.MyPlantDetailsErrorState
 import com.shurdev.my_plants.view_model.MyPlantDetailsLoadedState
 import com.shurdev.my_plants.view_model.MyPlantDetailsLoadingState
@@ -46,7 +46,7 @@ internal fun MyPlantDetailsScreen(
 
     when (uiState) {
         is MyPlantDetailsLoadedState -> {
-            val flower = uiState.flower
+            val plant = uiState.plant
 
             Text(
                 text = "My plant details"
@@ -59,23 +59,23 @@ internal fun MyPlantDetailsScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp)),
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(flower.imageLink)
+                            .data(plant.imageLink)
                             .placeholder(R.drawable.flower_placeholder_1)
                             .build(),
-                        contentDescription = "Your Flower",
+                        contentDescription = "Your Plant",
                         contentScale = ContentScale.Crop
                     )
 
                     Text(
-                        text = flower.id.toString()
+                        text = plant.id.toString()
                     )
 
                     Text(
-                        text = flower.name
+                        text = plant.name
                     )
 
                     Text(
-                        text = flower.description
+                        text = plant.description
                     )
 
 
@@ -98,7 +98,7 @@ internal fun MyPlantDetailsScreen(
 internal fun MyPlantDetailsScreenPreview() {
     MyPlantDetailsScreen(
         uiState = MyPlantDetailsLoadedState(
-            flower = Flower(1, "Тюльпан", "Великолепный", "")
+            plant = Plant(1, "Тюльпан", "Великолепный", "")
         )
     )
 }

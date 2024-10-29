@@ -5,7 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import com.shurdev.domain.models.Flower
+import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.PlantId
 import com.shurdev.my_plants.MyPlantDetailsRoute
 import com.shurdev.my_plants.MyPlantsRoute
 import kotlinx.serialization.Serializable
@@ -13,16 +14,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 object MyPlantsNavGraph
 
-fun NavController.navigateToMyPlantsNavGraph() = navigate(MyPlantsNavGraph)
-
 fun NavGraphBuilder.myPlantsNavGraph(
-    onFlowerClick: (Flower) -> Unit
+    onPlantClick: (Plant) -> Unit,
 ) {
     navigation<MyPlantsNavGraph>(
         startDestination = MyPlantsRoute
     ) {
         myPlantsScreen(
-            onFlowerClick = onFlowerClick,
+            onPlantClick = onPlantClick,
         )
 
         myPlantDetailsScreen()
@@ -32,24 +31,20 @@ fun NavGraphBuilder.myPlantsNavGraph(
 @Serializable
 object MyPlantsRoute
 
-fun NavController.navigateToMyPlantsScreen() = navigate(MyPlantsRoute)
-
 fun NavGraphBuilder.myPlantsScreen(
-    onFlowerClick: (Flower) -> Unit,
+    onPlantClick: (Plant) -> Unit,
 ) {
     composable<MyPlantsRoute> {
         MyPlantsRoute(
-            onFlowerClick = onFlowerClick,
+            onPlantClick = onPlantClick,
         )
     }
 }
 
 @Serializable
-data class MyPlantDetails(
-    val plantId: Int
-)
+data class MyPlantDetails(val plantId: PlantId)
 
-fun NavController.navigateToMyPlantDetailsScreen(plantId: Int) =
+fun NavController.navigateToMyPlantDetailsScreen(plantId: PlantId) =
     navigate(MyPlantDetails(plantId))
 
 fun NavGraphBuilder.myPlantDetailsScreen() {

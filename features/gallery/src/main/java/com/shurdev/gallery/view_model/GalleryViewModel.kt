@@ -2,8 +2,8 @@ package com.shurdev.gallery.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.models.FlowerFilters
-import com.shurdev.domain.repositories.FlowerRepository
+import com.shurdev.domain.models.PlantFilters
+import com.shurdev.domain.repositories.PlantRepository
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,45 +15,45 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
-    private val flowersRepository: FlowerRepository,
+    private val plantRepository: PlantRepository,
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow<GalleryUiState>(GalleryLoadingState)
     val uiState: StateFlow<GalleryUiState> = _uiState.asStateFlow()
 
     init {
-        getAllFlowers()
+        getAllPlants()
     }
 
     fun onSearchTextChange(text: String) {
-        getFlowersBySearchQuery(text)
+        getPlantsBySearchQuery(text)
     }
 
-    private fun getAllFlowers() {
+    private fun getAllPlants() {
         _uiState.value = GalleryLoadingState
         viewModelScope.launch {
             runCatching {
-                val flowers = flowersRepository.getFlowers()
-                _uiState.update { GalleryLoadedState(flowers = flowers) }
+                val plants = plantRepository.getPlants()
+                _uiState.update { GalleryLoadedState(plants = plants) }
             }.onFailure {
                 _uiState.update { GalleryLoadingErrorState }
             }
         }
     }
 
-    private fun getFlowersBySearchQuery(query: String) {
+    private fun getPlantsBySearchQuery(query: String) {
         _uiState.value = GalleryLoadingState
 
         viewModelScope.launch {
             runSuspendCatching {
-                val flowers = flowersRepository.getFlowersByFilters(
-                    filters = FlowerFilters(
+                val plants = plantRepository.getPlants(
+                    filters = PlantFilters(
                         name = query,
-                        description = query
+                        description = query,
                     )
                 )
 
-                _uiState.update { GalleryLoadedState(flowers = flowers) }
+                _uiState.update { GalleryLoadedState(plants = plants) }
             }.onFailure {
                 _uiState.update { GalleryLoadingErrorState }
             }

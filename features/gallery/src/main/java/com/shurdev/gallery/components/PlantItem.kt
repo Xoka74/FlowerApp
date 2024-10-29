@@ -27,15 +27,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.Flower
+import com.shurdev.domain.models.Plant
 import com.shurdev.gallery.R
-import com.shurdev.gallery.mocks.FLOWERS
+import com.shurdev.gallery.mocks.Plants
 
 @Composable
-internal fun FlowerItem(
+internal fun PlantItem(
     modifier: Modifier = Modifier,
-    flower: Flower,
-    onFlowerClick: (Flower) -> Unit
+    plant: Plant,
+    onPlantClick: (Plant) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -45,7 +45,7 @@ internal fun FlowerItem(
         modifier = modifier
             .fillMaxWidth()
             .background(Color.Transparent),
-        onClick = { onFlowerClick(flower) },
+        onClick = { onPlantClick(plant) },
         shape = RoundedCornerShape(
             topStart = 12.dp,
             topEnd = 0.dp,
@@ -67,10 +67,10 @@ internal fun FlowerItem(
                     .size(imageSize)
                     .clip(RoundedCornerShape(12.dp)),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(flower.imageLink)
-                    .placeholder(R.drawable.flower_placeholder_1)
+                    .data(plant.imageLink)
+                    .placeholder(R.drawable.plant_placeholder_1)
                     .build(),
-                contentDescription = "Your Flower",
+                contentDescription = "Your Plant",
                 contentScale = ContentScale.Crop
             )
 
@@ -91,14 +91,14 @@ internal fun FlowerItem(
                         .background(Color.Transparent)
                 ) {
                     Text(
-                        text = flower.name,
+                        text = plant.name,
                         fontSize = 20.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
 
                     Text(
-                        text = flower.description,
+                        text = plant.description,
                         fontSize = 12.sp,
                         color = Color.Gray,
                         maxLines = 1,
@@ -119,9 +119,9 @@ internal fun FlowerItem(
 
 @Preview
 @Composable
-internal fun FlowerItemPreview() {
-    FlowerItem(
-        flower = FLOWERS[0],
-        onFlowerClick = {}
+internal fun PlantItemPreview() {
+    PlantItem(
+        plant = Plants[0],
+        onPlantClick = {}
     )
 }

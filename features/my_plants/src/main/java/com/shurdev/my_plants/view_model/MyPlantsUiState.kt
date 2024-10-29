@@ -1,7 +1,7 @@
 package com.shurdev.my_plants.view_model
 
 import androidx.compose.runtime.Stable
-import com.shurdev.domain.models.Flower
+import com.shurdev.domain.models.Plant
 
 @Stable
 sealed class MyPlantsUiState
@@ -10,7 +10,7 @@ sealed class MyPlantsUiState
 data object MyPlantsLoadingState : MyPlantsUiState()
 
 @Stable
-data class MyPlantsLoadedState(val flowers: List<Flower>) : MyPlantsUiState()
+data class MyPlantsLoadedState(val plants: List<Plant>) : MyPlantsUiState()
 
 @Stable
 data object MyPlantsLoadingErrorState : MyPlantsUiState()

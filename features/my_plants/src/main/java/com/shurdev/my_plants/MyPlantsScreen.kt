@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.Flower
+import com.shurdev.domain.models.Plant
 import com.shurdev.my_plants.components.MyPlantItem
 import com.shurdev.my_plants.view_model.MyPlantsLoadedState
 import com.shurdev.my_plants.view_model.MyPlantsLoadingErrorState
@@ -29,11 +29,11 @@ import com.shurdev.ui_kit.components.buttons.PrimaryButton
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.loaders.Loader
 import com.shurdev.ui_kit.theme.AppBackgroundColor
-import com.shurdev.ui_kit.theme.FlowerCardContentColor
+import com.shurdev.ui_kit.theme.PlantCardContentColor
 
 @Composable
 internal fun MyPlantsRoute(
-    onFlowerClick: (Flower) -> Unit,
+    onPlantClick: (Plant) -> Unit,
 ) {
     val myPlantsViewModel = hiltViewModel<MyPlantsViewModel>()
 
@@ -41,14 +41,14 @@ internal fun MyPlantsRoute(
 
     MyPlantsScreen(
         uiState = uiState,
-        onFlowerClick = onFlowerClick,
+        onPlantClick = onPlantClick,
     )
 }
 
 @Composable
 internal fun MyPlantsScreen(
     uiState: MyPlantsUiState,
-    onFlowerClick: (Flower) -> Unit,
+    onPlantClick: (Plant) -> Unit,
 ) {
     when (uiState) {
         MyPlantsLoadingErrorState -> ErrorView()
@@ -69,7 +69,7 @@ internal fun MyPlantsScreen(
                     item {
                         Text(
                             text = myPlants,
-                            color = FlowerCardContentColor,
+                            color = PlantCardContentColor,
                             fontSize = 24.sp,
                             style = TextStyle(fontWeight = FontWeight.Bold)
                         )
@@ -86,10 +86,10 @@ internal fun MyPlantsScreen(
                         Spacer(Modifier.height(12.dp))
                     }
 
-                    items(uiState.flowers) { flower ->
+                    items(uiState.plants) { plant ->
                         MyPlantItem(
-                            flower = flower,
-                            onItemClick = onFlowerClick
+                            plant = plant,
+                            onItemClick = onPlantClick
                         )
                     }
                 }

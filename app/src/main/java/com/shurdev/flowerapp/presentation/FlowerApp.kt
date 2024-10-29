@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
 import com.shurdev.gallery.navigation.galleryNavGraph
-import com.shurdev.gallery.navigation.navigateToGalleryFlowerDetailsScreen
+import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.MyPlantsNavGraph
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
@@ -32,16 +32,16 @@ fun FlowerApp() {
         ) {
 
             galleryNavGraph(
-                onFlowerClick = { flower ->
-                    flower.id?.let {
-                        navController.navigateToGalleryFlowerDetailsScreen(flowerId = it)
+                onPlantClick = { plant ->
+                    plant.id?.let {
+                        navController.navigateToGalleryPlantDetailsScreen(plantId = it)
                     }
                 }
             )
 
             myPlantsNavGraph(
-                onFlowerClick = { flower ->
-                    flower.id?.let {
+                onPlantClick = { plant ->
+                    plant.id?.let {
                         navController.navigateToMyPlantDetailsScreen(plantId = it)
                     }
                 }
