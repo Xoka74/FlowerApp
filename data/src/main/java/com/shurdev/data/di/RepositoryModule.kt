@@ -1,7 +1,7 @@
 package com.shurdev.data.di
 
-import com.shurdev.data.repositories.FlowerRepositoryImpl
-import com.shurdev.domain.repositories.FlowerRepository
+import com.shurdev.data.repositories.PlantRepositoryImpl
+import com.shurdev.domain.repositories.PlantRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,5 +14,5 @@ interface RepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindFlowerRepository(impl: FlowerRepositoryImpl): FlowerRepository
+    fun bindPlantRepository(impl: PlantRepositoryImpl): PlantRepository
 }

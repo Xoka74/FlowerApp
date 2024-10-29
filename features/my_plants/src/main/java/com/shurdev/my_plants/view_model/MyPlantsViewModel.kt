@@ -2,7 +2,7 @@ package com.shurdev.my_plants.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.repositories.FlowerRepository
+import com.shurdev.domain.repositories.PlantRepository
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPlantsViewModel @Inject constructor(
-    private val flowersRepository: FlowerRepository,
+    private val plantsRepository: PlantRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<MyPlantsUiState>(MyPlantsLoadingState)
     val uiState = _uiState.asStateFlow()
@@ -28,8 +28,8 @@ class MyPlantsViewModel @Inject constructor(
         viewModelScope.launch {
             runSuspendCatching {
 
-                val flowers = flowersRepository.getFlowers()
-                _uiState.update { MyPlantsLoadedState(flowers) }
+                val plants = plantsRepository.getPlants()
+                _uiState.update { MyPlantsLoadedState(plants) }
             }.onFailure {
                 _uiState.update { MyPlantsLoadingErrorState }
             }

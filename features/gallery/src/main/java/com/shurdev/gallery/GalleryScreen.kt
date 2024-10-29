@@ -15,11 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.Flower
-import com.shurdev.gallery.components.FlowerCategoriesList
-import com.shurdev.gallery.components.FlowersList
+import com.shurdev.domain.models.Plant
+import com.shurdev.gallery.components.PlantCategoriesList
+import com.shurdev.gallery.components.PlantsList
 import com.shurdev.gallery.mocks.CATEGORIES
-import com.shurdev.gallery.mocks.FLOWERS
+import com.shurdev.gallery.mocks.Plants
 import com.shurdev.gallery.view_model.GalleryLoadedState
 import com.shurdev.gallery.view_model.GalleryLoadingErrorState
 import com.shurdev.gallery.view_model.GalleryLoadingState
@@ -31,7 +31,7 @@ import com.shurdev.ui_kit.loaders.Loader
 
 @Composable
 internal fun GalleryRoute(
-    onFlowerClick: (Flower) -> Unit,
+    onPlantClick: (Plant) -> Unit,
 ) {
     val galleryViewModel = hiltViewModel<GalleryViewModel>()
 
@@ -39,7 +39,7 @@ internal fun GalleryRoute(
 
     GalleryScreen(
         uiState = uiState,
-        onFlowerClick = onFlowerClick,
+        onPlantClick = onPlantClick,
         onCategoryClick = {},
         onSearchTextChange = galleryViewModel::onSearchTextChange
     )
@@ -48,7 +48,7 @@ internal fun GalleryRoute(
 @Composable
 internal fun GalleryScreen(
     uiState: GalleryUiState,
-    onFlowerClick: (Flower) -> Unit,
+    onPlantClick: (Plant) -> Unit,
     onCategoryClick: (String) -> Unit,
     onSearchTextChange: (String) -> Unit,
 ) {
@@ -78,7 +78,7 @@ internal fun GalleryScreen(
                         debounceTimeMillis = 800L
                     )
 
-                    FlowerCategoriesList(
+                    PlantCategoriesList(
                         categories = CATEGORIES,
                         onCategoryClick = onCategoryClick
                     )
@@ -92,9 +92,9 @@ internal fun GalleryScreen(
                         fontWeight = FontWeight.Normal
                     )
 
-                    FlowersList(
-                        flowers = uiState.flowers,
-                        onFlowerClick = onFlowerClick
+                    PlantsList(
+                        plants = uiState.plants,
+                        onPlantClick = onPlantClick
                     )
                 }
             }
@@ -110,9 +110,9 @@ internal fun GalleryScreen(
 internal fun GalleryScreenPreview() {
     GalleryScreen(
         uiState = GalleryLoadedState(
-            flowers = FLOWERS
+            plants = Plants
         ),
-        onFlowerClick = {},
+        onPlantClick = {},
         onCategoryClick = {},
         onSearchTextChange = {},
     )

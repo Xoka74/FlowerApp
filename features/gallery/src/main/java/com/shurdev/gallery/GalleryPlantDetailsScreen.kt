@@ -15,41 +15,41 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.gallery.mocks.FLOWERS
-import com.shurdev.gallery.view_model.GalleryFlowerDetailsErrorState
-import com.shurdev.gallery.view_model.GalleryFlowerDetailsLoadedState
-import com.shurdev.gallery.view_model.GalleryFlowerDetailsLoadingState
-import com.shurdev.gallery.view_model.GalleryFlowerDetailsUiState
-import com.shurdev.gallery.view_model.GalleryFlowerDetailsViewModel
+import com.shurdev.gallery.mocks.Plants
+import com.shurdev.gallery.view_model.GalleryPlantDetailsErrorState
+import com.shurdev.gallery.view_model.GalleryPlantDetailsLoadedState
+import com.shurdev.gallery.view_model.GalleryPlantDetailsLoadingState
+import com.shurdev.gallery.view_model.GalleryPlantDetailsUiState
+import com.shurdev.gallery.view_model.GalleryPlantDetailsViewModel
 import com.shurdev.ui_kit.components.Center
 
 @Composable
-internal fun GalleryFlowerDetailsRoute(
-    flowerId: Int,
+internal fun GalleryPlantDetailsRoute(
+    plantId: Int,
 ) {
     val viewModel =
-        hiltViewModel<GalleryFlowerDetailsViewModel, GalleryFlowerDetailsViewModel.ViewModelFactory> { factory ->
-            factory.create(flowerId)
+        hiltViewModel<GalleryPlantDetailsViewModel, GalleryPlantDetailsViewModel.ViewModelFactory> { factory ->
+            factory.create(plantId)
         }
 
     val uiState by viewModel.uiState.collectAsState()
 
-    GalleryFlowerDetailsScreen(
+    GalleryPlantDetailsScreen(
         uiState = uiState
     )
 }
 
 @Composable
-internal fun GalleryFlowerDetailsScreen(
-    uiState: GalleryFlowerDetailsUiState
+internal fun GalleryPlantDetailsScreen(
+    uiState: GalleryPlantDetailsUiState
 ) {
 
     when (uiState) {
-        is GalleryFlowerDetailsLoadedState -> {
-            val flower = uiState.flower
+        is GalleryPlantDetailsLoadedState -> {
+            val plant = uiState.plant
 
             Text(
-                text = "Gallery Flower details"
+                text = "Gallery Plant details"
             )
 
             Center {
@@ -59,23 +59,23 @@ internal fun GalleryFlowerDetailsScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp)),
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(flower.imageLink)
-                            .placeholder(R.drawable.flower_placeholder_1)
+                            .data(plant.imageLink)
+                            .placeholder(R.drawable.plant_placeholder_1)
                             .build(),
-                        contentDescription = "Your Flower",
+                        contentDescription = "Your Plant",
                         contentScale = ContentScale.Crop
                     )
 
                     Text(
-                        text = flower.id.toString()
+                        text = plant.id.toString()
                     )
 
                     Text(
-                        text = flower.name
+                        text = plant.name
                     )
 
                     Text(
-                        text = flower.description
+                        text = plant.description
                     )
 
 
@@ -83,11 +83,11 @@ internal fun GalleryFlowerDetailsScreen(
             }
         }
 
-        is GalleryFlowerDetailsErrorState -> {
+        is GalleryPlantDetailsErrorState -> {
             // TODO
         }
 
-        is GalleryFlowerDetailsLoadingState -> {
+        is GalleryPlantDetailsLoadingState -> {
             // TODO
         }
     }
@@ -95,10 +95,10 @@ internal fun GalleryFlowerDetailsScreen(
 
 @Preview
 @Composable
-internal fun GalleryFlowerDetailsScreenPreview() {
-    GalleryFlowerDetailsScreen(
-        uiState = GalleryFlowerDetailsLoadedState(
-            flower = FLOWERS[0]
+internal fun GalleryPlantDetailsScreenPreview() {
+    GalleryPlantDetailsScreen(
+        uiState = GalleryPlantDetailsLoadedState(
+            plant = Plants[0]
         )
     )
 }

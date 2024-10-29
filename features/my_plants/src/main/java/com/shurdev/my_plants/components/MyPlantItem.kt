@@ -20,25 +20,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.Flower
+import com.shurdev.domain.models.Plant
 import com.shurdev.my_plants.R
-import com.shurdev.ui_kit.theme.FlowerCardBackgroundColor
-import com.shurdev.ui_kit.theme.FlowerCardContentColor
+import com.shurdev.ui_kit.theme.PlantCardBackgroundColor
+import com.shurdev.ui_kit.theme.PlantCardContentColor
 
 @Composable
 fun MyPlantItem(
     modifier: Modifier = Modifier,
-    flower: Flower,
-    onItemClick: (Flower) -> Unit,
+    plant: Plant,
+    onItemClick: (Plant) -> Unit,
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = FlowerCardBackgroundColor,
-            contentColor = FlowerCardContentColor
+            containerColor = PlantCardBackgroundColor,
+            contentColor = PlantCardContentColor
         ),
-        onClick = { onItemClick(flower) }
+        onClick = { onItemClick(plant) }
     ) {
         Row(
             modifier = Modifier
@@ -52,10 +52,10 @@ fun MyPlantItem(
                     .aspectRatio(1F)
                     .clip(RoundedCornerShape(12.dp)),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(flower.imageLink)
+                    .data(plant.imageLink)
                     .placeholder(R.drawable.flower_placeholder_1)
                     .build(),
-                contentDescription = "Your Flower",
+                contentDescription = "Your Plant",
                 contentScale = ContentScale.Crop
             )
 
@@ -65,12 +65,12 @@ fun MyPlantItem(
                     .padding(top = 12.dp)
             ) {
                 Text(
-                    text = flower.name,
+                    text = plant.name,
                     fontSize = 22.sp
                 )
 
                 Text(
-                    text = flower.description,
+                    text = plant.description,
                 )
             }
         }
@@ -81,7 +81,7 @@ fun MyPlantItem(
 @Preview
 fun MyPlantItemPreview() {
     MyPlantItem(
-        flower = Flower(
+        plant = Plant(
             name = "Пахира Акватика",
             description = "Дата следующего полива",
             imageLink = ""

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun FlowerCategoriesList(
+internal fun PlantCategoriesList(
     modifier: Modifier = Modifier,
     categories: List<String>,
     onCategoryClick: (String) -> Unit
@@ -20,7 +20,7 @@ internal fun FlowerCategoriesList(
         contentPadding = PaddingValues(start = 16.dp)
     ) {
         items(categories) { category ->
-            FlowerCategoryItem(
+            PlantCategoryItem(
                 category = category,
                 onCategoryClick = onCategoryClick
             )

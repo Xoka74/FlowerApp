@@ -5,8 +5,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import com.shurdev.domain.models.Flower
-import com.shurdev.gallery.GalleryFlowerDetailsRoute
+import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.PlantId
+import com.shurdev.gallery.GalleryPlantDetailsRoute
 import com.shurdev.gallery.GalleryRoute
 import kotlinx.serialization.Serializable
 
@@ -14,54 +15,48 @@ import kotlinx.serialization.Serializable
 @Serializable
 object GalleryNavGraph
 
-fun NavController.navigateToGalleryGraph() = navigate(GalleryNavGraph)
-
 fun NavGraphBuilder.galleryNavGraph(
-    onFlowerClick: (Flower) -> Unit
+    onPlantClick: (Plant) -> Unit,
 ) {
     navigation<GalleryNavGraph>(
         startDestination = GalleryRoute,
     ) {
         galleryScreen(
-            onFlowerClick = onFlowerClick,
+            onPlantClick = onPlantClick,
         )
 
 
-        galleryFlowerDetailsScreen()
+        galleryPlantDetailsScreen()
     }
 }
 
 @Serializable
 object GalleryRoute
 
-fun NavController.navigateToGalleryScreen() = navigate(GalleryRoute)
-
 fun NavGraphBuilder.galleryScreen(
-    onFlowerClick: (Flower) -> Unit,
+    onPlantClick: (Plant) -> Unit,
 ) {
     composable<GalleryRoute> {
         GalleryRoute(
-            onFlowerClick = onFlowerClick,
+            onPlantClick = onPlantClick,
         )
     }
 }
 
 
 @Serializable
-data class GalleryFlowerDetails(
-    val flowerId: Int
-)
+data class GalleryPlantDetails(val plantId: PlantId)
 
-fun NavController.navigateToGalleryFlowerDetailsScreen(flowerId: Int) =
-    navigate(GalleryFlowerDetails(flowerId))
+fun NavController.navigateToGalleryPlantDetailsScreen(plantId: PlantId) =
+    navigate(GalleryPlantDetails(plantId))
 
-fun NavGraphBuilder.galleryFlowerDetailsScreen() {
+fun NavGraphBuilder.galleryPlantDetailsScreen() {
 
-    composable<GalleryFlowerDetails> { backStackEntry ->
-        val flowerDetails: GalleryFlowerDetails = backStackEntry.toRoute()
+    composable<GalleryPlantDetails> { backStackEntry ->
+        val plantDetails: GalleryPlantDetails = backStackEntry.toRoute()
 
-        GalleryFlowerDetailsRoute(
-            flowerId = flowerDetails.flowerId
+        GalleryPlantDetailsRoute(
+            plantId = plantDetails.plantId
         )
     }
 }
