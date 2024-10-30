@@ -1,4 +1,4 @@
-package com.shurdev.my_plants.view_model
+package com.shurdev.my_plants.screens.myPlants.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

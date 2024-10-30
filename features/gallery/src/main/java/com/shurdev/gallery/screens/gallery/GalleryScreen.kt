@@ -1,4 +1,4 @@
-package com.shurdev.gallery
+package com.shurdev.gallery.screens.gallery
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,16 +16,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.models.Plant
+import com.shurdev.gallery.R
 import com.shurdev.gallery.components.PlantCategoriesList
 import com.shurdev.gallery.components.PlantsList
 import com.shurdev.gallery.mocks.CATEGORIES
 import com.shurdev.gallery.mocks.Plants
-import com.shurdev.gallery.view_model.GalleryLoadedState
-import com.shurdev.gallery.view_model.GalleryLoadingErrorState
-import com.shurdev.gallery.view_model.GalleryLoadingState
-import com.shurdev.gallery.view_model.GalleryUiState
-import com.shurdev.gallery.view_model.GalleryViewModel
-import com.shurdev.ui_kit.components.SearchField
+import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadedState
+import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingErrorState
+import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingState
+import com.shurdev.gallery.screens.gallery.viewModel.GalleryUiState
+import com.shurdev.gallery.screens.gallery.viewModel.GalleryViewModel
+import com.shurdev.ui_kit.fields.SearchField
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.loaders.Loader
 

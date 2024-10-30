@@ -7,8 +7,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import com.shurdev.domain.models.Plant
 import com.shurdev.domain.models.PlantId
-import com.shurdev.my_plants.MyPlantDetailsRoute
-import com.shurdev.my_plants.MyPlantsRoute
+import com.shurdev.my_plants.screens.details.MyPlantDetailsRoute
+import com.shurdev.my_plants.screens.myPlants.MyPlantsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

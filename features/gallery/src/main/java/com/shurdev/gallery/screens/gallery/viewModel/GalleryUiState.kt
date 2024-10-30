@@ -1,4 +1,4 @@
-package com.shurdev.gallery.view_model
+package com.shurdev.gallery.screens.gallery.viewModel
 
 import androidx.compose.runtime.Stable
 import com.shurdev.domain.models.Plant

@@ -1,4 +1,4 @@
-package com.shurdev.my_plants.view_model
+package com.shurdev.gallery.screens.details.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,14 +13,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-@HiltViewModel(assistedFactory = MyPlantDetailsViewModel.ViewModelFactory::class)
-class MyPlantDetailsViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = GalleryPlantDetailsViewModel.ViewModelFactory::class)
+class GalleryPlantDetailsViewModel @AssistedInject constructor(
     @Assisted private val plantId: Int,
     private val plantRepository: PlantRepository,
 ) : ViewModel() {
 
     private var _uiState =
-        MutableStateFlow<MyPlantDetailsUiState>(MyPlantDetailsLoadingState)
+        MutableStateFlow<GalleryPlantDetailsUiState>(GalleryPlantDetailsLoadingState)
 
     val uiState = _uiState.asStateFlow()
 
@@ -29,19 +29,19 @@ class MyPlantDetailsViewModel @AssistedInject constructor(
     }
 
     private fun getPlant(id: Int) {
-        _uiState.value = MyPlantDetailsLoadingState
+        _uiState.value = GalleryPlantDetailsLoadingState
 
         viewModelScope.launch {
             runSuspendCatching {
                 val plant = plantRepository.getPlantById(id)
 
                 if (plant != null) {
-                    _uiState.value = MyPlantDetailsLoadedState(plant = plant)
+                    _uiState.value = GalleryPlantDetailsLoadedState(plant = plant)
                 } else {
-                    _uiState.value = MyPlantDetailsErrorState
+                    _uiState.value = GalleryPlantDetailsErrorState
                 }
             }.onFailure {
-                _uiState.value = MyPlantDetailsErrorState
+                _uiState.value = GalleryPlantDetailsErrorState
             }
         }
     }
@@ -49,6 +49,6 @@ class MyPlantDetailsViewModel @AssistedInject constructor(
     @AssistedFactory
     interface ViewModelFactory {
 
-        fun create(plantId: PlantId): MyPlantDetailsViewModel
+        fun create(plantId: PlantId): GalleryPlantDetailsViewModel
     }
 }

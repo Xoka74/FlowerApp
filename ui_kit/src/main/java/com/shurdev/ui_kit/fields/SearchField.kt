@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.components
+package com.shurdev.ui_kit.fields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

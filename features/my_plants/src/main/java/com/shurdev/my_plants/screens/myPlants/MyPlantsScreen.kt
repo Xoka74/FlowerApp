@@ -1,4 +1,4 @@
-package com.shurdev.my_plants
+package com.shurdev.my_plants.screens.myPlants
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
@@ -19,13 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.models.Plant
+import com.shurdev.ui_kit.R
 import com.shurdev.my_plants.components.MyPlantItem
-import com.shurdev.my_plants.view_model.MyPlantsLoadedState
-import com.shurdev.my_plants.view_model.MyPlantsLoadingErrorState
-import com.shurdev.my_plants.view_model.MyPlantsLoadingState
-import com.shurdev.my_plants.view_model.MyPlantsUiState
-import com.shurdev.my_plants.view_model.MyPlantsViewModel
-import com.shurdev.ui_kit.components.buttons.PrimaryButton
+import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsLoadedState
+import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsLoadingErrorState
+import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsLoadingState
+import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsUiState
+import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsViewModel
+import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.loaders.Loader
 import com.shurdev.ui_kit.theme.AppBackgroundColor
