@@ -1,7 +1,7 @@
 package com.shurdev.data.repositories
 
-import com.shurdev.domain.models.Plant
-import com.shurdev.domain.models.PlantFilters
+import com.shurdev.domain.models.flower.Plant
+import com.shurdev.domain.models.flower.PlantFilters
 import com.shurdev.domain.repositories.PlantRepository
 import javax.inject.Inject
 

@@ -9,11 +9,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 object SurveyNavGraph
 
-fun NavGraphBuilder.surveyNavGraph() {
+fun NavGraphBuilder.surveyNavGraph(
+    onFinishSurvey: () -> Unit
+) {
     navigation<SurveyNavGraph>(
         startDestination = SurveyRoute,
     ) {
-        surveyScreen()
+        surveyScreen(onFinishSurvey = onFinishSurvey)
     }
 }
 
@@ -21,8 +23,12 @@ fun NavGraphBuilder.surveyNavGraph() {
 @Serializable
 object SurveyRoute
 
-fun NavGraphBuilder.surveyScreen() {
+fun NavGraphBuilder.surveyScreen(
+    onFinishSurvey: () -> Unit
+) {
     composable<SurveyRoute> {
-        SurveyRoute()
+        SurveyRoute(
+            onFinishSurvey = onFinishSurvey
+        )
     }
 }

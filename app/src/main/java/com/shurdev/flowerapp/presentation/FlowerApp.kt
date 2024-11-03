@@ -31,7 +31,11 @@ fun FlowerApp() {
             navController = navController,
             startDestination = SurveyNavGraph,
         ) {
-            surveyNavGraph()
+            surveyNavGraph(
+                onFinishSurvey = {
+                    navController.navigateToGalleryGraph()
+                }
+            )
 
             galleryNavGraph(
                 onPop = navController::navigateUp,

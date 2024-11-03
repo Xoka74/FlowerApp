@@ -1,5 +1,7 @@
 package com.shurdev.data.di
 
+import com.shurdev.data.repositories.SurveyRepositoryImpl
+import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.data.repositories.PlantRepositoryImpl
 import com.shurdev.domain.repositories.PlantRepository
 import dagger.Binds
@@ -15,4 +17,8 @@ interface RepositoryModule {
     @Binds
     @ViewModelScoped
     fun bindPlantRepository(impl: PlantRepositoryImpl): PlantRepository
+
+    @Binds
+    @ViewModelScoped
+    fun bindSurveyRepository(impl: SurveyRepositoryImpl): SurveyRepository
 }

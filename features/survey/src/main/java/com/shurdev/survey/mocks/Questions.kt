@@ -1,6 +1,6 @@
 package com.shurdev.survey.mocks
 
-import com.shurdev.survey.model.QuestionWithSingleAnswer
+import com.shurdev.domain.models.survey.Question
 
 val SINGLE_ANSWER_OPTIONS = listOf(
     "Да",
@@ -11,22 +11,22 @@ val SINGLE_ANSWER_OPTIONS = listOf(
 )
 
 val QUESTIONS = listOf(
-    QuestionWithSingleAnswer(
+    Question(
         id = 1,
         question = "Вы живете в теплом регионе?",
         answerOptions = SINGLE_ANSWER_OPTIONS
     ),
-    QuestionWithSingleAnswer(
+    Question(
         id = 2,
         question = "У вас есть аллергия на цветы?",
         answerOptions = SINGLE_ANSWER_OPTIONS
     ),
-    QuestionWithSingleAnswer(
+    Question(
         id = 3,
         question = "Сколько цветов вы собираетесь выращивать?",
         answerOptions = SINGLE_ANSWER_OPTIONS
     ),
-    QuestionWithSingleAnswer(
+    Question(
         id = 4,
         question = "У вас есть дети?",
         answerOptions = SINGLE_ANSWER_OPTIONS
