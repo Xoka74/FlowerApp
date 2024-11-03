@@ -15,5 +15,5 @@ val Black = Color(0xFF0A250F)
 
 val AppBackgroundColor = Color(0xFFF7FCF7)
 
-val FlowerCardBackgroundColor = Color(0xFFE8F2E8)
-val FlowerCardContentColor = Color(0xFF0D1C0F)
+val PlantCardBackgroundColor = Color(0xFFE8F2E8)
+val PlantCardContentColor = Color(0xFF0D1C0F)
