@@ -1,4 +1,4 @@
-package com.shurdev.gallery
+package com.shurdev.my_plants.screens.details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,41 +15,42 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.gallery.mocks.Plants
-import com.shurdev.gallery.view_model.GalleryPlantDetailsErrorState
-import com.shurdev.gallery.view_model.GalleryPlantDetailsLoadedState
-import com.shurdev.gallery.view_model.GalleryPlantDetailsLoadingState
-import com.shurdev.gallery.view_model.GalleryPlantDetailsUiState
-import com.shurdev.gallery.view_model.GalleryPlantDetailsViewModel
-import com.shurdev.ui_kit.components.Center
+import com.shurdev.domain.models.Plant
+import com.shurdev.my_plants.R
+import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsErrorState
+import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsLoadedState
+import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsLoadingState
+import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsUiState
+import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsViewModel
+import com.shurdev.ui_kit.layouts.Center
 
 @Composable
-internal fun GalleryPlantDetailsRoute(
+internal fun MyPlantDetailsRoute(
     plantId: Int,
 ) {
     val viewModel =
-        hiltViewModel<GalleryPlantDetailsViewModel, GalleryPlantDetailsViewModel.ViewModelFactory> { factory ->
+        hiltViewModel<MyPlantDetailsViewModel, MyPlantDetailsViewModel.ViewModelFactory> { factory ->
             factory.create(plantId)
         }
 
     val uiState by viewModel.uiState.collectAsState()
 
-    GalleryPlantDetailsScreen(
-        uiState = uiState
+    MyPlantDetailsScreen(
+        uiState = uiState,
     )
 }
 
 @Composable
-internal fun GalleryPlantDetailsScreen(
-    uiState: GalleryPlantDetailsUiState
+internal fun MyPlantDetailsScreen(
+    uiState: MyPlantDetailsUiState,
 ) {
 
     when (uiState) {
-        is GalleryPlantDetailsLoadedState -> {
+        is MyPlantDetailsLoadedState -> {
             val plant = uiState.plant
 
             Text(
-                text = "Gallery Plant details"
+                text = "My plant details"
             )
 
             Center {
@@ -60,7 +61,7 @@ internal fun GalleryPlantDetailsScreen(
                             .clip(RoundedCornerShape(12.dp)),
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(plant.imageLink)
-                            .placeholder(R.drawable.plant_placeholder_1)
+                            .placeholder(R.drawable.flower_placeholder_1)
                             .build(),
                         contentDescription = "Your Plant",
                         contentScale = ContentScale.Crop
@@ -83,11 +84,11 @@ internal fun GalleryPlantDetailsScreen(
             }
         }
 
-        is GalleryPlantDetailsErrorState -> {
+        is MyPlantDetailsLoadingState -> {
             // TODO
         }
 
-        is GalleryPlantDetailsLoadingState -> {
+        is MyPlantDetailsErrorState -> {
             // TODO
         }
     }
@@ -95,10 +96,10 @@ internal fun GalleryPlantDetailsScreen(
 
 @Preview
 @Composable
-internal fun GalleryPlantDetailsScreenPreview() {
-    GalleryPlantDetailsScreen(
-        uiState = GalleryPlantDetailsLoadedState(
-            plant = Plants[0]
+internal fun MyPlantDetailsScreenPreview() {
+    MyPlantDetailsScreen(
+        uiState = MyPlantDetailsLoadedState(
+            plant = Plant(1, "Тюльпан", "Великолепный", "")
         )
     )
 }

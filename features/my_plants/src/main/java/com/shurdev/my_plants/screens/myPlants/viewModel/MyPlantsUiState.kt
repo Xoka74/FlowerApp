@@ -1,4 +1,4 @@
-package com.shurdev.my_plants.view_model
+package com.shurdev.my_plants.screens.myPlants.viewModel
 
 import androidx.compose.runtime.Stable
 import com.shurdev.domain.models.Plant

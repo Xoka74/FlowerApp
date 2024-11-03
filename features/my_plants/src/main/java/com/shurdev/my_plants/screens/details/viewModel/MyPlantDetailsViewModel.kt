@@ -1,4 +1,4 @@
-package com.shurdev.gallery.view_model
+package com.shurdev.my_plants.screens.details.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,14 +13,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-@HiltViewModel(assistedFactory = GalleryPlantDetailsViewModel.ViewModelFactory::class)
-class GalleryPlantDetailsViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = MyPlantDetailsViewModel.ViewModelFactory::class)
+class MyPlantDetailsViewModel @AssistedInject constructor(
     @Assisted private val plantId: Int,
     private val plantRepository: PlantRepository,
 ) : ViewModel() {
 
     private var _uiState =
-        MutableStateFlow<GalleryPlantDetailsUiState>(GalleryPlantDetailsLoadingState)
+        MutableStateFlow<MyPlantDetailsUiState>(MyPlantDetailsLoadingState)
 
     val uiState = _uiState.asStateFlow()
 
@@ -29,19 +29,19 @@ class GalleryPlantDetailsViewModel @AssistedInject constructor(
     }
 
     private fun getPlant(id: Int) {
-        _uiState.value = GalleryPlantDetailsLoadingState
+        _uiState.value = MyPlantDetailsLoadingState
 
         viewModelScope.launch {
             runSuspendCatching {
                 val plant = plantRepository.getPlantById(id)
 
                 if (plant != null) {
-                    _uiState.value = GalleryPlantDetailsLoadedState(plant = plant)
+                    _uiState.value = MyPlantDetailsLoadedState(plant = plant)
                 } else {
-                    _uiState.value = GalleryPlantDetailsErrorState
+                    _uiState.value = MyPlantDetailsErrorState
                 }
             }.onFailure {
-                _uiState.value = GalleryPlantDetailsErrorState
+                _uiState.value = MyPlantDetailsErrorState
             }
         }
     }
@@ -49,6 +49,6 @@ class GalleryPlantDetailsViewModel @AssistedInject constructor(
     @AssistedFactory
     interface ViewModelFactory {
 
-        fun create(plantId: PlantId): GalleryPlantDetailsViewModel
+        fun create(plantId: PlantId): MyPlantDetailsViewModel
     }
 }

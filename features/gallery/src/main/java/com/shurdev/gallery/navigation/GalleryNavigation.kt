@@ -7,8 +7,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import com.shurdev.domain.models.Plant
 import com.shurdev.domain.models.PlantId
-import com.shurdev.gallery.GalleryPlantDetailsRoute
-import com.shurdev.gallery.GalleryRoute
+import com.shurdev.gallery.screens.details.GalleryPlantDetailsRoute
+import com.shurdev.gallery.screens.gallery.GalleryRoute
 import kotlinx.serialization.Serializable
 
 
@@ -17,6 +17,7 @@ object GalleryNavGraph
 
 fun NavGraphBuilder.galleryNavGraph(
     onPlantClick: (Plant) -> Unit,
+    onPop: () -> Unit,
 ) {
     navigation<GalleryNavGraph>(
         startDestination = GalleryRoute,
@@ -26,7 +27,9 @@ fun NavGraphBuilder.galleryNavGraph(
         )
 
 
-        galleryPlantDetailsScreen()
+        galleryPlantDetailsScreen(
+            onPop = onPop,
+        )
     }
 }
 
@@ -50,13 +53,15 @@ data class GalleryPlantDetails(val plantId: PlantId)
 fun NavController.navigateToGalleryPlantDetailsScreen(plantId: PlantId) =
     navigate(GalleryPlantDetails(plantId))
 
-fun NavGraphBuilder.galleryPlantDetailsScreen() {
-
+fun NavGraphBuilder.galleryPlantDetailsScreen(
+    onPop: () -> Unit,
+) {
     composable<GalleryPlantDetails> { backStackEntry ->
         val plantDetails: GalleryPlantDetails = backStackEntry.toRoute()
 
         GalleryPlantDetailsRoute(
-            plantId = plantDetails.plantId
+            plantId = plantDetails.plantId,
+            onPop = onPop
         )
     }
 }

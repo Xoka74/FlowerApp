@@ -68,7 +68,7 @@ internal fun PlantItem(
                     .clip(RoundedCornerShape(12.dp)),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(plant.imageLink)
-                    .placeholder(R.drawable.plant_placeholder_1)
+                    .placeholder(R.drawable.flower_placeholder_1)
                     .build(),
                 contentDescription = "Your Plant",
                 contentScale = ContentScale.Crop

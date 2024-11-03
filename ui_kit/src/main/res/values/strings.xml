@@ -2,4 +2,5 @@
 <resources>
     <string name="my_plants">Мои растения</string>
     <string name="add_plant">Добавить растение</string>
+    <string name="add_to_favorite">Добавить в избранное</string>
 </resources>

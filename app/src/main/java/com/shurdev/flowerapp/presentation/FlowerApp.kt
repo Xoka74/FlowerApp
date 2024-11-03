@@ -32,6 +32,7 @@ fun FlowerApp() {
         ) {
 
             galleryNavGraph(
+                onPop = navController::navigateUp,
                 onPlantClick = { plant ->
                     plant.id?.let {
                         navController.navigateToGalleryPlantDetailsScreen(plantId = it)
