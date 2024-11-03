@@ -10,9 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
-import com.shurdev.my_plants.navigation.MyPlantsNavGraph
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
+import com.shurdev.onboarding.navigation.OnboardingNavGraph
+import com.shurdev.onboarding.navigation.onboardingNavGraph
 
 @Composable
 fun FlowerApp() {
@@ -28,8 +29,9 @@ fun FlowerApp() {
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
-            startDestination = MyPlantsNavGraph,
+            startDestination = OnboardingNavGraph,
         ) {
+            onboardingNavGraph()
 
             galleryNavGraph(
                 onPop = navController::navigateUp,
