@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.shurdev.survey"
+    namespace = "com.shurdev.onboarding"
     compileSdk = 34
 
     defaultConfig {
@@ -49,4 +49,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    // Splash API
+    implementation(libs.androidx.core.splashscreen)
 }

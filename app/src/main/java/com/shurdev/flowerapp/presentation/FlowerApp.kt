@@ -12,7 +12,9 @@ import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
-import com.shurdev.survey.navigation.SurveyNavGraph
+import com.shurdev.onboarding.navigation.OnboardingNavGraph
+import com.shurdev.onboarding.navigation.onboardingNavGraph
+import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
 
 @Composable
@@ -29,8 +31,14 @@ fun FlowerApp() {
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
-            startDestination = SurveyNavGraph,
+            startDestination = OnboardingNavGraph,
         ) {
+            onboardingNavGraph(
+                onFinishOnboarding = {
+                    navController.navigateToSurveyGraph()
+                }
+            )
+
             surveyNavGraph(
                 onFinishSurvey = {
                     navController.navigateToGalleryGraph()
