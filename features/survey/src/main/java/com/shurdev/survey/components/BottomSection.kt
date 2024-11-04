@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.shurdev.ui_kit.theme.Green
 
 @Composable
 internal fun BottomSection(
@@ -29,10 +30,10 @@ internal fun BottomSection(
     ) {
         FloatingActionButton(
             onClick = onNextClick,
-            containerColor = Color.Black,
+            containerColor = Green,
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .clip(RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
+                .clip(RoundedCornerShape(15.dp))
         ) {
             Icon(
                 imageVector = if (isQuestionLast)
@@ -41,7 +42,7 @@ internal fun BottomSection(
                     Icons.AutoMirrored.Outlined.KeyboardArrowRight,
 
                 tint = Color.White,
-                contentDescription = "Localized description"
+                contentDescription = "Далее"
             )
         }
     }

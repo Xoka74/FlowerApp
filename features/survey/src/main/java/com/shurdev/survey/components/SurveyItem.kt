@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.MaterialTheme
@@ -55,10 +56,13 @@ internal fun SurveyItem(
 
         radioOptions.forEachIndexed { index, answerOption ->
             Column(
+                modifier = Modifier
+                    .fillMaxWidth(0.6f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .selectable(
                             selected = isItemSelected(index),
                             onClick = { onAnswerClick(index) },
