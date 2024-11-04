@@ -18,7 +18,9 @@ fun NavGraphBuilder.surveyNavGraph(
     navigation<SurveyNavGraph>(
         startDestination = SurveyRoute,
     ) {
-        surveyScreen(onFinishSurvey = onFinishSurvey)
+        surveyScreen(
+            onFinishSurvey = onFinishSurvey
+        )
     }
 }
 
