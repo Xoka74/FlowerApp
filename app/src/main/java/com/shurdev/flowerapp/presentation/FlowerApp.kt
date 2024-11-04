@@ -17,7 +17,6 @@ import androidx.navigation.compose.rememberNavController
 import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
-import com.shurdev.gallery.navigation.navigateToGalleryFlowerDetailsScreen
 import com.shurdev.gallery.navigation.popUpToGalleryGraph
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen

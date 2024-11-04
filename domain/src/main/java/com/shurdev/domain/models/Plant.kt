@@ -1,4 +1,4 @@
-package com.shurdev.domain.models.flower
+package com.shurdev.domain.models
 
 typealias PlantId = Int
 
