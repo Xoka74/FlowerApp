@@ -25,18 +25,17 @@ fun PrimaryButton(
         colors = ButtonDefaults.buttonColors().copy(
             containerColor = Green,
             contentColor = Black,
-        )
+        ),
     ) {
         Text(text, style = MaterialTheme.typography.titleMedium)
     }
 }
 
-
 @Preview
 @Composable
-fun PreviewButton() {
+private fun PreviewButton() {
     PrimaryButton(
         onClick = {},
-        text = ""
+        text = "",
     )
 }
