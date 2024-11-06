@@ -24,6 +24,7 @@ fun AppBottomNavigation(navController: NavController) {
         listOf(
             BottomNavigationItems.MyPlants,
             BottomNavigationItems.Gallery,
+            BottomNavigationItems.Profile,
         )
     }
 

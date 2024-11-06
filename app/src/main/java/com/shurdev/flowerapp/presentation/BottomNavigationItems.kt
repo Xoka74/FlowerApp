@@ -3,6 +3,7 @@ package com.shurdev.flowerapp.presentation
 import com.shurdev.flowerapp.R
 import com.shurdev.gallery.navigation.GalleryNavGraph
 import com.shurdev.my_plants.navigation.MyPlantsNavGraph
+import com.shurdev.profile.navigation.ProfileNavGraph
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -29,10 +30,11 @@ sealed class BottomNavigationItems<T>(
         route = GalleryNavGraph
     )
 
-    // TODO
-    /*
     @Serializable
-    data object Settings : BottomNavigationItems<SettingsGraph>{
-
-    }*/
+    data object Profile : BottomNavigationItems<ProfileNavGraph>(
+        name = "Профиль",
+        selectedIconResId = R.drawable.icon_person_filled,
+        unSelectedIconResId = R.drawable.icon_person_unfilled,
+        route = ProfileNavGraph
+    )
 }
