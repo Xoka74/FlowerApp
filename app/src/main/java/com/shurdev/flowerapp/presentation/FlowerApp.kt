@@ -10,6 +10,7 @@ import com.shurdev.gallery.navigation.galleryScreen
 import com.shurdev.myPlants.navigation.MyPlantsRoute
 import com.shurdev.myPlants.navigation.myPlantsScreen
 
+@Suppress("ktlint:compose:modifier-missing-check")
 @Composable
 fun FlowerApp() {
     val navController = rememberNavController()
@@ -23,7 +24,7 @@ fun FlowerApp() {
             myPlantsScreen(
                 onFlowerClick = {
                     // Navigate to details screen
-                }
+                },
             )
             galleryScreen(
                 onFlowerClick = {
@@ -31,7 +32,7 @@ fun FlowerApp() {
                 },
                 onCategoryClick = {
                     // Filter by category
-                }
+                },
             )
         }
     }

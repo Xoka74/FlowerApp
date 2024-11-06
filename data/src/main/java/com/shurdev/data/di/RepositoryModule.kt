@@ -11,7 +11,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 interface RepositoryModule {
-
     @Binds
     @ViewModelScoped
     fun bindFlowerRepository(impl: FlowerRepositoryImpl): FlowerRepository

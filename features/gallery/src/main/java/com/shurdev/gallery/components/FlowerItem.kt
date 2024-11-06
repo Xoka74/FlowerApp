@@ -33,9 +33,9 @@ import com.shurdev.gallery.mocks.FLOWERS
 
 @Composable
 internal fun FlowerItem(
-    modifier: Modifier = Modifier,
+    onFlowerClick: (Flower) -> Unit,
     flower: Flower,
-    onFlowerClick: (Flower) -> Unit
+    modifier: Modifier = Modifier,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -50,17 +50,17 @@ internal fun FlowerItem(
             topStart = 12.dp,
             topEnd = 0.dp,
             bottomStart = 12.dp,
-            bottomEnd = 0.dp
+            bottomEnd = 0.dp,
         ),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
 
-            ),
+        ),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Transparent)
+                .background(Color.Transparent),
         ) {
             AsyncImage(
                 modifier = Modifier
@@ -71,7 +71,7 @@ internal fun FlowerItem(
                     .placeholder(R.drawable.flower_placeholder_1)
                     .build(),
                 contentDescription = "Your Flower",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             val paddingTop = 12.dp
@@ -80,7 +80,7 @@ internal fun FlowerItem(
                 modifier = Modifier
                     .padding(
                         start = 12.dp,
-                        top = paddingTop
+                        top = paddingTop,
                     )
                     .height(imageSize - paddingTop)
                     .background(Color.Transparent),
@@ -88,13 +88,13 @@ internal fun FlowerItem(
             ) {
                 Column(
                     modifier = Modifier
-                        .background(Color.Transparent)
+                        .background(Color.Transparent),
                 ) {
                     Text(
                         text = flower.name,
                         fontSize = 20.sp,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
 
                     Text(
@@ -102,7 +102,7 @@ internal fun FlowerItem(
                         fontSize = 12.sp,
                         color = Color.Gray,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
 
@@ -110,7 +110,7 @@ internal fun FlowerItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(Color.LightGray)
+                        .background(Color.LightGray),
                 )
             }
         }
@@ -122,6 +122,6 @@ internal fun FlowerItem(
 internal fun FlowerItemPreview() {
     FlowerItem(
         flower = FLOWERS[0],
-        onFlowerClick = {}
+        onFlowerClick = {},
     )
 }

@@ -14,12 +14,12 @@ fun NavController.navigateToGalleryScreen() = navigate(GalleryRoute)
 
 fun NavGraphBuilder.galleryScreen(
     onFlowerClick: (Flower) -> Unit,
-    onCategoryClick: (String) -> Unit
+    onCategoryClick: (String) -> Unit,
 ) {
     composable<GalleryRoute> {
         GalleryRoute(
             onFlowerClick = onFlowerClick,
-            onCategoryClick = onCategoryClick
+            onCategoryClick = onCategoryClick,
         )
     }
 }

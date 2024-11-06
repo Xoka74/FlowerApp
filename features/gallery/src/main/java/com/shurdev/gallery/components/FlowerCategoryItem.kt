@@ -16,28 +16,28 @@ import com.shurdev.gallery.mocks.CATEGORIES
 
 @Composable
 internal fun FlowerCategoryItem(
-    modifier: Modifier = Modifier,
+    onCategoryClick: (String) -> Unit,
     category: String,
-    onCategoryClick: (String) -> Unit
+    modifier: Modifier = Modifier,
 ) {
     OutlinedCard(
         modifier = modifier
             .padding(end = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent
+            containerColor = Color.Transparent,
         ),
         shape = RoundedCornerShape(20.dp),
-        onClick = { onCategoryClick(category) }
+        onClick = { onCategoryClick(category) },
     ) {
         Column {
             Text(
                 modifier = Modifier
                     .padding(
                         vertical = 4.dp,
-                        horizontal = 12.dp
+                        horizontal = 12.dp,
                     ),
                 text = category,
-                fontSize = 14.sp
+                fontSize = 14.sp,
             )
         }
     }
@@ -48,6 +48,6 @@ internal fun FlowerCategoryItem(
 internal fun FlowerCategoryItemPreview() {
     FlowerCategoryItem(
         category = CATEGORIES[0],
-        onCategoryClick = {}
+        onCategoryClick = {},
     )
 }

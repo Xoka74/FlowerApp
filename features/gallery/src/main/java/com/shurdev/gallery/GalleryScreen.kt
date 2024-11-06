@@ -38,7 +38,7 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun GalleryRoute(
     onFlowerClick: (Flower) -> Unit,
-    onCategoryClick: (String) -> Unit
+    onCategoryClick: (String) -> Unit,
 ) {
     val galleryViewModel = hiltViewModel<GalleryViewModel>()
 
@@ -94,7 +94,7 @@ internal fun GalleryScreen(
                         onCategoryClick = {
                             scope.launch {
                                 snackbarHostState.showSnackbar(
-                                    message = it.toString(),
+                                    message = it,
                                     duration = SnackbarDuration.Short
                                 )
                             }

@@ -7,6 +7,6 @@ val FLOWERS = (1..10)
         Flower(
             name = "Flower$it",
             description = "Description$it",
-            imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
+            imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
         )
     }

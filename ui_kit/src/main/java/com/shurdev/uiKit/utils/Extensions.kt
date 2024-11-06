@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 fun <T> T.useDebounce(
     delayMillis: Long,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onChange: (T) -> Unit
+    onChange: (T) -> Unit,
 ): T {
     val state by rememberUpdatedState(this)
 

@@ -23,24 +23,25 @@ import com.shurdev.uiKit.utils.useDebounce
 
 @Composable
 fun SearchField(
+    onSearchTextChange: (String) -> Unit,
+    debounceTimeMillis: Long,
     modifier: Modifier = Modifier,
     hint: String = "",
     searchText: String = "",
-    debounceTimeMillis: Long,
-    onSearchTextChange: (String) -> Unit,
 ) {
     var currentSearchText by remember { mutableStateOf(searchText) }
 
     currentSearchText.useDebounce(
         delayMillis = debounceTimeMillis,
         coroutineScope = rememberCoroutineScope(),
-        onChange = onSearchTextChange
+        onChange = onSearchTextChange,
     )
 
     TextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Color.LightGray, RoundedCornerShape(16.dp)),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(Color.LightGray, RoundedCornerShape(16.dp)),
         value = currentSearchText,
         onValueChange = {
             currentSearchText = it
@@ -52,18 +53,19 @@ fun SearchField(
         leadingIcon = {
             Icon(Icons.Filled.Search, contentDescription = "Search Icon")
         },
-        colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        ),
+        colors =
+            TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+            ),
         shape = RoundedCornerShape(12.dp),
     )
 }
 
 @Preview
 @Composable
-fun SearchFieldPreview() {
+private fun SearchFieldPreview() {
     SearchField(
         hint = "Поиск",
         searchText = "",

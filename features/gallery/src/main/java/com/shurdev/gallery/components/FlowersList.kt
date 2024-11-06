@@ -14,9 +14,9 @@ import com.shurdev.gallery.mocks.FLOWERS
 
 @Composable
 internal fun FlowersList(
-    modifier: Modifier = Modifier,
+    onFlowerClick: (Flower) -> Unit,
     flowers: List<Flower>,
-    onFlowerClick: (Flower) -> Unit
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier
@@ -26,12 +26,12 @@ internal fun FlowersList(
         items(flowers) { flower ->
             FlowerItem(
                 flower = flower,
-                onFlowerClick = onFlowerClick
+                onFlowerClick = onFlowerClick,
             )
 
             Spacer(
                 modifier = Modifier
-                    .height(10.dp)
+                    .height(10.dp),
             )
         }
     }
@@ -42,6 +42,6 @@ internal fun FlowersList(
 internal fun FlowersListPreview() {
     FlowersList(
         flowers = FLOWERS,
-        onFlowerClick = {}
+        onFlowerClick = {},
     )
 }

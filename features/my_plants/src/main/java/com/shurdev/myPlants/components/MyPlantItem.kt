@@ -27,9 +27,9 @@ import com.shurdev.uiKit.theme.FlowerCardContentColor
 
 @Composable
 fun MyPlantItem(
-    modifier: Modifier = Modifier,
-    flower: Flower,
     onItemClick: (Flower) -> Unit,
+    flower: Flower,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,

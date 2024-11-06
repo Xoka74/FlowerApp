@@ -49,8 +49,8 @@ class GalleryViewModel @Inject constructor(
                 val flowers = flowersRepository.getFlowersByFilters(
                     filters = FlowerFilters(
                         name = query,
-                        description = query
-                    )
+                        description = query,
+                    ),
                 )
 
                 _uiState.update { GalleryLoadedState(flowers = flowers) }
