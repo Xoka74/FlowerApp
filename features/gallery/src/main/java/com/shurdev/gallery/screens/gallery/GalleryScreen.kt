@@ -26,8 +26,8 @@ import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingErrorState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryUiState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryViewModel
-import com.shurdev.ui_kit.fields.SearchField
 import com.shurdev.ui_kit.errors.ErrorView
+import com.shurdev.ui_kit.fields.SearchField
 import com.shurdev.ui_kit.loaders.Loader
 
 @Composable
