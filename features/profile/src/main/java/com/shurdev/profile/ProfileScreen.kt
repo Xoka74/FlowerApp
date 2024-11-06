@@ -110,7 +110,7 @@ internal fun ProfileScreenContent(
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             // TODO: To navigation items similar to BottomNavigationItems
-            val options = listOf("Избранное", "О приложении")
+            val options = listOf("Избранное", "О приложении", "Пройти опрос")
 
             for (option in options) {
                 ProfileOption(option)
