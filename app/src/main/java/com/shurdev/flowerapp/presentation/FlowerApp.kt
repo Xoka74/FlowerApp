@@ -10,9 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
-import com.shurdev.my_plants.navigation.MyPlantsNavGraph
-import com.shurdev.my_plants.navigation.myPlantsNavGraph
-import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
+import com.shurdev.myPlants.navigation.MyPlantsNavGraph
+import com.shurdev.myPlants.navigation.myPlantsNavGraph
+import com.shurdev.myPlants.navigation.navigateToMyPlantDetailsScreen
 
 @Composable
 fun FlowerApp() {
@@ -23,21 +23,20 @@ fun FlowerApp() {
             BottomAppBar {
                 AppBottomNavigation(navController)
             }
-        }
+        },
     ) { padding ->
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
             startDestination = MyPlantsNavGraph,
         ) {
-
             galleryNavGraph(
                 onPop = navController::navigateUp,
                 onPlantClick = { plant ->
                     plant.id?.let {
                         navController.navigateToGalleryPlantDetailsScreen(plantId = it)
                     }
-                }
+                },
             )
 
             myPlantsNavGraph(
@@ -45,7 +44,7 @@ fun FlowerApp() {
                     plant.id?.let {
                         navController.navigateToMyPlantDetailsScreen(plantId = it)
                     }
-                }
+                },
             )
         }
     }

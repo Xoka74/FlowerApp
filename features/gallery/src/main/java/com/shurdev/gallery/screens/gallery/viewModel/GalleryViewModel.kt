@@ -17,7 +17,6 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
     private val plantRepository: PlantRepository,
 ) : ViewModel() {
-
     private var _uiState = MutableStateFlow<GalleryUiState>(GalleryLoadingState)
     val uiState: StateFlow<GalleryUiState> = _uiState.asStateFlow()
 
@@ -50,7 +49,7 @@ class GalleryViewModel @Inject constructor(
                     filters = PlantFilters(
                         name = query,
                         description = query,
-                    )
+                    ),
                 )
 
                 _uiState.update { GalleryLoadedState(plants = plants) }

@@ -11,7 +11,6 @@ import com.shurdev.gallery.screens.details.GalleryPlantDetailsRoute
 import com.shurdev.gallery.screens.gallery.GalleryRoute
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 object GalleryNavGraph
 
@@ -26,7 +25,6 @@ fun NavGraphBuilder.galleryNavGraph(
             onPlantClick = onPlantClick,
         )
 
-
         galleryPlantDetailsScreen(
             onPop = onPop,
         )
@@ -36,9 +34,7 @@ fun NavGraphBuilder.galleryNavGraph(
 @Serializable
 object GalleryRoute
 
-fun NavGraphBuilder.galleryScreen(
-    onPlantClick: (Plant) -> Unit,
-) {
+fun NavGraphBuilder.galleryScreen(onPlantClick: (Plant) -> Unit) {
     composable<GalleryRoute> {
         GalleryRoute(
             onPlantClick = onPlantClick,
@@ -46,22 +42,20 @@ fun NavGraphBuilder.galleryScreen(
     }
 }
 
-
 @Serializable
-data class GalleryPlantDetails(val plantId: PlantId)
+data class GalleryPlantDetails(
+    val plantId: PlantId,
+)
 
-fun NavController.navigateToGalleryPlantDetailsScreen(plantId: PlantId) =
-    navigate(GalleryPlantDetails(plantId))
+fun NavController.navigateToGalleryPlantDetailsScreen(plantId: PlantId) = navigate(GalleryPlantDetails(plantId))
 
-fun NavGraphBuilder.galleryPlantDetailsScreen(
-    onPop: () -> Unit,
-) {
+fun NavGraphBuilder.galleryPlantDetailsScreen(onPop: () -> Unit) {
     composable<GalleryPlantDetails> { backStackEntry ->
         val plantDetails: GalleryPlantDetails = backStackEntry.toRoute()
 
         GalleryPlantDetailsRoute(
             plantId = plantDetails.plantId,
-            onPop = onPop
+            onPop = onPop,
         )
     }
 }

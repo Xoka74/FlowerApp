@@ -2,7 +2,7 @@ package com.shurdev.flowerapp.presentation
 
 import com.shurdev.flowerapp.R
 import com.shurdev.gallery.navigation.GalleryNavGraph
-import com.shurdev.my_plants.navigation.MyPlantsNavGraph
+import com.shurdev.myPlants.navigation.MyPlantsNavGraph
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -27,11 +27,4 @@ sealed class BottomNavigationItems<T>(
         unSelectedIconResId = R.drawable.icon_flower_unfilled,
         route = GalleryNavGraph,
     )
-
-    // TODO
-    /*
-    @Serializable
-    data object Settings : BottomNavigationItems<SettingsGraph>{
-
-    }*/
 }

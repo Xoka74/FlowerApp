@@ -14,9 +14,9 @@ import com.shurdev.gallery.mocks.Plants
 
 @Composable
 internal fun PlantsList(
-    modifier: Modifier = Modifier,
     plants: List<Plant>,
-    onPlantClick: (Plant) -> Unit
+    onPlantClick: (Plant) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier
@@ -26,12 +26,12 @@ internal fun PlantsList(
         items(plants) { plant ->
             PlantItem(
                 plant = plant,
-                onPlantClick = onPlantClick
+                onPlantClick = onPlantClick,
             )
 
             Spacer(
                 modifier = Modifier
-                    .height(10.dp)
+                    .height(10.dp),
             )
         }
     }
@@ -42,6 +42,6 @@ internal fun PlantsList(
 internal fun PlantsListPreview() {
     PlantsList(
         plants = Plants,
-        onPlantClick = {}
+        onPlantClick = {},
     )
 }

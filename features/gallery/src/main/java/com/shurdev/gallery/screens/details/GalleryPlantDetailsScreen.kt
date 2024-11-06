@@ -30,30 +30,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.shurdev.domain.models.Plant
-import com.shurdev.gallery.R
 import com.shurdev.gallery.mocks.Plants
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsErrorState
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsLoadedState
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsLoadingState
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsUiState
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsViewModel
-import com.shurdev.ui_kit.actions.FavoriteAction
-import com.shurdev.ui_kit.buttons.BackButton
-import com.shurdev.ui_kit.buttons.PrimaryButton
-import com.shurdev.ui_kit.errors.ErrorView
-import com.shurdev.ui_kit.loaders.Loader
-import com.shurdev.ui_kit.R as uiKitResource
+import com.shurdev.uiKit.actions.FavoriteAction
+import com.shurdev.uiKit.buttons.BackButton
+import com.shurdev.uiKit.buttons.PrimaryButton
+import com.shurdev.uiKit.errors.ErrorView
+import com.shurdev.uiKit.loaders.Loader
+import com.shurdev.ui_kit.R
 
 @Composable
 internal fun GalleryPlantDetailsRoute(
     plantId: Int,
     onPop: () -> Unit,
+    // TODO: Refactor
+    viewModel: GalleryPlantDetailsViewModel = hiltViewModel<
+        GalleryPlantDetailsViewModel,
+        GalleryPlantDetailsViewModel.ViewModelFactory,
+    > { factory ->
+        factory.create(plantId)
+    },
 ) {
-    val viewModel =
-        hiltViewModel<GalleryPlantDetailsViewModel, GalleryPlantDetailsViewModel.ViewModelFactory> { factory ->
-            factory.create(plantId)
-        }
-
     val uiState by viewModel.uiState.collectAsState()
 
     GalleryPlantDetailsScreen(
@@ -77,9 +78,9 @@ internal fun GalleryPlantDetailsScreen(
                 // TODO: Implement me
                 FavoriteAction(
                     isActive = false,
-                    onClick = {}
+                    onClick = {},
                 )
-            }
+            },
         )
         Box(
             Modifier
@@ -95,16 +96,14 @@ internal fun GalleryPlantDetailsScreen(
 }
 
 @Composable
-internal fun GalleryPlantDetailsContent(
-    plant: Plant,
-) {
+internal fun GalleryPlantDetailsContent(plant: Plant) {
     val typography = MaterialTheme.typography
 
     Column {
         Column(
             Modifier
                 .weight(1f)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
         ) {
             AsyncImage(
                 modifier = Modifier
@@ -112,12 +111,13 @@ internal fun GalleryPlantDetailsContent(
                     .fillMaxWidth()
                     .aspectRatio(1F)
                     .height(400.dp),
-                model = ImageRequest.Builder(LocalContext.current)
+                model = ImageRequest
+                    .Builder(LocalContext.current)
                     .data(plant.imageLink)
-                    .placeholder(R.drawable.flower_placeholder_1)
+                    .placeholder(com.shurdev.gallery.R.drawable.flower_placeholder_1)
                     .build(),
                 contentDescription = "Your Plant",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             Spacer(Modifier.height(12.dp))
@@ -130,11 +130,11 @@ internal fun GalleryPlantDetailsContent(
             Spacer(Modifier.height(12.dp))
 
             Text(
-                text = plant.description
+                text = plant.description,
             )
         }
 
-        val addPlant = stringResource(uiKitResource.string.add_plant)
+        val addPlant = stringResource(R.string.add_plant)
 
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
@@ -152,7 +152,7 @@ internal fun GalleryPlantDetailsScreenPreview() {
     GalleryPlantDetailsScreen(
         onPop = {},
         uiState = GalleryPlantDetailsLoadedState(
-            plant = Plants[0]
+            plant = Plants[0],
         ),
     )
 }
