@@ -10,15 +10,14 @@ sealed class BottomNavigationItems<T>(
     val name: String,
     val selectedIconResId: Int,
     val unSelectedIconResId: Int,
-    val route: T
+    val route: T,
 ) {
-
     @Serializable
     data object MyPlants : BottomNavigationItems<MyPlantsNavGraph>(
         name = "Мои растения",
         selectedIconResId = R.drawable.icon_home_filled,
         unSelectedIconResId = R.drawable.icon_home_unfilled,
-        route = MyPlantsNavGraph
+        route = MyPlantsNavGraph,
     )
 
     @Serializable
@@ -26,7 +25,7 @@ sealed class BottomNavigationItems<T>(
         name = "Галерея",
         selectedIconResId = R.drawable.icon_flower_filled,
         unSelectedIconResId = R.drawable.icon_flower_unfilled,
-        route = GalleryNavGraph
+        route = GalleryNavGraph,
     )
 
     // TODO
