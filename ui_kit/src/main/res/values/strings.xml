@@ -5,4 +5,5 @@
     <string name="add_to_favorite">Добавить в избранное</string>
     <string name="settings">Настройки</string>
     <string name="logout">Выйти</string>
+    <string name="take_survey">Пройти опрос</string>
 </resources>

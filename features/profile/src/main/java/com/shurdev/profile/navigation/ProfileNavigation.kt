@@ -10,19 +10,31 @@ import kotlinx.serialization.Serializable
 @Serializable
 object ProfileNavGraph
 
-fun NavGraphBuilder.profileNavGraph() {
+fun NavGraphBuilder.profileNavGraph(
+    onTakeSurveyClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {},
+) {
     navigation<ProfileNavGraph>(
         startDestination = ProfileRoute,
     ) {
-        profileRoute()
+        profileRoute(
+            onTakeSurveyClick = onTakeSurveyClick,
+            onSettingsClick = onSettingsClick,
+        )
     }
 }
 
 @Serializable
 object ProfileRoute
 
-fun NavGraphBuilder.profileRoute() {
+fun NavGraphBuilder.profileRoute(
+    onTakeSurveyClick: () -> Unit = {},
+    onSettingsClick: () -> Unit = {},
+) {
     composable<ProfileRoute> {
-        ProfileRoute()
+        ProfileRoute(
+            onTakeSurveyClick = onTakeSurveyClick,
+            onSettingsClick = onSettingsClick,
+        )
     }
 }
