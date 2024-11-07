@@ -1,6 +1,5 @@
 package com.shurdev.flowerapp.presentation.composables
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -31,10 +30,7 @@ fun AppBottomNavigation(
     }
 
     NavigationBar(
-        modifier = modifier
-            .fillMaxWidth()
-            .size(20.dp)
-            .size(20.dp),
+        modifier = modifier,
     ) {
         val currentDestination = navController.currentBackStackEntryAsState().value?.destination
 
