@@ -18,7 +18,6 @@ class GalleryPlantDetailsViewModel @AssistedInject constructor(
     @Assisted private val plantId: Int,
     private val plantRepository: PlantRepository,
 ) : ViewModel() {
-
     private var _uiState =
         MutableStateFlow<GalleryPlantDetailsUiState>(GalleryPlantDetailsLoadingState)
 
@@ -35,6 +34,7 @@ class GalleryPlantDetailsViewModel @AssistedInject constructor(
             runSuspendCatching {
                 val plant = plantRepository.getPlantById(id)
 
+                // TODO: Refactor
                 if (plant != null) {
                     _uiState.value = GalleryPlantDetailsLoadedState(plant = plant)
                 } else {
@@ -48,7 +48,6 @@ class GalleryPlantDetailsViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface ViewModelFactory {
-
         fun create(plantId: PlantId): GalleryPlantDetailsViewModel
     }
 }

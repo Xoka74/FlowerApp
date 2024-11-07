@@ -10,19 +10,19 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun PlantCategoriesList(
-    modifier: Modifier = Modifier,
     categories: List<String>,
-    onCategoryClick: (String) -> Unit
+    onCategoryClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     LazyRow(
         modifier = modifier
             .padding(top = 12.dp),
-        contentPadding = PaddingValues(start = 16.dp)
+        contentPadding = PaddingValues(start = 16.dp),
     ) {
         items(categories) { category ->
             PlantCategoryItem(
                 category = category,
-                onCategoryClick = onCategoryClick
+                onCategoryClick = onCategoryClick,
             )
         }
     }

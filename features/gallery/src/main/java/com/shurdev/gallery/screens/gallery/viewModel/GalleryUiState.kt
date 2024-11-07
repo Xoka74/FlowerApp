@@ -10,7 +10,9 @@ sealed class GalleryUiState
 data object GalleryLoadingState : GalleryUiState()
 
 @Stable
-data class GalleryLoadedState(val plants: List<Plant>) : GalleryUiState()
+data class GalleryLoadedState(
+    val plants: List<Plant>,
+) : GalleryUiState()
 
 @Stable
 data object GalleryLoadingErrorState : GalleryUiState()

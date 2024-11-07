@@ -18,8 +18,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.shurdev.flowerapp.presentation.BottomNavigationItems
 
 @Composable
-fun AppBottomNavigation(navController: NavController) {
-
+fun AppBottomNavigation(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+) {
     val bottomNavigationItems = remember {
         listOf(
             BottomNavigationItems.MyPlants,
@@ -27,23 +29,27 @@ fun AppBottomNavigation(navController: NavController) {
         )
     }
 
-    NavigationBar {
+    NavigationBar(
+        modifier = modifier,
+    ) {
         val currentDestination = navController.currentBackStackEntryAsState().value?.destination
 
         bottomNavigationItems.forEach { item ->
 
-            val isSelected = currentDestination?.hierarchy?.any {
-                it.hasRoute(item.route::class)
-            } ?: false
+            val isSelected =
+                currentDestination?.hierarchy?.any {
+                    it.hasRoute(item.route::class)
+                } ?: false
 
             NavigationBarItem(
                 icon = {
                     Icon(
                         modifier = Modifier.size(24.dp),
-                        painter = painterResource(
-                            id = if (isSelected) item.selectedIconResId else item.unSelectedIconResId
-                        ),
-                        contentDescription = item.name
+                        painter =
+                            painterResource(
+                                id = if (isSelected) item.selectedIconResId else item.unSelectedIconResId,
+                            ),
+                        contentDescription = item.name,
                     )
                 },
                 label = {
@@ -58,7 +64,7 @@ fun AppBottomNavigation(navController: NavController) {
                         launchSingleTop = true
 //                        restoreState = true
                     }
-                }
+                },
             )
         }
     }

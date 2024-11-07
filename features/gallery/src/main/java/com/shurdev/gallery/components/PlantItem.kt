@@ -33,9 +33,9 @@ import com.shurdev.gallery.mocks.Plants
 
 @Composable
 internal fun PlantItem(
-    modifier: Modifier = Modifier,
     plant: Plant,
     onPlantClick: (Plant) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -50,28 +50,28 @@ internal fun PlantItem(
             topStart = 12.dp,
             topEnd = 0.dp,
             bottomStart = 12.dp,
-            bottomEnd = 0.dp
+            bottomEnd = 0.dp,
         ),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
-
-            ),
+        ),
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Transparent)
+                .background(Color.Transparent),
         ) {
             AsyncImage(
                 modifier = Modifier
                     .size(imageSize)
                     .clip(RoundedCornerShape(12.dp)),
-                model = ImageRequest.Builder(LocalContext.current)
+                model = ImageRequest
+                    .Builder(LocalContext.current)
                     .data(plant.imageLink)
                     .placeholder(R.drawable.flower_placeholder_1)
                     .build(),
                 contentDescription = "Your Plant",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             val paddingTop = 12.dp
@@ -80,21 +80,20 @@ internal fun PlantItem(
                 modifier = Modifier
                     .padding(
                         start = 12.dp,
-                        top = paddingTop
-                    )
-                    .height(imageSize - paddingTop)
+                        top = paddingTop,
+                    ).height(imageSize - paddingTop)
                     .background(Color.Transparent),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(
                     modifier = Modifier
-                        .background(Color.Transparent)
+                        .background(Color.Transparent),
                 ) {
                     Text(
                         text = plant.name,
                         fontSize = 20.sp,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
 
                     Text(
@@ -102,7 +101,7 @@ internal fun PlantItem(
                         fontSize = 12.sp,
                         color = Color.Gray,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
 
@@ -110,7 +109,7 @@ internal fun PlantItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(Color.LightGray)
+                        .background(Color.LightGray),
                 )
             }
         }
@@ -122,6 +121,6 @@ internal fun PlantItem(
 internal fun PlantItemPreview() {
     PlantItem(
         plant = Plants[0],
-        onPlantClick = {}
+        onPlantClick = {},
     )
 }

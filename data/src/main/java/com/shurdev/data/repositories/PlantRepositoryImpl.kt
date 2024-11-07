@@ -6,7 +6,6 @@ import com.shurdev.domain.repositories.PlantRepository
 import javax.inject.Inject
 
 class PlantRepositoryImpl @Inject constructor() : PlantRepository {
-
     override suspend fun getPlants(filters: PlantFilters?): List<Plant> {
         return plants.filter { item ->
             filters?.let {
@@ -23,12 +22,15 @@ class PlantRepositoryImpl @Inject constructor() : PlantRepository {
             name = "Подсолнух обыкновенный",
             description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
                 .repeat(10),
-            imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
+            imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
         )
     }
 
-    private fun doesPlantMatchFilters(plant: Plant, filters: PlantFilters): Boolean {
-        return plant.name.contains(filters.name ?: "", ignoreCase = true)
-                || plant.description.contains(filters.description ?: "", ignoreCase = true)
+    private fun doesPlantMatchFilters(
+        plant: Plant,
+        filters: PlantFilters,
+    ): Boolean {
+        return plant.name.contains(filters.name ?: "", ignoreCase = true) ||
+            plant.description.contains(filters.description ?: "", ignoreCase = true)
     }
 }
