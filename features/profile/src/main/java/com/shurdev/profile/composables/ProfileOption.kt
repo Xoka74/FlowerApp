@@ -22,7 +22,7 @@ fun ProfileOption(
     Row(
         modifier = Modifier
             .clickable(onClick = onClick)
-            .padding(10.dp),
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text, style = MaterialTheme.typography.titleLarge)

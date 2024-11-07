@@ -26,7 +26,7 @@ fun ProfileAction(
         modifier = Modifier
             .clickable(onClick = onClick)
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(Icons.AutoMirrored.Filled.ExitToApp, null, tint = Color.Red)

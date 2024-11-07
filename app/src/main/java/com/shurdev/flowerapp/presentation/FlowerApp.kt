@@ -90,7 +90,14 @@ fun FlowerApp() {
                 }
             )
 
-            profileNavGraph()
+            profileNavGraph(
+                onTakeSurveyClick = {
+                    // TODO: Navigate to survey
+                },
+                onSettingsClick = {
+                    // TODO: Navigate to settings
+                },
+            )
         }
     }
 }
