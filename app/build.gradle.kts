@@ -64,6 +64,7 @@ dependencies {
     implementation(projects.features.survey)
     implementation(projects.features.profile)
     implementation(projects.uiKit)
+    implementation(projects.utils)
 
     // Hilt
     implementation(libs.hilt.android)
