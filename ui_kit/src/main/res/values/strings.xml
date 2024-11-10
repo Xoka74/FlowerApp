@@ -3,4 +3,7 @@
     <string name="my_plants">Мои растения</string>
     <string name="add_plant">Добавить растение</string>
     <string name="add_to_favorite">Добавить в избранное</string>
+    <string name="settings">Настройки</string>
+    <string name="logout">Выйти</string>
+    <string name="take_survey">Пройти опрос</string>
 </resources>

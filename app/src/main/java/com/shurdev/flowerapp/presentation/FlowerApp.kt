@@ -13,6 +13,7 @@ import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.MyPlantsNavGraph
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
+import com.shurdev.profile.navigation.profileNavGraph
 
 @Composable
 fun FlowerApp() {
@@ -46,6 +47,15 @@ fun FlowerApp() {
                         navController.navigateToMyPlantDetailsScreen(plantId = it)
                     }
                 }
+            )
+
+            profileNavGraph(
+                onTakeSurveyClick = {
+                    // TODO: Navigate to survey
+                },
+                onSettingsClick = {
+                    // TODO: Navigate to settings
+                },
             )
         }
     }
