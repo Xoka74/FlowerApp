@@ -19,6 +19,7 @@ import com.shurdev.survey.components.SurveyItem
 import com.shurdev.survey.components.TopSection
 import com.shurdev.survey.mocks.QUESTIONS
 import com.shurdev.survey.model.SurveyData
+import com.shurdev.survey.utils.SurveyActionListener
 import com.shurdev.survey.view_model.SurveyErrorUiState
 import com.shurdev.survey.view_model.SurveyLoadedUiState
 import com.shurdev.survey.view_model.SurveyLoadingUiState
@@ -35,26 +36,18 @@ internal fun SurveyRoute(
 
     SurveyScreen(
         uiState = uiState,
-        onAnswerClick = viewModel::onAnswerClick,
-        onBackClick = viewModel::onBackClick,
-        onSkipClick = viewModel::onSkipClick,
-        onNextClick = viewModel::onNextClick,
+        actionListener = viewModel,
         onFinishSurvey = {
             viewModel.onFinishSurvey()
             onFinishSurvey()
         },
-        onSwipe = viewModel::onSwipe
     )
 }
 
 @Composable
 internal fun SurveyScreen(
     uiState: SurveyUiState,
-    onAnswerClick: (Int) -> Unit,
-    onBackClick: () -> Unit,
-    onSkipClick: () -> Unit,
-    onNextClick: () -> Unit,
-    onSwipe: (page: Int) -> Unit,
+    actionListener: SurveyActionListener,
     onFinishSurvey: () -> Unit
 ) {
     when (uiState) {
@@ -72,7 +65,7 @@ internal fun SurveyScreen(
             val currentQuestion = uiState.currentQuestion
 
             if (currentQuestion != pagerState.currentPage) {
-                onSwipe(pagerState.currentPage)
+                actionListener.onSwipe(pagerState.currentPage)
             }
 
             val isQuestionFirst = currentQuestion == 0
@@ -87,8 +80,8 @@ internal fun SurveyScreen(
             Column(modifier = Modifier.fillMaxSize()) {
 
                 TopSection(
-                    onBackClick = onBackClick,
-                    onSkipClick = onSkipClick,
+                    onBackClick = actionListener::onBackClick,
+                    onSkipClick = actionListener::onSkipClick,
                     showBackButton = !isQuestionFirst
                 )
 
@@ -104,13 +97,13 @@ internal fun SurveyScreen(
                             imageSrc = "",
                             content = questions[page],
                         ),
-                        onAnswerClick = onAnswerClick,
+                        onAnswerClick = actionListener::onAnswerClick,
                         selectedOption = uiState.answers[page]
                     )
                 }
 
                 BottomSection(
-                    onNextClick = onNextClick,
+                    onNextClick = actionListener::onNextClick,
                     isQuestionLast = isQuestionLast
                 )
             }
@@ -130,11 +123,14 @@ internal fun SurveyPreview() {
             answers = (1..QUESTIONS.size).toList(),
             currentQuestion = 0
         ),
-        onAnswerClick = {},
-        onNextClick = {},
-        onSkipClick = {},
-        onBackClick = {},
         onFinishSurvey = {},
-        onSwipe = {}
+        actionListener = object : SurveyActionListener {
+            override fun onNextClick() {}
+            override fun onBackClick() {}
+            override fun onSkipClick() {}
+            override fun onAnswerClick(answerId: Int) {}
+            override fun onSwipe(targetPage: Int) {}
+            override fun onFinishSurvey() {}
+        }
     )
 }

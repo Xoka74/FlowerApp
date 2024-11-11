@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
 object GalleryNavGraph
 
 fun NavController.popUpToGalleryGraph() = navigate(GalleryNavGraph) {
-    popUpTo(0);
+    popUpTo(0)
 }
 
 
