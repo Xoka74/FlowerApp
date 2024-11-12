@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.repositories.SurveyRepository
+import com.shurdev.survey.utils.SurveyActionListener
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SurveyViewModel @Inject constructor(
     private val surveyRepository: SurveyRepository,
-) : ViewModel() {
+) : ViewModel(), SurveyActionListener {
 
     private var _uiState: MutableStateFlow<SurveyUiState> = MutableStateFlow(SurveyLoadingUiState)
     val uiState = _uiState.asStateFlow()
@@ -40,7 +41,7 @@ internal class SurveyViewModel @Inject constructor(
         }
     }
 
-    fun onFinishSurvey() {
+    override fun onFinishSurvey() {
         if (_uiState.value !is SurveyLoadedUiState) {
             return
         }
@@ -55,14 +56,12 @@ internal class SurveyViewModel @Inject constructor(
                         answer = questions[index].answerOptions[answer],
                         questionId = questions[index].id
                     )
-                }.also {
-                    println(it)
                 }
             )
         }
     }
 
-    fun onAnswerClick(answer: Int) {
+    override fun onAnswerClick(answerId: Int) {
         if (_uiState.value !is SurveyLoadedUiState) {
             return
         }
@@ -73,7 +72,7 @@ internal class SurveyViewModel @Inject constructor(
             val currentQuestion = loadedState.currentQuestion
             val answers = loadedState.answers.toMutableList()
 
-            answers[currentQuestion] = answer
+            answers[currentQuestion] = answerId
 
             return@update loadedState.copy(
                 answers = answers
@@ -81,7 +80,7 @@ internal class SurveyViewModel @Inject constructor(
         }
     }
 
-    fun onSwipe(targetPage: Int) {
+    override fun onSwipe(targetPage: Int) {
         if (_uiState.value !is SurveyLoadedUiState) {
             return
         }
@@ -99,7 +98,7 @@ internal class SurveyViewModel @Inject constructor(
         }
     }
 
-    fun onBackClick() {
+    override fun onBackClick() {
         if (_uiState.value !is SurveyLoadedUiState) {
             return
         }
@@ -118,7 +117,7 @@ internal class SurveyViewModel @Inject constructor(
         }
     }
 
-    fun onSkipClick() {
+    override fun onSkipClick() {
         if (_uiState.value !is SurveyLoadedUiState) {
             return
         }
@@ -132,7 +131,7 @@ internal class SurveyViewModel @Inject constructor(
         }
     }
 
-    fun onNextClick() {
+    override fun onNextClick() {
         if (_uiState.value !is SurveyLoadedUiState) {
             return
         }
