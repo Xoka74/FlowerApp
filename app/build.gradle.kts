@@ -62,6 +62,7 @@ dependencies {
     implementation(projects.features.gallery)
     implementation(projects.features.onboarding)
     implementation(projects.features.survey)
+    implementation(projects.features.profile)
     implementation(projects.uiKit)
 
     // Hilt

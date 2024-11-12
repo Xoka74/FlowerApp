@@ -25,6 +25,7 @@ import com.shurdev.onboarding.navigation.onboardingNavGraph
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
+import com.shurdev.profile.navigation.profileNavGraph
 
 @Composable
 fun FlowerApp() {
@@ -87,6 +88,15 @@ fun FlowerApp() {
                         navController.navigateToMyPlantDetailsScreen(plantId = it)
                     }
                 }
+            )
+
+            profileNavGraph(
+                onTakeSurveyClick = {
+                    // TODO: Navigate to survey
+                },
+                onSettingsClick = {
+                    // TODO: Navigate to settings
+                },
             )
         }
     }
