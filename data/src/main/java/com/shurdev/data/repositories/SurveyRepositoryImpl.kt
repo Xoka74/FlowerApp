@@ -15,6 +15,11 @@ class SurveyRepositoryImpl @Inject constructor(
         return questionsMocks
     }
 
+    override suspend fun submitAnswers(answers: List<Answer>) {
+        // TODO send answers to server
+    }
+
+
     override suspend fun saveResultsToDatabase(questions: List<Question>, answers: List<Answer>) {
 
         val results = questions.map { question ->
@@ -30,8 +35,14 @@ class SurveyRepositoryImpl @Inject constructor(
         surveyResultsDao.saveResults(results)
     }
 
-    override suspend fun submitAnswers(answers: List<Answer>) {
-        // TODO send answers to server
+    override suspend fun getResultsFromDatabase(): List<Pair<Question, Answer>> {
+        val results = surveyResultsDao.getAllResults()
+
+        return results.map { result ->
+            val question = result.question
+            val answer = Answer(answer = result.answer, questionId = question.id)
+            return@map Pair(question, answer)
+        }
     }
 
     private val answerMocks = listOf(

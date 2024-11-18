@@ -4,7 +4,7 @@ interface SurveyActionListener {
     fun onNextClick()
     fun onBackClick()
     fun onSkipClick()
-    fun onAnswerClick(answerId: Int)
+    fun onAnswerClick(answerIndex: Int)
     fun onSwipe(targetPage: Int)
     fun onFinishSurvey()
 }

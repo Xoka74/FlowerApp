@@ -3,6 +3,7 @@ package com.shurdev.survey.view_model
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.survey.Answer
+import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.survey.utils.SurveyActionListener
 import com.shurdev.utils.runSuspendCatching
@@ -26,13 +27,37 @@ internal class SurveyViewModel @Inject constructor(
 
         viewModelScope.launch {
             runSuspendCatching {
-                val questions = surveyRepository.getQuestions()
+                val surveyResults = surveyRepository.getResultsFromDatabase()
+
+                val questions: List<Question>
+                val answersIndices: List<Int>
+
+                if (surveyResults.isEmpty()) {
+                    questions = surveyRepository.getQuestions()
+                    answersIndices = List(questions.size) { 0 }
+                } else {
+                    println("Results exist")
+
+                    questions = surveyResults.map { it.first }
+
+                    answersIndices = surveyResults.map { result ->
+                        val answer = result.second
+                        val question = questions.first { it.id == answer.questionId }
+
+                        val answerIndex = question.answerOptions.indexOfFirst { answerOption ->
+                            answerOption == answer.answer
+                        }
+
+                        return@map answerIndex
+                    }
+                }
+
 
                 _uiState.update {
                     SurveyLoadedUiState(
                         questions = questions,
-                        answers = List(questions.size) { 0 },
-                        currentQuestion = 0
+                        answersIndices = answersIndices,
+                        currentQuestionIndex = 0
                     )
                 }
             }.onFailure {
@@ -51,9 +76,9 @@ internal class SurveyViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            val answers = loadedState.answers.mapIndexed { index, answer ->
+            val answers = loadedState.answersIndices.mapIndexed { index, answerIndex ->
                 Answer(
-                    answer = questions[index].answerOptions[answer],
+                    answer = questions[index].answerOptions[answerIndex],
                     questionId = questions[index].id
                 )
             }
@@ -66,7 +91,7 @@ internal class SurveyViewModel @Inject constructor(
         }
     }
 
-    override fun onAnswerClick(answerId: Int) {
+    override fun onAnswerClick(answerIndex: Int) {
         if (_uiState.value !is SurveyLoadedUiState) {
             return
         }
@@ -74,13 +99,13 @@ internal class SurveyViewModel @Inject constructor(
         _uiState.update {
             val loadedState = _uiState.value as SurveyLoadedUiState
 
-            val currentQuestion = loadedState.currentQuestion
-            val answers = loadedState.answers.toMutableList()
+            val currentQuestion = loadedState.currentQuestionIndex
+            val answersIndices = loadedState.answersIndices.toMutableList()
 
-            answers[currentQuestion] = answerId
+            answersIndices[currentQuestion] = answerIndex
 
             return@update loadedState.copy(
-                answers = answers
+                answersIndices = answersIndices
             )
         }
     }
@@ -97,7 +122,7 @@ internal class SurveyViewModel @Inject constructor(
                 return@update loadedState
             } else {
                 return@update loadedState.copy(
-                    currentQuestion = targetPage
+                    currentQuestionIndex = targetPage
                 )
             }
         }
@@ -110,13 +135,13 @@ internal class SurveyViewModel @Inject constructor(
 
         _uiState.update {
             val loadedState = _uiState.value as SurveyLoadedUiState
-            val currentQuestion = loadedState.currentQuestion
+            val currentQuestionIndex = loadedState.currentQuestionIndex
 
-            if (currentQuestion == 0) {
+            if (currentQuestionIndex == 0) {
                 return@update loadedState
             } else {
                 return@update loadedState.copy(
-                    currentQuestion = currentQuestion - 1
+                    currentQuestionIndex = currentQuestionIndex - 1
                 )
             }
         }
@@ -143,15 +168,15 @@ internal class SurveyViewModel @Inject constructor(
 
         _uiState.update {
             val loadedState = _uiState.value as SurveyLoadedUiState
-            val currentQuestion = loadedState.currentQuestion
+            val currentQuestionIndex = loadedState.currentQuestionIndex
 
-            if (currentQuestion == loadedState.questions.size - 1) {
+            if (currentQuestionIndex == loadedState.questions.size - 1) {
                 return@update loadedState.copy(
                     isFinished = true
                 )
             } else {
                 return@update loadedState.copy(
-                    currentQuestion = currentQuestion + 1
+                    currentQuestionIndex = currentQuestionIndex + 1
                 )
             }
         }

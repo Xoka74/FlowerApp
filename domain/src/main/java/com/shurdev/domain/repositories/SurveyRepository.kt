@@ -7,7 +7,9 @@ interface SurveyRepository {
 
     suspend fun getQuestions(): List<Question>
 
+    suspend fun submitAnswers(answers: List<Answer>)
+
     suspend fun saveResultsToDatabase(questions: List<Question>, answers: List<Answer>)
 
-    suspend fun submitAnswers(answers: List<Answer>)
+    suspend fun getResultsFromDatabase(): List<Pair<Question, Answer>>
 }

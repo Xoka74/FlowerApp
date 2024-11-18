@@ -8,6 +8,9 @@ import com.shurdev.data.local.entity.SurveyResultsEntity
 @Dao
 interface SurveyResultsDao {
 
+    @Query("SELECT * FROM survey_results")
+    suspend fun getAllResults(): List<SurveyResultsEntity>
+
     @Insert
     suspend fun saveResults(surveyResults: List<SurveyResultsEntity>)
 
