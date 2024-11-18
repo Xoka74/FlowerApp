@@ -50,13 +50,18 @@ internal class SurveyViewModel @Inject constructor(
         val questions = loadedState.questions
 
         viewModelScope.launch {
-            surveyRepository.submitAnswers(
-                answers = loadedState.answers.mapIndexed { index, answer ->
-                    Answer(
-                        answer = questions[index].answerOptions[answer],
-                        questionId = questions[index].id
-                    )
-                }
+
+            val answers = loadedState.answers.mapIndexed { index, answer ->
+                Answer(
+                    answer = questions[index].answerOptions[answer],
+                    questionId = questions[index].id
+                )
+            }
+
+            surveyRepository.submitAnswers(answers = answers)
+            surveyRepository.saveResultsToDatabase(
+                questions = loadedState.questions,
+                answers = answers
             )
         }
     }

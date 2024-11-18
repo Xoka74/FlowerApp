@@ -1,14 +1,33 @@
 package com.shurdev.data.repositories
 
+import com.shurdev.data.local.dao.SurveyResultsDao
+import com.shurdev.data.local.entity.SurveyResultsEntity
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.repositories.SurveyRepository
 import javax.inject.Inject
 
-class SurveyRepositoryImpl @Inject constructor() : SurveyRepository {
+class SurveyRepositoryImpl @Inject constructor(
+    private val surveyResultsDao: SurveyResultsDao
+) : SurveyRepository {
 
     override suspend fun getQuestions(): List<Question> {
         return questionsMocks
+    }
+
+    override suspend fun saveResultsToDatabase(questions: List<Question>, answers: List<Answer>) {
+
+        val results = questions.map { question ->
+            val userAnswer = answers.first { answer -> answer.questionId == question.id }
+
+            return@map SurveyResultsEntity(
+                question = question,
+                answer = userAnswer.answer
+            )
+        }
+
+        surveyResultsDao.deleteAllResults()
+        surveyResultsDao.saveResults(results)
     }
 
     override suspend fun submitAnswers(answers: List<Answer>) {
