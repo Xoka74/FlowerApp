@@ -13,6 +13,7 @@ object ProfileNavGraph
 fun NavGraphBuilder.profileNavGraph(
     onTakeSurveyClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
+    onRecommendedPlantsClick: () -> Unit
 ) {
     navigation<ProfileNavGraph>(
         startDestination = ProfileRoute,
@@ -20,6 +21,7 @@ fun NavGraphBuilder.profileNavGraph(
         profileRoute(
             onTakeSurveyClick = onTakeSurveyClick,
             onSettingsClick = onSettingsClick,
+            onRecommendedPlantsClick = onRecommendedPlantsClick
         )
     }
 }
@@ -30,11 +32,13 @@ object ProfileRoute
 fun NavGraphBuilder.profileRoute(
     onTakeSurveyClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
+    onRecommendedPlantsClick: () -> Unit
 ) {
     composable<ProfileRoute> {
         ProfileRoute(
             onTakeSurveyClick = onTakeSurveyClick,
             onSettingsClick = onSettingsClick,
+            onRecommendedPlantsClick = onRecommendedPlantsClick
         )
     }
 }

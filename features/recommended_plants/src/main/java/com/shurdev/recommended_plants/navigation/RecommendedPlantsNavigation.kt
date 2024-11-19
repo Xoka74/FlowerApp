@@ -14,14 +14,12 @@ object RecommendedPlantsNavGraph
 fun NavController.navigateToRecommendedPlantsGraph() = navigate(RecommendedPlantsNavGraph)
 
 fun NavGraphBuilder.recommendedPlantsNavGraph(
-    onPop: () -> Unit,
     onPlantClick: (Plant) -> Unit
 ) {
     navigation<RecommendedPlantsNavGraph>(
         startDestination = RecommendedPlantsRoute,
     ) {
         recommendedPlantsScreen(
-            onPop = onPop,
             onPlantClick = onPlantClick
         )
     }
@@ -32,7 +30,6 @@ fun NavGraphBuilder.recommendedPlantsNavGraph(
 object RecommendedPlantsRoute
 
 fun NavGraphBuilder.recommendedPlantsScreen(
-    onPop: () -> Unit,
     onPlantClick: (Plant) -> Unit
 ) {
     composable<RecommendedPlantsRoute> {

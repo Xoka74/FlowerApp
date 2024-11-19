@@ -52,8 +52,8 @@ internal fun RecommendedPlantsScreen(
                             .padding(top = 20.dp)
                             .padding(horizontal = 16.dp),
                         text = stringResource(R.string.recommended_flowers),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Normal
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
                     )
 
                     RecommendedPlantsList(

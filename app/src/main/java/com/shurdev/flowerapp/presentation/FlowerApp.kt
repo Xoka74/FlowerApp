@@ -19,6 +19,7 @@ import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
 import com.shurdev.flowerapp.presentation.screens.StartupRoute
 import com.shurdev.flowerapp.presentation.screens.startupScreen
 import com.shurdev.flowerapp.presentation.viewModel.SettingsViewModel
+import com.shurdev.gallery.navigation.GalleryNavGraph
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
@@ -26,7 +27,7 @@ import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
 import com.shurdev.onboarding.navigation.OnboardingNavGraph
 import com.shurdev.onboarding.navigation.onboardingNavGraph
 import com.shurdev.profile.navigation.profileNavGraph
-import com.shurdev.recommended_plants.navigation.RecommendedPlantsNavGraph
+import com.shurdev.recommended_plants.navigation.navigateToRecommendedPlantsGraph
 import com.shurdev.recommended_plants.navigation.recommendedPlantsNavGraph
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
@@ -71,8 +72,7 @@ fun FlowerApp() {
             startupScreen(
                 settingsViewModel = settingsViewModel,
                 onStartupFinished = { settings ->
-//                    navController.navigate(GalleryNavGraph) {
-                    navController.navigate(RecommendedPlantsNavGraph) {
+                    navController.navigate(GalleryNavGraph) {
                         popUpTo(StartupRoute) {
                             inclusive = true
                         }
@@ -113,13 +113,15 @@ fun FlowerApp() {
                 onTakeSurveyClick = navController::navigateToSurveyGraph,
                 onSettingsClick = {
                     // TODO: Navigate to SettingsScreen
+                },
+                onRecommendedPlantsClick = {
+                    navController.navigateToRecommendedPlantsGraph()
                 }
             )
 
             recommendedPlantsNavGraph(
-                onPop = navController::navigateUp,
                 onPlantClick = {
-                    println(it)
+                    // TODO
                 }
             )
         }
