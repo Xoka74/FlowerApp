@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.models.survey.Question
+import com.shurdev.domain.models.survey.AnsweredQuestion
 import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.survey.utils.SurveyActionListener
 import com.shurdev.utils.runSuspendCatching
@@ -27,21 +28,19 @@ internal class SurveyViewModel @Inject constructor(
 
         viewModelScope.launch {
             runSuspendCatching {
-                val surveyResults = surveyRepository.getResultsFromDatabase()
+                val answeredQuestions = surveyRepository.getResultsFromDatabase()
 
                 val questions: List<Question>
                 val answersIndices: List<Int>
 
-                if (surveyResults.isEmpty()) {
+                if (answeredQuestions.isEmpty()) {
                     questions = surveyRepository.getQuestions()
                     answersIndices = List(questions.size) { 0 }
                 } else {
-                    println("Results exist")
+                    questions = answeredQuestions.map { it.question }
 
-                    questions = surveyResults.map { it.first }
-
-                    answersIndices = surveyResults.map { result ->
-                        val answer = result.second
+                    answersIndices = answeredQuestions.map { result ->
+                        val answer = result.answer
                         val question = questions.first { it.id == answer.questionId }
 
                         val answerIndex = question.answerOptions.indexOfFirst { answerOption ->
@@ -72,21 +71,46 @@ internal class SurveyViewModel @Inject constructor(
         }
 
         val loadedState = _uiState.value as SurveyLoadedUiState
+
         val questions = loadedState.questions
+        val answersIndices = loadedState.answersIndices
 
         viewModelScope.launch {
 
-            val answers = loadedState.answersIndices.mapIndexed { index, answerIndex ->
-                Answer(
-                    answer = questions[index].answerOptions[answerIndex],
-                    questionId = questions[index].id
-                )
-            }
+            val answers = getAnswers(answersIndices, questions)
+            val results = getResults(answers, questions)
 
             surveyRepository.submitAnswers(answers = answers)
-            surveyRepository.saveResultsToDatabase(
-                questions = loadedState.questions,
-                answers = answers
+            surveyRepository.saveResultsToDatabase(results)
+        }
+    }
+
+    private fun getResults(
+        answers: List<Answer>,
+        questions: List<Question>
+    ): List<AnsweredQuestion> {
+
+        return questions.mapIndexed { index, question ->
+            val answer = answers[index]
+
+            AnsweredQuestion(
+                question = question,
+                answer = answer
+            )
+        }
+    }
+
+    private fun getAnswers(
+        answersIndices: List<Int>,
+        questions: List<Question>
+    ): List<Answer> {
+
+        return answersIndices.mapIndexed { index, selectedAnswerIndex ->
+            val question = questions[index]
+
+            Answer(
+                answer = question.answerOptions[selectedAnswerIndex],
+                questionId = question.id
             )
         }
     }

@@ -1,9 +1,11 @@
 package com.shurdev.data.repositories
 
 import com.shurdev.data.local.dao.SurveyResultsDao
-import com.shurdev.data.local.entity.SurveyResultsEntity
+import com.shurdev.data.mappers.toDomainModel
+import com.shurdev.data.mappers.toEntity
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.models.survey.Question
+import com.shurdev.domain.models.survey.AnsweredQuestion
 import com.shurdev.domain.repositories.SurveyRepository
 import javax.inject.Inject
 
@@ -20,29 +22,18 @@ class SurveyRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun saveResultsToDatabase(questions: List<Question>, answers: List<Answer>) {
-
-        val results = questions.map { question ->
-            val userAnswer = answers.first { answer -> answer.questionId == question.id }
-
-            return@map SurveyResultsEntity(
-                question = question,
-                answer = userAnswer.answer
-            )
-        }
-
+    override suspend fun saveResultsToDatabase(results: List<AnsweredQuestion>) {
         surveyResultsDao.deleteAllResults()
-        surveyResultsDao.saveResults(results)
+
+        surveyResultsDao.saveResults(
+            surveyResults = results.map { it.toEntity() }
+        )
     }
 
-    override suspend fun getResultsFromDatabase(): List<Pair<Question, Answer>> {
+    override suspend fun getResultsFromDatabase(): List<AnsweredQuestion> {
         val results = surveyResultsDao.getAllResults()
 
-        return results.map { result ->
-            val question = result.question
-            val answer = Answer(answer = result.answer, questionId = question.id)
-            return@map Pair(question, answer)
-        }
+        return results.map { resultEntity -> resultEntity.toDomainModel() }
     }
 
     private val answerMocks = listOf(
@@ -57,22 +48,22 @@ class SurveyRepositoryImpl @Inject constructor(
         Question(
             id = 1,
             question = "Вы живете в теплом регионе?",
-            answerOptions = answerMocks
+            answerOptions = answerMocks.plus("Конечно")
         ),
         Question(
             id = 2,
             question = "У вас есть аллергия на цветы?",
-            answerOptions = answerMocks
+            answerOptions = answerMocks.plus(listOf("Разумеется", "Естественно"))
         ),
         Question(
             id = 3,
             question = "Сколько цветов вы собираетесь выращивать?",
-            answerOptions = answerMocks
+            answerOptions = answerMocks.plus(listOf("1", "2"))
         ),
         Question(
             id = 4,
             question = "У вас есть дети?",
-            answerOptions = answerMocks
+            answerOptions = answerMocks.plus(listOf("1", "2"))
         ),
     )
 }
