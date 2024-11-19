@@ -63,6 +63,7 @@ dependencies {
     implementation(projects.features.onboarding)
     implementation(projects.features.survey)
     implementation(projects.features.profile)
+    implementation(projects.features.recommendedPlants)
     implementation(projects.uiKit)
     implementation(projects.utils)
 
