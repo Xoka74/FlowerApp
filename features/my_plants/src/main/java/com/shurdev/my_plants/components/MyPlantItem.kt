@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.MyPlant
 import com.shurdev.my_plants.R
 import com.shurdev.ui_kit.theme.PlantCardBackgroundColor
 import com.shurdev.ui_kit.theme.PlantCardContentColor
@@ -28,8 +28,8 @@ import com.shurdev.ui_kit.theme.PlantCardContentColor
 @Composable
 fun MyPlantItem(
     modifier: Modifier = Modifier,
-    plant: Plant,
-    onItemClick: (Plant) -> Unit,
+    plant: MyPlant,
+    onItemClick: (MyPlant) -> Unit,
 ) {
     Card(
         modifier = modifier,
@@ -52,7 +52,7 @@ fun MyPlantItem(
                     .aspectRatio(1F)
                     .clip(RoundedCornerShape(12.dp)),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(plant.imageLink)
+                    .data("https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg")
                     .placeholder(R.drawable.flower_placeholder_1)
                     .build(),
                 contentDescription = "Your Plant",
@@ -68,10 +68,6 @@ fun MyPlantItem(
                     text = plant.name,
                     fontSize = 22.sp
                 )
-
-                Text(
-                    text = plant.description,
-                )
             }
         }
     }
@@ -81,10 +77,9 @@ fun MyPlantItem(
 @Preview
 fun MyPlantItemPreview() {
     MyPlantItem(
-        plant = Plant(
+        plant = MyPlant(
+            id = 1,
             name = "Пахира Акватика",
-            description = "Дата следующего полива",
-            imageLink = ""
         ),
         onItemClick = {}
     )

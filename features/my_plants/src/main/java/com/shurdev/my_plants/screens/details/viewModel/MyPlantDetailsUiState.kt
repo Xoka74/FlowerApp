@@ -1,18 +1,20 @@
 package com.shurdev.my_plants.screens.details.viewModel
 
 import androidx.compose.runtime.Stable
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.MyPlant
 
 
 @Stable
 sealed class MyPlantDetailsUiState
 
-
 @Stable
 data object MyPlantDetailsLoadingState : MyPlantDetailsUiState()
 
 @Stable
-data class MyPlantDetailsLoadedState(val plant: Plant) : MyPlantDetailsUiState()
+data class MyPlantDetailsLoadedState(val plant: MyPlant) : MyPlantDetailsUiState()
 
 @Stable
 data object MyPlantDetailsErrorState : MyPlantDetailsUiState()
+
+@Stable
+data object MyPlantDeletedState : MyPlantDetailsUiState()

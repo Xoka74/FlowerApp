@@ -2,7 +2,10 @@ package com.shurdev.flowerapp.presentation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,15 +21,18 @@ import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.gallery.navigation.popUpToGalleryGraph
+import com.shurdev.my_plants.navigation.MyPlantsNavGraph
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
-import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
+import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
 import com.shurdev.onboarding.navigation.OnboardingNavGraph
 import com.shurdev.onboarding.navigation.onboardingNavGraph
+import com.shurdev.profile.navigation.profileNavGraph
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
-import com.shurdev.profile.navigation.profileNavGraph
+import navigateToMyPlantDetailsScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlowerApp() {
     val navController = rememberNavController()
@@ -59,7 +65,7 @@ fun FlowerApp() {
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
-            startDestination = OnboardingNavGraph,
+            startDestination = MyPlantsNavGraph,
         ) {
             onboardingNavGraph(
                 onFinishOnboarding = {
@@ -83,11 +89,13 @@ fun FlowerApp() {
             )
 
             myPlantsNavGraph(
+                onAddPlantClick = navController::navigateToMyPlantCreateScreen,
+                onBackInvoked = navController::navigateUp,
                 onPlantClick = { plant ->
-                    plant.id?.let {
+                    plant.id.let {
                         navController.navigateToMyPlantDetailsScreen(plantId = it)
                     }
-                }
+                },
             )
 
             profileNavGraph(

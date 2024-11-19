@@ -1,35 +1,29 @@
 package com.shurdev.profile.viewModel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.repositories.UserRepository
+import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
-) : ViewModel() {
-    private val _uiState = MutableStateFlow<ProfileUiState>(ProfileLoadingState)
-    val uiState = _uiState.asStateFlow()
-
+) : BaseViewModel<ProfileUiState>(ProfileLoadingState) {
     init {
         loadProfile()
     }
 
     private fun loadProfile() {
-        _uiState.update { ProfileLoadingState }
+        updateUiState { ProfileLoadingState }
         viewModelScope.launch {
             runSuspendCatching {
                 val user = userRepository.getUser()
-                _uiState.update { ProfileLoadedState(user) }
+                updateUiState { ProfileLoadedState(user) }
             }.onFailure {
-                _uiState.update { ProfileErrorState }
+                updateUiState { ProfileErrorState }
             }
         }
     }
