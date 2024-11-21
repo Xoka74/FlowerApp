@@ -15,10 +15,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 object GalleryNavGraph
 
-fun NavController.popUpToGalleryGraph() = navigate(GalleryNavGraph) {
-    popUpTo(0)
-}
-
 
 fun NavGraphBuilder.galleryNavGraph(
     onPlantClick: (Plant) -> Unit,

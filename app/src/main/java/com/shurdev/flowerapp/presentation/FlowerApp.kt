@@ -9,23 +9,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
+import com.shurdev.flowerapp.presentation.screens.StartupRoute
+import com.shurdev.flowerapp.presentation.screens.startupScreen
+import com.shurdev.flowerapp.presentation.viewModel.SettingsViewModel
+import com.shurdev.gallery.navigation.GalleryNavGraph
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
-import com.shurdev.gallery.navigation.popUpToGalleryGraph
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
 import com.shurdev.onboarding.navigation.OnboardingNavGraph
 import com.shurdev.onboarding.navigation.onboardingNavGraph
+import com.shurdev.profile.navigation.profileNavGraph
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
-import com.shurdev.profile.navigation.profileNavGraph
 
 @Composable
 fun FlowerApp() {
@@ -47,6 +51,8 @@ fun FlowerApp() {
         else -> true
     }
 
+    val settingsViewModel = hiltViewModel<SettingsViewModel>()
+
     Scaffold(
         bottomBar = {
             if (showBottomBar) {
@@ -59,18 +65,29 @@ fun FlowerApp() {
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
-            startDestination = OnboardingNavGraph,
+            startDestination = StartupRoute,
         ) {
+            startupScreen(
+                settingsViewModel = settingsViewModel,
+                onStartupFinished = { settings ->
+                    navController.navigate(GalleryNavGraph) {
+                        popUpTo(StartupRoute) {
+                            inclusive = true
+                        }
+                    }
+
+                    if (settings.isFirstRun) {
+                        navController.navigate(SurveyNavGraph)
+                    }
+                },
+            )
+
             onboardingNavGraph(
-                onFinishOnboarding = {
-                    navController.navigateToSurveyGraph()
-                }
+                onFinishOnboarding = navController::navigateToSurveyGraph
             )
 
             surveyNavGraph(
-                onFinishSurvey = {
-                    navController.popUpToGalleryGraph()
-                }
+                onFinishSurvey = navController::navigateUp
             )
 
             galleryNavGraph(
@@ -91,12 +108,10 @@ fun FlowerApp() {
             )
 
             profileNavGraph(
-                onTakeSurveyClick = {
-                    // TODO: Navigate to survey
-                },
+                onTakeSurveyClick = navController::navigateToSurveyGraph,
                 onSettingsClick = {
-                    // TODO: Navigate to settings
-                },
+                    // TODO: Navigate to SettingsScreen
+                }
             )
         }
     }
