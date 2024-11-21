@@ -3,6 +3,7 @@ package com.shurdev.data.di
 import android.content.Context
 import androidx.room.Room
 import com.shurdev.data.local.AppDatabase
+import com.shurdev.data.local.dao.SurveyResultsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
