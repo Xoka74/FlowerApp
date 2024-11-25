@@ -1,4 +1,4 @@
-package com.shurdev.data.di
+package com.shurdev.di
 
 import com.shurdev.data.repositories.MyPlantsRepositoryImpl
 import com.shurdev.data.repositories.PlantRepositoryImpl

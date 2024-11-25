@@ -1,4 +1,4 @@
-package com.shurdev.data.di
+package com.shurdev.di
 
 import com.shurdev.domain.repositories.MyPlantsRepository
 import com.shurdev.domain.usecases.CreateMyPlantUseCase
