@@ -62,18 +62,18 @@ internal fun SurveyScreen(
             val questions = uiState.questions
             val pagerState = rememberPagerState { questions.size }
 
-            val currentQuestion = uiState.currentQuestion
+            val currentQuestionIndex = uiState.currentQuestionIndex
 
-            if (currentQuestion != pagerState.currentPage) {
+            if (currentQuestionIndex != pagerState.currentPage) {
                 actionListener.onSwipe(pagerState.currentPage)
             }
 
-            val isQuestionFirst = currentQuestion == 0
-            val isQuestionLast = currentQuestion == questions.size - 1
+            val isQuestionFirst = currentQuestionIndex == 0
+            val isQuestionLast = currentQuestionIndex == questions.size - 1
 
-            LaunchedEffect(currentQuestion) {
+            LaunchedEffect(currentQuestionIndex) {
                 scope.launch {
-                    pagerState.animateScrollToPage(currentQuestion)
+                    pagerState.animateScrollToPage(currentQuestionIndex)
                 }
             }
 
@@ -98,7 +98,7 @@ internal fun SurveyScreen(
                             content = questions[page],
                         ),
                         onAnswerClick = actionListener::onAnswerClick,
-                        selectedOption = uiState.answers[page]
+                        selectedOption = uiState.answersIndices[page]
                     )
                 }
 
@@ -120,15 +120,15 @@ internal fun SurveyPreview() {
     SurveyScreen(
         uiState = SurveyLoadedUiState(
             questions = QUESTIONS,
-            answers = (1..QUESTIONS.size).toList(),
-            currentQuestion = 0
+            answersIndices = (1..QUESTIONS.size).toList(),
+            currentQuestionIndex = 0
         ),
         onFinishSurvey = {},
         actionListener = object : SurveyActionListener {
             override fun onNextClick() {}
             override fun onBackClick() {}
             override fun onSkipClick() {}
-            override fun onAnswerClick(answerId: Int) {}
+            override fun onAnswerClick(answerIndex: Int) {}
             override fun onSwipe(targetPage: Int) {}
             override fun onFinishSurvey() {}
         }

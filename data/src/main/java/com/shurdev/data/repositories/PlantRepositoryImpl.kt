@@ -15,6 +15,10 @@ class PlantRepositoryImpl @Inject constructor() : PlantRepository {
         }
     }
 
+    override suspend fun getRecommendedPlants(): List<Plant> {
+        return recommendedPlants
+    }
+
     override suspend fun getPlantById(id: Int): Plant? = plants.firstOrNull { it.id == id }
 
     private val plants: List<Plant> = (0..20).map {
@@ -26,6 +30,8 @@ class PlantRepositoryImpl @Inject constructor() : PlantRepository {
             imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
         )
     }
+
+    private val recommendedPlants = plants.filterIndexed { index, _ -> index % 2 == 0 }
 
     private fun doesPlantMatchFilters(plant: Plant, filters: PlantFilters): Boolean {
         return plant.name.contains(filters.name ?: "", ignoreCase = true)

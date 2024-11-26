@@ -27,6 +27,8 @@ import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
 import com.shurdev.onboarding.navigation.OnboardingNavGraph
 import com.shurdev.onboarding.navigation.onboardingNavGraph
 import com.shurdev.profile.navigation.profileNavGraph
+import com.shurdev.recommended_plants.navigation.navigateToRecommendedPlantsGraph
+import com.shurdev.recommended_plants.navigation.recommendedPlantsNavGraph
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
@@ -111,6 +113,15 @@ fun FlowerApp() {
                 onTakeSurveyClick = navController::navigateToSurveyGraph,
                 onSettingsClick = {
                     // TODO: Navigate to SettingsScreen
+                },
+                onRecommendedPlantsClick = {
+                    navController.navigateToRecommendedPlantsGraph()
+                }
+            )
+
+            recommendedPlantsNavGraph(
+                onPlantClick = {
+                    // TODO
                 }
             )
         }

@@ -7,5 +7,7 @@ import com.shurdev.domain.models.PlantFilters
 interface PlantRepository {
     suspend fun getPlants(filters: PlantFilters? = null): List<Plant>
 
+    suspend fun getRecommendedPlants(): List<Plant>
+
     suspend fun getPlantById(id: Int): Plant?
 }
