@@ -80,7 +80,13 @@ internal class SurveyViewModel @Inject constructor(
             val answers = getAnswers(answersIndices, questions)
             val results = getResults(answers, questions)
 
-            surveyRepository.submitAnswers(answers = answers)
+            runSuspendCatching {
+                surveyRepository.submitAnswers(answers = answers)
+            }.onFailure {
+                println("Error: $it")
+                // TODO handle error
+            }
+
             surveyRepository.saveResultsToDatabase(results)
         }
     }
