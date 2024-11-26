@@ -186,7 +186,7 @@ internal class SurveyViewModel @Inject constructor(
             val loadedState = _uiState.value as SurveyLoadedUiState
 
             return@update loadedState.copy(
-                isFinished = true
+                isSkipped = true
             )
         }
     }
