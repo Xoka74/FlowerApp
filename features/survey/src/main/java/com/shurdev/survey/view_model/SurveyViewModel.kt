@@ -122,7 +122,7 @@ internal class SurveyViewModel @Inject constructor(
             answersIndices[currentQuestion] = answerIndex
 
             return@updateUiState loadedState.copy(
-                answers = answers
+                answersIndices = answersIndices
             )
         }
     }
@@ -139,7 +139,7 @@ internal class SurveyViewModel @Inject constructor(
                 return@updateUiState loadedState
             } else {
                 return@updateUiState loadedState.copy(
-                    currentQuestion = targetPage
+                    currentQuestionIndex = targetPage
                 )
             }
         }
@@ -152,13 +152,13 @@ internal class SurveyViewModel @Inject constructor(
 
         updateUiState {
             val loadedState = uiState.value as SurveyLoadedUiState
-            val currentQuestion = loadedState.currentQuestion
+            val currentQuestion = loadedState.currentQuestionIndex
 
             if (currentQuestion == 0) {
                 return@updateUiState loadedState
             } else {
                 return@updateUiState loadedState.copy(
-                    currentQuestion = currentQuestion - 1
+                    currentQuestionIndex = currentQuestion - 1
                 )
             }
         }
@@ -185,7 +185,7 @@ internal class SurveyViewModel @Inject constructor(
 
         updateUiState {
             val loadedState = uiState.value as SurveyLoadedUiState
-            val currentQuestion = loadedState.currentQuestion
+            val currentQuestion = loadedState.currentQuestionIndex
 
             if (currentQuestion == loadedState.questions.size - 1) {
                 return@updateUiState loadedState.copy(
@@ -193,7 +193,7 @@ internal class SurveyViewModel @Inject constructor(
                 )
             } else {
                 return@updateUiState loadedState.copy(
-                    currentQuestion = currentQuestion + 1
+                    currentQuestionIndex = currentQuestion + 1
                 )
             }
         }

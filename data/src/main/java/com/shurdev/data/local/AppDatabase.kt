@@ -3,15 +3,14 @@ package com.shurdev.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.shurdev.data.daos.MyPlantsDao
+import com.shurdev.data.entities.MyPlantEntity
 import com.shurdev.data.local.converters.ListConverter
 import com.shurdev.data.local.dao.SurveyResultsDao
-import com.shurdev.data.local.entity.MyPlantEntity
 import com.shurdev.data.local.entity.SurveyResultsEntity
-import com.shurdev.data.entities.MyPlantEntity
-import com.shurdev.data.daos.MyPlantsDao
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
         MyPlantEntity::class,
         SurveyResultsEntity::class
