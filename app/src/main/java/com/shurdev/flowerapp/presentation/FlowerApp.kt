@@ -2,10 +2,7 @@ package com.shurdev.flowerapp.presentation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,8 +22,6 @@ import com.shurdev.flowerapp.presentation.viewModel.SettingsViewModel
 import com.shurdev.gallery.navigation.GalleryNavGraph
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
-import com.shurdev.gallery.navigation.popUpToGalleryGraph
-import com.shurdev.my_plants.navigation.MyPlantsNavGraph
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
 import com.shurdev.onboarding.navigation.OnboardingNavGraph
@@ -37,7 +32,6 @@ import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
 import navigateToMyPlantDetailsScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlowerApp() {
     val navController = rememberNavController()

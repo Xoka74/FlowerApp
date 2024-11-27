@@ -1,7 +1,6 @@
 package com.shurdev.di
 
 import com.shurdev.data.repositories.LocalSettingsRepositoryImpl
-import com.shurdev.data.repositories.PlantRepositoryImpl
 import com.shurdev.data.repositories.MyPlantsRepositoryImpl
 import com.shurdev.data.repositories.PlantRepositoryImpl
 import com.shurdev.data.repositories.SurveyRepositoryImpl

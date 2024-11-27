@@ -18,11 +18,12 @@ class LocalModule {
 
     @Provides
     @Singleton
-    @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences(LocalKeys.FILENAME, Context.MODE_PRIVATE)
     }
 
+    @Provides
+    @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME).build()
     }
