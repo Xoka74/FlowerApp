@@ -5,6 +5,9 @@ import android.content.SharedPreferences
 import com.shurdev.data.const.LocalKeys
 import androidx.room.Room
 import com.shurdev.data.local.AppDatabase
+import androidx.room.Room
+import com.shurdev.data.local.AppDatabase
+import com.shurdev.data.local.dao.SurveyResultsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

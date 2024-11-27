@@ -26,7 +26,7 @@ import com.shurdev.survey.model.SurveyData
 @Composable
 internal fun SurveyItem(
     data: SurveyData,
-    onAnswerClick: (Int) -> Unit,
+    onAnswerClick: (index: Int) -> Unit,
     selectedOption: Int
 ) {
     Column(

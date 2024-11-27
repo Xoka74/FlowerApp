@@ -10,14 +10,22 @@ import com.shurdev.ui_kit.R
 fun ProfileMenu(
     onLogoutClick: () -> Unit = {},
     onTakeSurveyClick: () -> Unit = {},
+    onRecommendedPlantsClick: () -> Unit
 ) {
     Column {
         val takeSurveyString = stringResource(R.string.take_survey)
+        val recommendedFlowersString =
+            stringResource(com.shurdev.profile.R.string.recommended_plants)
         val logoutString = stringResource(R.string.logout)
 
         ProfileOption(
             text = takeSurveyString,
             onClick = onTakeSurveyClick,
+        )
+
+        ProfileOption(
+            text = recommendedFlowersString,
+            onClick = onRecommendedPlantsClick
         )
 
         HorizontalDivider()
