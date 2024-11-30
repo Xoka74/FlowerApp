@@ -73,7 +73,13 @@ internal class SurveyViewModel @Inject constructor(
             val answers = getAnswers(answersIndices, questions)
             val results = getResults(answers, questions)
 
-            surveyRepository.submitAnswers(answers = answers)
+            runSuspendCatching {
+                surveyRepository.submitAnswers(answers = answers)
+            }.onFailure {
+                println("Error: $it")
+                // TODO handle error
+            }
+
             surveyRepository.saveResultsToDatabase(results)
         }
     }
@@ -173,7 +179,7 @@ internal class SurveyViewModel @Inject constructor(
             val loadedState = uiState.value as SurveyLoadedUiState
 
             return@updateUiState loadedState.copy(
-                isFinished = true
+                isSkipped = true
             )
         }
     }

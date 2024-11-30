@@ -41,6 +41,7 @@ internal fun SurveyRoute(
             viewModel.onFinishSurvey()
             onFinishSurvey()
         },
+        onSkipSurvey = onFinishSurvey
     )
 }
 
@@ -48,10 +49,16 @@ internal fun SurveyRoute(
 internal fun SurveyScreen(
     uiState: SurveyUiState,
     actionListener: SurveyActionListener,
-    onFinishSurvey: () -> Unit
+    onFinishSurvey: () -> Unit,
+    onSkipSurvey: () -> Unit,
 ) {
     when (uiState) {
         is SurveyLoadedUiState -> {
+
+            if (uiState.isSkipped) {
+                onSkipSurvey()
+                return
+            }
 
             if (uiState.isFinished) {
                 onFinishSurvey()
@@ -124,6 +131,7 @@ internal fun SurveyPreview() {
             currentQuestionIndex = 0
         ),
         onFinishSurvey = {},
+        onSkipSurvey = {},
         actionListener = object : SurveyActionListener {
             override fun onNextClick() {}
             override fun onBackClick() {}
@@ -131,6 +139,6 @@ internal fun SurveyPreview() {
             override fun onAnswerClick(answerIndex: Int) {}
             override fun onSwipe(targetPage: Int) {}
             override fun onFinishSurvey() {}
-        }
+        },
     )
 }

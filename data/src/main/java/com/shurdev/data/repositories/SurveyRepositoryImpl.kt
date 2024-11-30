@@ -3,6 +3,7 @@ package com.shurdev.data.repositories
 import com.shurdev.data.local.dao.SurveyResultsDao
 import com.shurdev.data.mappers.toDomainModel
 import com.shurdev.data.mappers.toEntity
+import com.shurdev.data.remote.api.SurveyApi
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.models.survey.AnsweredQuestion
@@ -10,7 +11,8 @@ import com.shurdev.domain.repositories.SurveyRepository
 import javax.inject.Inject
 
 class SurveyRepositoryImpl @Inject constructor(
-    private val surveyResultsDao: SurveyResultsDao
+    private val surveyResultsDao: SurveyResultsDao,
+    private val surveyApi: SurveyApi
 ) : SurveyRepository {
 
     override suspend fun getQuestions(): List<Question> {
@@ -18,7 +20,7 @@ class SurveyRepositoryImpl @Inject constructor(
     }
 
     override suspend fun submitAnswers(answers: List<Answer>) {
-        // TODO send answers to server
+        surveyApi.submitAnswers(answers)
     }
 
 

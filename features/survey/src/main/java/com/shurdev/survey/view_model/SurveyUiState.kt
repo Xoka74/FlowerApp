@@ -10,7 +10,8 @@ internal data class SurveyLoadedUiState(
     val questions: List<Question>,
     val answersIndices: List<Int>,
     val currentQuestionIndex: Int,
-    val isFinished: Boolean = false
+    val isFinished: Boolean = false,
+    val isSkipped: Boolean = false,
 ) : SurveyUiState()
 
 internal data object SurveyErrorUiState : SurveyUiState()
