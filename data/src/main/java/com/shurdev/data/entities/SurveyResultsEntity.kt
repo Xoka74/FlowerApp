@@ -1,4 +1,4 @@
-package com.shurdev.data.local.entity
+package com.shurdev.data.entities
 
 import androidx.room.Embedded
 import androidx.room.Entity

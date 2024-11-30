@@ -1,6 +1,6 @@
 package com.shurdev.data.repositories
 
-import com.shurdev.data.local.dao.SurveyResultsDao
+import com.shurdev.data.daos.SurveyResultsDao
 import com.shurdev.data.mappers.toDomainModel
 import com.shurdev.data.mappers.toEntity
 import com.shurdev.data.remote.api.SurveyApi

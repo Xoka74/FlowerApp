@@ -1,6 +1,6 @@
 package com.shurdev.data.mappers
 
-import com.shurdev.data.local.entity.SurveyResultsEntity
+import com.shurdev.data.entities.SurveyResultsEntity
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.models.survey.AnsweredQuestion
 

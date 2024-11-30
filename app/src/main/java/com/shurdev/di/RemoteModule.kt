@@ -1,4 +1,4 @@
-package com.shurdev.data.di
+package com.shurdev.di
 
 import com.shurdev.data.remote.ApiConfig
 import com.shurdev.data.remote.api.SurveyApi

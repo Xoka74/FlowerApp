@@ -1,4 +1,4 @@
-package com.shurdev.data.local.converters
+package com.shurdev.data.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

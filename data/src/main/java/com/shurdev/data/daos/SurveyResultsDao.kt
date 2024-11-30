@@ -1,9 +1,9 @@
-package com.shurdev.data.local.dao
+package com.shurdev.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.shurdev.data.local.entity.SurveyResultsEntity
+import com.shurdev.data.entities.SurveyResultsEntity
 
 @Dao
 interface SurveyResultsDao {
