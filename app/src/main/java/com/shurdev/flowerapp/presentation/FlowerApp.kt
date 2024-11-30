@@ -23,7 +23,7 @@ import com.shurdev.gallery.navigation.GalleryNavGraph
 import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
-import com.shurdev.my_plants.navigation.navigateToMyPlantDetailsScreen
+import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
 import com.shurdev.onboarding.navigation.OnboardingNavGraph
 import com.shurdev.onboarding.navigation.onboardingNavGraph
 import com.shurdev.profile.navigation.profileNavGraph
@@ -32,6 +32,7 @@ import com.shurdev.recommended_plants.navigation.recommendedPlantsNavGraph
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
+import navigateToMyPlantDetailsScreen
 
 @Composable
 fun FlowerApp() {
@@ -102,11 +103,13 @@ fun FlowerApp() {
             )
 
             myPlantsNavGraph(
+                onAddPlantClick = navController::navigateToMyPlantCreateScreen,
+                onBackInvoked = navController::navigateUp,
                 onPlantClick = { plant ->
-                    plant.id?.let {
+                    plant.id.let {
                         navController.navigateToMyPlantDetailsScreen(plantId = it)
                     }
-                }
+                },
             )
 
             profileNavGraph(

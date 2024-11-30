@@ -1,47 +1,49 @@
 package com.shurdev.my_plants.screens.details.viewModel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.PlantId
-import com.shurdev.domain.repositories.PlantRepository
+import com.shurdev.domain.repositories.MyPlantsRepository
+import com.shurdev.domain.usecases.DeleteMyPlantUseCase
+import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = MyPlantDetailsViewModel.ViewModelFactory::class)
 class MyPlantDetailsViewModel @AssistedInject constructor(
     @Assisted private val plantId: Int,
-    private val plantRepository: PlantRepository,
-) : ViewModel() {
-
-    private var _uiState =
-        MutableStateFlow<MyPlantDetailsUiState>(MyPlantDetailsLoadingState)
-
-    val uiState = _uiState.asStateFlow()
+    private val myPlantsRepository: MyPlantsRepository,
+    private val deleteMyPlantUseCase: DeleteMyPlantUseCase,
+) : BaseViewModel<MyPlantDetailsUiState>(MyPlantDetailsLoadingState) {
 
     init {
         getPlant(plantId)
     }
 
     private fun getPlant(id: Int) {
-        _uiState.value = MyPlantDetailsLoadingState
+        updateUiState { MyPlantDetailsLoadingState }
 
         viewModelScope.launch {
             runSuspendCatching {
-                val plant = plantRepository.getPlantById(id)
+                val plant = myPlantsRepository.getById(id)
 
-                if (plant != null) {
-                    _uiState.value = MyPlantDetailsLoadedState(plant = plant)
-                } else {
-                    _uiState.value = MyPlantDetailsErrorState
-                }
+                updateUiState { MyPlantDetailsLoadedState(plant = plant) }
             }.onFailure {
-                _uiState.value = MyPlantDetailsErrorState
+                updateUiState { MyPlantDetailsErrorState }
+            }
+        }
+    }
+
+    fun deletePlant() {
+        viewModelScope.launch {
+            runSuspendCatching {
+                deleteMyPlantUseCase(plantId)
+                updateUiState { MyPlantDeletedState }
+            }.onFailure {
+                updateUiState { MyPlantDetailsErrorState }
             }
         }
     }

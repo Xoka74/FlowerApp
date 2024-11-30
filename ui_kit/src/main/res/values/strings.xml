@@ -6,4 +6,16 @@
     <string name="settings">Настройки</string>
     <string name="logout">Выйти</string>
     <string name="take_survey">Пройти опрос</string>
+    <string name="plant_name">Название растения</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="changes_wont_be_saved">Изменения не будут сохранены</string>
+    <string name="you_will_miss_it_forever">Вы потеряете его навсегда</string>
+    <string name="continue_text">Продолжить</string>
+    <string name="delete">Удалить</string>
+    <string name="keep">Оставить</string>
+    <string name="cancel">Отмена</string>
+    <string name="start_typing">Начните печатать…</string>
+    <string name="save">Сохранить</string>
+    <string name="are_you_sure_you_want_to_leave">Вы уверены, что хотите выйти?</string>
+    <string name="are_you_sure_you_want_to_delete_plant">Вы уверены, что хотите удалить растение?</string>
 </resources>

@@ -1,30 +1,24 @@
 package com.shurdev.survey.view_model
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.models.survey.AnsweredQuestion
 import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.survey.utils.SurveyActionListener
+import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SurveyViewModel @Inject constructor(
     private val surveyRepository: SurveyRepository,
-) : ViewModel(), SurveyActionListener {
-
-    private var _uiState: MutableStateFlow<SurveyUiState> = MutableStateFlow(SurveyLoadingUiState)
-    val uiState = _uiState.asStateFlow()
+) : BaseViewModel<SurveyUiState>(SurveyLoadingUiState), SurveyActionListener {
 
     init {
-        _uiState.value = SurveyLoadingUiState
+        updateUiState { SurveyLoadingUiState }
 
         viewModelScope.launch {
             runSuspendCatching {
@@ -52,7 +46,7 @@ internal class SurveyViewModel @Inject constructor(
                 }
 
 
-                _uiState.update {
+                updateUiState {
                     SurveyLoadedUiState(
                         questions = questions,
                         answersIndices = answersIndices,
@@ -60,18 +54,17 @@ internal class SurveyViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-                _uiState.update { SurveyErrorUiState }
+                updateUiState { SurveyErrorUiState }
             }
         }
     }
 
     override fun onFinishSurvey() {
-        if (_uiState.value !is SurveyLoadedUiState) {
+        if (uiState.value !is SurveyLoadedUiState) {
             return
         }
 
-        val loadedState = _uiState.value as SurveyLoadedUiState
-
+        val loadedState = uiState.value as SurveyLoadedUiState
         val questions = loadedState.questions
         val answersIndices = loadedState.answersIndices
 
@@ -122,36 +115,36 @@ internal class SurveyViewModel @Inject constructor(
     }
 
     override fun onAnswerClick(answerIndex: Int) {
-        if (_uiState.value !is SurveyLoadedUiState) {
+        if (uiState.value !is SurveyLoadedUiState) {
             return
         }
 
-        _uiState.update {
-            val loadedState = _uiState.value as SurveyLoadedUiState
+        updateUiState {
+            val loadedState = uiState.value as SurveyLoadedUiState
 
             val currentQuestion = loadedState.currentQuestionIndex
             val answersIndices = loadedState.answersIndices.toMutableList()
 
             answersIndices[currentQuestion] = answerIndex
 
-            return@update loadedState.copy(
+            return@updateUiState loadedState.copy(
                 answersIndices = answersIndices
             )
         }
     }
 
     override fun onSwipe(targetPage: Int) {
-        if (_uiState.value !is SurveyLoadedUiState) {
+        if (uiState.value !is SurveyLoadedUiState) {
             return
         }
 
-        _uiState.update {
-            val loadedState = _uiState.value as SurveyLoadedUiState
+        updateUiState {
+            val loadedState = uiState.value as SurveyLoadedUiState
 
             if (targetPage >= loadedState.questions.size) {
-                return@update loadedState
+                return@updateUiState loadedState
             } else {
-                return@update loadedState.copy(
+                return@updateUiState loadedState.copy(
                     currentQuestionIndex = targetPage
                 )
             }
@@ -159,54 +152,54 @@ internal class SurveyViewModel @Inject constructor(
     }
 
     override fun onBackClick() {
-        if (_uiState.value !is SurveyLoadedUiState) {
+        if (uiState.value !is SurveyLoadedUiState) {
             return
         }
 
-        _uiState.update {
-            val loadedState = _uiState.value as SurveyLoadedUiState
-            val currentQuestionIndex = loadedState.currentQuestionIndex
+        updateUiState {
+            val loadedState = uiState.value as SurveyLoadedUiState
+            val currentQuestion = loadedState.currentQuestionIndex
 
-            if (currentQuestionIndex == 0) {
-                return@update loadedState
+            if (currentQuestion == 0) {
+                return@updateUiState loadedState
             } else {
-                return@update loadedState.copy(
-                    currentQuestionIndex = currentQuestionIndex - 1
+                return@updateUiState loadedState.copy(
+                    currentQuestionIndex = currentQuestion - 1
                 )
             }
         }
     }
 
     override fun onSkipClick() {
-        if (_uiState.value !is SurveyLoadedUiState) {
+        if (uiState.value !is SurveyLoadedUiState) {
             return
         }
 
-        _uiState.update {
-            val loadedState = _uiState.value as SurveyLoadedUiState
+        updateUiState {
+            val loadedState = uiState.value as SurveyLoadedUiState
 
-            return@update loadedState.copy(
+            return@updateUiState loadedState.copy(
                 isSkipped = true
             )
         }
     }
 
     override fun onNextClick() {
-        if (_uiState.value !is SurveyLoadedUiState) {
+        if (uiState.value !is SurveyLoadedUiState) {
             return
         }
 
-        _uiState.update {
-            val loadedState = _uiState.value as SurveyLoadedUiState
-            val currentQuestionIndex = loadedState.currentQuestionIndex
+        updateUiState {
+            val loadedState = uiState.value as SurveyLoadedUiState
+            val currentQuestion = loadedState.currentQuestionIndex
 
-            if (currentQuestionIndex == loadedState.questions.size - 1) {
-                return@update loadedState.copy(
+            if (currentQuestion == loadedState.questions.size - 1) {
+                return@updateUiState loadedState.copy(
                     isFinished = true
                 )
             } else {
-                return@update loadedState.copy(
-                    currentQuestionIndex = currentQuestionIndex + 1
+                return@updateUiState loadedState.copy(
+                    currentQuestionIndex = currentQuestion + 1
                 )
             }
         }

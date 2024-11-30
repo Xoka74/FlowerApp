@@ -1,24 +1,22 @@
-package com.shurdev.data.di
+package com.shurdev.di
 
-import android.content.Context
-import androidx.room.Room
+import com.shurdev.data.daos.MyPlantsDao
 import com.shurdev.data.local.AppDatabase
 import com.shurdev.data.local.dao.SurveyResultsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class LocalModule {
+class DaoModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME).build()
+    fun provideMyPlantDao(appDatabase: AppDatabase): MyPlantsDao {
+        return appDatabase.myPlantsDao()
     }
 
     @Provides

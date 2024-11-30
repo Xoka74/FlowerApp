@@ -28,9 +28,8 @@ dependencies {
     // Local dependencies
     implementation(projects.domain)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    // DI
+    implementation(libs.javax.inject)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
