@@ -88,6 +88,7 @@ internal fun MyPlantDetailsScreenPreview() {
             plant = MyPlant(
                 id = 1,
                 name = "Тюльпан",
+                imageData = null
             )
         )
     )

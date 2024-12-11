@@ -22,11 +22,18 @@ class MyPlantCreateViewModel @Inject constructor(
 ) {
     fun updateName(value: String) = updateFormData { it.copy(name = value) }
 
+    fun updateImage(imageData: ByteArray?) {
+        updateFormData { it.copy(imageData = imageData) }
+    }
+
     override fun sendForm() {
         viewModelScope.launch {
             updateUiState { FormSubmittingState }
 
-            val intent = CreateMyPlantIntent(name = formData.name)
+            val intent = CreateMyPlantIntent(
+                name = formData.name,
+                imageData = formData.imageData
+            )
 
             runSuspendCatching {
                 createMyPlantUseCase(intent)

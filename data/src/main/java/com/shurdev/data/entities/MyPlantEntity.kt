@@ -8,4 +8,5 @@ import com.shurdev.domain.models.PlantId
 data class MyPlantEntity(
     @PrimaryKey(autoGenerate = true) val id: PlantId = 0,
     val name: String,
+    val imageData: ByteArray?
 )
