@@ -3,7 +3,7 @@ package com.shurdev.my_plants.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.shurdev.domain.models.MyPlant
+import com.shurdev.domain.models.myPlant.MyPlant
 import com.shurdev.my_plants.screens.create.navigation.myPlantCreateScreen
 import com.shurdev.my_plants.screens.myPlants.MyPlantsRoute
 import kotlinx.serialization.Serializable

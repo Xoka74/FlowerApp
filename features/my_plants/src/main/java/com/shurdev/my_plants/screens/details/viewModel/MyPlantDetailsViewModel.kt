@@ -1,7 +1,7 @@
 package com.shurdev.my_plants.screens.details.viewModel
 
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.models.PlantId
+import com.shurdev.domain.models.plant.PlantId
 import com.shurdev.domain.repositories.MyPlantsRepository
 import com.shurdev.domain.usecases.DeleteMyPlantUseCase
 import com.shurdev.ui_kit.viewModel.base.BaseViewModel
@@ -40,7 +40,16 @@ class MyPlantDetailsViewModel @AssistedInject constructor(
     fun deletePlant() {
         viewModelScope.launch {
             runSuspendCatching {
-                deleteMyPlantUseCase(plantId)
+                val state = uiState.value
+                if (state !is MyPlantDetailsLoadedState){
+                    return@launch
+                }
+
+                deleteMyPlantUseCase(
+                    id = plantId,
+                    name = state.plant.name
+                )
+
                 updateUiState { MyPlantDeletedState }
             }.onFailure {
                 updateUiState { MyPlantDetailsErrorState }

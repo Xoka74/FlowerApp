@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.recommended_plants.R
 import com.shurdev.recommended_plants.composables.RecommendedPlantsList
 import com.shurdev.recommended_plants.screens.recommendedPlants.viewModel.RecommendedPlantsLoadedState

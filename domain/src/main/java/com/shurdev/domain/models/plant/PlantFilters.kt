@@ -1,4 +1,4 @@
-package com.shurdev.domain.models
+package com.shurdev.domain.models.plant
 
 data class PlantFilters(
     val name: String?,

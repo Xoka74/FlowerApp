@@ -1,10 +1,12 @@
 package com.shurdev.di
 
+import android.app.AlarmManager
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
-import com.shurdev.data.const.LocalKeys
+import com.shurdev.data.keys.LocalKeys
 import com.shurdev.data.local.AppDatabase
+import com.shurdev.watering.WateringAlertsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +17,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class LocalModule {
+
+    @Provides
+    @Singleton
+    fun provideAlarmManager(@ApplicationContext context: Context): AlarmManager {
+        return context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    }
 
     @Provides
     @Singleton
