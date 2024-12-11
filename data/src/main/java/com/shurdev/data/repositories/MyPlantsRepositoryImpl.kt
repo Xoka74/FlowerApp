@@ -3,9 +3,9 @@ package com.shurdev.data.repositories
 import com.shurdev.data.daos.MyPlantsDao
 import com.shurdev.data.entities.MyPlantEntity
 import com.shurdev.data.mappers.toDomainModel
-import com.shurdev.domain.models.CreateMyPlantIntent
-import com.shurdev.domain.models.MyPlant
-import com.shurdev.domain.models.MyPlantId
+import com.shurdev.domain.models.myPlant.CreateMyPlantIntent
+import com.shurdev.domain.models.myPlant.MyPlant
+import com.shurdev.domain.models.myPlant.MyPlantId
 import com.shurdev.domain.repositories.MyPlantsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,17 +25,22 @@ class MyPlantsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun create(data: CreateMyPlantIntent) {
+    override suspend fun create(data: CreateMyPlantIntent): Long {
         return withContext(Dispatchers.IO) {
             myPlantsDao.insert(
                 MyPlantEntity(
                     name = data.name,
+                    plantWatering = data.plantWatering,
+                    otherInfo = data.otherInfo,
                 )
             )
         }
     }
 
-    override suspend fun delete(plantId: MyPlantId) {
+    override suspend fun delete(
+        plantId: MyPlantId,
+        plantName: String,
+    ) {
         return withContext(Dispatchers.IO) {
             myPlantsDao.delete(plantId)
         }

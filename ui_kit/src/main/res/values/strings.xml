@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="my_plants">Мои растения</string>
-    <string name="add_plant">Добавить растение</string>
     <string name="add_to_favorite">Добавить в избранное</string>
+    <string name="add_plant">Добавить растение</string>
     <string name="settings">Настройки</string>
     <string name="logout">Выйти</string>
     <string name="take_survey">Пройти опрос</string>
@@ -18,4 +17,25 @@
     <string name="save">Сохранить</string>
     <string name="are_you_sure_you_want_to_leave">Вы уверены, что хотите выйти?</string>
     <string name="are_you_sure_you_want_to_delete_plant">Вы уверены, что хотите удалить растение?</string>
+    <string name="no_selection">Не выбрано</string>
+    <string name="watering">Полив</string>
+    <string name="watering_frequency">Частота полива</string>
+    <string name="last_watering">Последний полив</string>
+    <string name="other">Другое</string>
+    <string name="illumination">Освещенность</string>
+    <string name="toxicity">Токсичность</string>
+    <string name="next_watering">Следующий полив: %1$s</string>
+
+    <string name="once_a_week">Раз в неделю</string>
+    <string name="twice_a_week">2 раза в неделю</string>
+    <string name="once_every_two_weeks">Раз в 2 недели</string>
+    <string name="once_a_month">Раз в месяц</string>
+
+    <string name="bright">Яркая</string>
+    <string name="partial_shade">Частичная тень</string>
+    <string name="average">Средняя</string>
+
+    <string name="kids">Дети</string>
+    <string name="pets">Питомцы</string>
+    <string name="people">Люди</string>
 </resources>

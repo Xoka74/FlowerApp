@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.MyPlant
+import com.shurdev.domain.models.myPlant.MyPlant
 import com.shurdev.my_plants.R
 
 @Composable

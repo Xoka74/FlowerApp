@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.MyPlant
+import com.shurdev.domain.models.myPlant.MyPlant
 import com.shurdev.my_plants.screens.details.composables.MyPlantDetailsContent
 import com.shurdev.my_plants.screens.details.viewModel.MyPlantDeletedState
 import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsErrorState
