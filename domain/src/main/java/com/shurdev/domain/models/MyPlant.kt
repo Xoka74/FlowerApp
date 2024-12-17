@@ -5,4 +5,5 @@ typealias MyPlantId = Int
 data class MyPlant(
     val id: MyPlantId,
     val name: String,
+    val imageData: ByteArray?
 )

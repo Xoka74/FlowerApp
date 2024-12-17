@@ -14,16 +14,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.shurdev.domain.models.MyPlant
 import com.shurdev.my_plants.R
 import com.shurdev.ui_kit.theme.PlantCardBackgroundColor
 import com.shurdev.ui_kit.theme.PlantCardContentColor
+import com.shurdev.ui_kit.utils.getImage
 
 @Composable
 fun MyPlantItem(
@@ -46,15 +45,17 @@ fun MyPlantItem(
                 .padding(12.dp),
             verticalAlignment = Alignment.Top,
         ) {
+
+            val imageModel = plant.imageData.getImage(
+                defaultImageRes = R.drawable.flower_placeholder_1
+            )
+
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth(0.25f)
                     .aspectRatio(1F)
                     .clip(RoundedCornerShape(12.dp)),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg")
-                    .placeholder(R.drawable.flower_placeholder_1)
-                    .build(),
+                model = imageModel,
                 contentDescription = "Your Plant",
                 contentScale = ContentScale.Crop
             )
@@ -80,6 +81,7 @@ fun MyPlantItemPreview() {
         plant = MyPlant(
             id = 1,
             name = "Пахира Акватика",
+            imageData = null
         ),
         onItemClick = {}
     )
