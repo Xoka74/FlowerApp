@@ -7,6 +7,7 @@ fun MyPlantEntity.toDomainModel(): MyPlant {
     return MyPlant(
         id = id,
         name = name,
+        imageData = imageData,
         plantWatering = plantWatering,
         otherInfo = otherInfo,
     )

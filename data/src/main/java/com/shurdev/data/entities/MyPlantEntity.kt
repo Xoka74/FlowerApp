@@ -11,6 +11,7 @@ import com.shurdev.domain.models.plant.PlantId
 data class MyPlantEntity(
     @PrimaryKey(autoGenerate = true) val id: PlantId = 0,
     val name: String,
+    val imageData: ByteArray?,
     @Embedded
     val plantWatering: PlantWatering? = null,
     @Embedded

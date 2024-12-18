@@ -30,6 +30,7 @@ class MyPlantsRepositoryImpl @Inject constructor(
             myPlantsDao.insert(
                 MyPlantEntity(
                     name = data.name,
+                    imageData = data.imageData,
                     plantWatering = data.plantWatering,
                     otherInfo = data.otherInfo,
                 )

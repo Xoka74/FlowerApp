@@ -93,6 +93,10 @@ class MyPlantCreateViewModel @Inject constructor(
         )
     }
 
+    fun updateImage(imageData: ByteArray?) {
+        updateFormData { it.copy(imageData = imageData) }
+    }
+
     override fun sendForm() {
         viewModelScope.launch {
             updateUiState { FormSubmittingState }
@@ -101,6 +105,7 @@ class MyPlantCreateViewModel @Inject constructor(
                 name = formData.name,
                 plantWatering = formData.watering,
                 otherInfo = formData.otherInfo,
+                imageData = formData.imageData
             )
 
             runSuspendCatching {

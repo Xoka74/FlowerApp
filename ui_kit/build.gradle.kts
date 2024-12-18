@@ -36,6 +36,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(projects.domain)
 
+    // Coil
+    implementation(libs.coil.compose)
+
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.activity.compose)
 
