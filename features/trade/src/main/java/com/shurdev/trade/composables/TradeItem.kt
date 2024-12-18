@@ -84,7 +84,7 @@ fun TradeItem(
                         .width(imageWidth)
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(cornerRadius)),
-                    model = trade.plantToGet.imageLink, // TODO
+                    model = trade.plantToGive.imageLink,
                     contentDescription = "",
                     placeholder = painterResource(R.drawable.flower_placeholder_1),
                     fallback = painterResource(R.drawable.flower_placeholder_1),

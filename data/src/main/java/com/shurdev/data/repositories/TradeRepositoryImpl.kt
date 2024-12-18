@@ -18,7 +18,6 @@ class TradeRepositoryImpl @Inject constructor() : TradeRepository {
 
     override suspend fun createTrade(trade: Trade) {
         // TODO send created trade to server
-        println("Create trade $trade")
     }
 
 

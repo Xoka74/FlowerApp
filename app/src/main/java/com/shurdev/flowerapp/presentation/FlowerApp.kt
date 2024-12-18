@@ -136,8 +136,6 @@ fun FlowerApp() {
 
             tradeNavGraph(
                 onTradeItemClick = { trade ->
-                    println("Click trade $trade")
-
                     trade.id?.let {
                         navController.navigateToTradeDetailsScreen(tradeId = it)
                     }
