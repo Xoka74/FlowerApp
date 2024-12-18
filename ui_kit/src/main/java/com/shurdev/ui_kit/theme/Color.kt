@@ -17,3 +17,6 @@ val AppBackgroundColor = Color(0xFFF7FCF7)
 
 val PlantCardBackgroundColor = Color(0xFFE8F2E8)
 val PlantCardContentColor = Color(0xFF0D1C0F)
+
+val TradeCardBackgroundColor = Color(0xFFE8F2E8)
+val TradeCardContentColor = Color(0xFF0D1C0F)

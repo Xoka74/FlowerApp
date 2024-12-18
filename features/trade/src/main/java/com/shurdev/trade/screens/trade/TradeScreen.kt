@@ -1,4 +1,4 @@
-package com.shurdev.trade
+package com.shurdev.trade.screens.trade
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,12 +22,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.models.Plant
 import com.shurdev.domain.models.trade.Trade
+import com.shurdev.trade.R
 import com.shurdev.trade.composables.TradeItem
-import com.shurdev.trade.viewModel.TradeLoadedState
-import com.shurdev.trade.viewModel.TradeLoadingErrorState
-import com.shurdev.trade.viewModel.TradeLoadingState
-import com.shurdev.trade.viewModel.TradeUiState
-import com.shurdev.trade.viewModel.TradeViewModel
+import com.shurdev.trade.screens.trade.viewModel.TradeLoadedState
+import com.shurdev.trade.screens.trade.viewModel.TradeLoadingErrorState
+import com.shurdev.trade.screens.trade.viewModel.TradeLoadingState
+import com.shurdev.trade.screens.trade.viewModel.TradeUiState
+import com.shurdev.trade.screens.trade.viewModel.TradeViewModel
 import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.theme.PlantCardContentColor
 

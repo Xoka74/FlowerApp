@@ -1,4 +1,4 @@
-package com.shurdev.trade.viewModel
+package com.shurdev.trade.screens.trade.viewModel
 
 import androidx.compose.runtime.Stable
 import com.shurdev.domain.models.trade.Trade

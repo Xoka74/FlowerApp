@@ -25,6 +25,7 @@ class TradeRepositoryImpl @Inject constructor() : TradeRepository {
     private val trades: List<Trade> = (1..10)
         .map {
             Trade(
+                id = it,
                 plantToGet = Plant(
                     id = it,
                     name = "Get plant $it",

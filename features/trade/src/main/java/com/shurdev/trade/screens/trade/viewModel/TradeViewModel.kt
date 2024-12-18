@@ -1,4 +1,4 @@
-package com.shurdev.trade.viewModel
+package com.shurdev.trade.screens.trade.viewModel
 
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.repositories.TradeRepository
@@ -22,7 +22,7 @@ class TradeViewModel @Inject constructor(
         viewModelScope.launch {
             runSuspendCatching {
                 val trades = tradeRepository.getTrades()
-                updateUiState { TradeLoadedState(trades)}
+                updateUiState { TradeLoadedState(trades) }
 
             }.onFailure {
                 updateUiState { TradeLoadingErrorState }
