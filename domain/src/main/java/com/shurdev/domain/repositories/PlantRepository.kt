@@ -1,7 +1,7 @@
 package com.shurdev.domain.repositories
 
-import com.shurdev.domain.models.Plant
-import com.shurdev.domain.models.PlantFilters
+import com.shurdev.domain.models.plant.Plant
+import com.shurdev.domain.models.plant.PlantFilters
 
 
 interface PlantRepository {

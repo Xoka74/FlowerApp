@@ -1,7 +1,7 @@
 package com.shurdev.data.dataSource
 
 import android.content.SharedPreferences
-import com.shurdev.data.const.LocalKeys
+import com.shurdev.data.keys.LocalKeys
 import javax.inject.Inject
 
 class SettingsDataSource @Inject constructor(

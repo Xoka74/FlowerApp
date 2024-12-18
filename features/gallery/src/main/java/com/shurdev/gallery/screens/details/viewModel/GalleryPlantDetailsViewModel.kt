@@ -1,7 +1,7 @@
 package com.shurdev.gallery.screens.details.viewModel
 
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.models.PlantId
+import com.shurdev.domain.models.plant.PlantId
 import com.shurdev.domain.repositories.PlantRepository
 import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching

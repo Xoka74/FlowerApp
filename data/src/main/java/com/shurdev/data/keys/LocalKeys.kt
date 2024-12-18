@@ -1,4 +1,4 @@
-package com.shurdev.data.const
+package com.shurdev.data.keys
 
 object LocalKeys {
     const val FILENAME = "settings"

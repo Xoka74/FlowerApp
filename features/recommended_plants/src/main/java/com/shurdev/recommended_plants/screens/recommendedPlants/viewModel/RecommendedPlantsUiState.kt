@@ -1,6 +1,6 @@
 package com.shurdev.recommended_plants.screens.recommendedPlants.viewModel
 
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 
 sealed class RecommendedPlantsUiState
 

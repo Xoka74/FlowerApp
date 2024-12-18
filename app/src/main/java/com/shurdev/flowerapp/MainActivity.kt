@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.shurdev.flowerapp.presentation.FlowerApp
+import com.shurdev.flowerapp.presentation.composables.NotificationPermissionHandler
 import com.shurdev.ui_kit.theme.FlowerAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +16,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FlowerAppTheme {
-                FlowerApp()
+                NotificationPermissionHandler {
+                    FlowerApp()
+                }
             }
         }
     }
