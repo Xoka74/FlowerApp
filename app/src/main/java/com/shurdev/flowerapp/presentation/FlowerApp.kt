@@ -32,6 +32,9 @@ import com.shurdev.recommended_plants.navigation.recommendedPlantsNavGraph
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
+import com.shurdev.trade.navigation.navigateToTradeDetailsScreen
+import com.shurdev.trade.navigation.navigateToTradeGraph
+import com.shurdev.trade.navigation.tradeNavGraph
 import navigateToMyPlantDetailsScreen
 
 @Composable
@@ -119,6 +122,9 @@ fun FlowerApp() {
                 },
                 onRecommendedPlantsClick = {
                     navController.navigateToRecommendedPlantsGraph()
+                },
+                onTradeClick = {
+                    navController.navigateToTradeGraph()
                 }
             )
 
@@ -126,6 +132,15 @@ fun FlowerApp() {
                 onPlantClick = {
                     // TODO
                 }
+            )
+
+            tradeNavGraph(
+                onTradeItemClick = { trade ->
+                    trade.id?.let {
+                        navController.navigateToTradeDetailsScreen(tradeId = it)
+                    }
+                },
+                onBackInvoked = navController::navigateUp
             )
         }
     }

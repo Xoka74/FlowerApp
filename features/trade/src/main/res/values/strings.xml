@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plants_trade">Обмен растениями</string>
+    <string name="create_trade">Создать обмен</string>
+    <string name="exchange_plants_with">Поменяйтесь растениями с</string>
+    <string name="your_plant">Ваше растение:</string>
+    <string name="in_exchange_for">В обмен на:</string>
+    <string name="exchange">Обмен</string>
+</resources>
