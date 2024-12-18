@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="recommended_plants">Рекомендованные растения</string>
     <string name="plants_trade">Обмен растениями</string>
+    <string name="create_trade">Создать обмен</string>
 </resources>

@@ -4,11 +4,13 @@ import com.shurdev.data.repositories.LocalSettingsRepositoryImpl
 import com.shurdev.data.repositories.MyPlantsRepositoryImpl
 import com.shurdev.data.repositories.PlantRepositoryImpl
 import com.shurdev.data.repositories.SurveyRepositoryImpl
+import com.shurdev.data.repositories.TradeRepositoryImpl
 import com.shurdev.data.repositories.UserRepositoryImpl
 import com.shurdev.domain.repositories.LocalSettingsRepository
 import com.shurdev.domain.repositories.MyPlantsRepository
 import com.shurdev.domain.repositories.PlantRepository
 import com.shurdev.domain.repositories.SurveyRepository
+import com.shurdev.domain.repositories.TradeRepository
 import com.shurdev.domain.repositories.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -39,4 +41,8 @@ interface RepositoryModule {
     @Binds
     @ViewModelScoped
     fun bindMyPlantsRepository(impl: MyPlantsRepositoryImpl): MyPlantsRepository
+
+    @Binds
+    @ViewModelScoped
+    fun bindTradeRepository(impl: TradeRepositoryImpl): TradeRepository
 }
