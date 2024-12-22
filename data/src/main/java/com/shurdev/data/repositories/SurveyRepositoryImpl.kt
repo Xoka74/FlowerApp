@@ -5,8 +5,8 @@ import com.shurdev.data.mappers.toDomainModel
 import com.shurdev.data.mappers.toEntity
 import com.shurdev.data.remote.api.SurveyApi
 import com.shurdev.domain.models.survey.Answer
-import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.models.survey.AnsweredQuestion
+import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.repositories.SurveyRepository
 import javax.inject.Inject
 
@@ -25,6 +25,8 @@ class SurveyRepositoryImpl @Inject constructor(
 
 
     override suspend fun saveResultsToDatabase(results: List<AnsweredQuestion>) {
+        // TODO transaction
+
         surveyResultsDao.deleteAllResults()
 
         surveyResultsDao.saveResults(
