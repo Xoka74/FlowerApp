@@ -6,36 +6,20 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.shurdev.flowerapp.presentation.BottomNavigationItems
+import com.shurdev.flowerapp.presentation.BottomNavigationItem
 
 @Composable
-fun AppBottomNavigation(navController: NavController) {
-
-    val bottomNavigationItems = remember {
-        listOf(
-            BottomNavigationItems.MyPlants,
-            BottomNavigationItems.Gallery,
-            BottomNavigationItems.Profile,
-        )
-    }
-
+fun AppBottomNavigation(
+    items: List<BottomNavigationItem<out Any>>,
+    selectedItem: BottomNavigationItem<out Any>,
+    onItemClick: (BottomNavigationItem<out Any>) -> Unit,
+) {
     NavigationBar {
-        val currentDestination = navController.currentBackStackEntryAsState().value?.destination
-
-        bottomNavigationItems.forEach { item ->
-
-            val isSelected = currentDestination?.hierarchy?.any {
-                it.hasRoute(item.route::class)
-            } ?: false
+        items.forEach { item ->
+            val isSelected = item == selectedItem
 
             NavigationBarItem(
                 icon = {
@@ -52,12 +36,8 @@ fun AppBottomNavigation(navController: NavController) {
                 },
                 selected = isSelected,
                 onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-//                        restoreState = true
+                    if (!isSelected) {
+                        onItemClick(item)
                     }
                 }
             )

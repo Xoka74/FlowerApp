@@ -5,13 +5,11 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -24,7 +22,6 @@ import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
-import com.shurdev.onboarding.navigation.OnboardingNavGraph
 import com.shurdev.onboarding.navigation.onboardingNavGraph
 import com.shurdev.profile.navigation.profileNavGraph
 import com.shurdev.recommended_plants.navigation.navigateToRecommendedPlantsGraph
@@ -40,27 +37,38 @@ fun FlowerApp() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
 
     val currentDestination = navBackStackEntry?.destination
-    val routesWithoutBottomBar = listOf(OnboardingNavGraph, SurveyNavGraph)
 
-    var showBottomBar by rememberSaveable { mutableStateOf(true) }
+    val bottomNavigationItems = remember {
+        listOf(
+            BottomNavigationItem.MyPlants,
+            BottomNavigationItem.Gallery,
+            BottomNavigationItem.Profile,
+        )
+    }
 
-    showBottomBar = when {
-        currentDestination?.hierarchy?.any { route ->
-            routesWithoutBottomBar.any { routeWithoutBottomBar ->
-                route.hasRoute(routeWithoutBottomBar::class)
-            }
-        } ?: false -> false
-
-        else -> true
+    val selectedDestination = bottomNavigationItems.firstOrNull { item ->
+        currentDestination?.hasRoute(item.route::class) == true
     }
 
     val settingsViewModel = hiltViewModel<SettingsViewModel>()
 
     Scaffold(
         bottomBar = {
-            if (showBottomBar) {
+            if (selectedDestination != null) {
                 BottomAppBar {
-                    AppBottomNavigation(navController)
+                    AppBottomNavigation(
+                        items = bottomNavigationItems,
+                        selectedItem = selectedDestination,
+                        onItemClick = { item ->
+                            navController.navigate(item.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
                 }
             }
         }

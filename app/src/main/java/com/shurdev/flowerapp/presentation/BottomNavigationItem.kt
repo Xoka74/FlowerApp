@@ -1,13 +1,13 @@
 package com.shurdev.flowerapp.presentation
 
 import com.shurdev.flowerapp.R
-import com.shurdev.gallery.navigation.GalleryNavGraph
-import com.shurdev.my_plants.navigation.MyPlantsNavGraph
-import com.shurdev.profile.navigation.ProfileNavGraph
+import com.shurdev.gallery.navigation.GalleryRoute
+import com.shurdev.my_plants.navigation.MyPlantsRoute
+import com.shurdev.profile.navigation.ProfileRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class BottomNavigationItems<T>(
+sealed class BottomNavigationItem<T>(
     val name: String,
     val selectedIconResId: Int,
     val unSelectedIconResId: Int,
@@ -15,26 +15,26 @@ sealed class BottomNavigationItems<T>(
 ) {
 
     @Serializable
-    data object MyPlants : BottomNavigationItems<MyPlantsNavGraph>(
+    data object MyPlants : BottomNavigationItem<MyPlantsRoute>(
         name = "Мои растения",
         selectedIconResId = R.drawable.icon_home_filled,
         unSelectedIconResId = R.drawable.icon_home_unfilled,
-        route = MyPlantsNavGraph
+        route = MyPlantsRoute
     )
 
     @Serializable
-    data object Gallery : BottomNavigationItems<GalleryNavGraph>(
+    data object Gallery : BottomNavigationItem<GalleryRoute>(
         name = "Галерея",
         selectedIconResId = R.drawable.icon_flower_filled,
         unSelectedIconResId = R.drawable.icon_flower_unfilled,
-        route = GalleryNavGraph
+        route = GalleryRoute
     )
 
     @Serializable
-    data object Profile : BottomNavigationItems<ProfileNavGraph>(
+    data object Profile : BottomNavigationItem<ProfileRoute>(
         name = "Профиль",
         selectedIconResId = R.drawable.icon_person_filled,
         unSelectedIconResId = R.drawable.icon_person_unfilled,
-        route = ProfileNavGraph
+        route = ProfileRoute
     )
 }

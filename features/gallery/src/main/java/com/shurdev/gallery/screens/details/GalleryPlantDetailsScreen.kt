@@ -1,13 +1,15 @@
 package com.shurdev.gallery.screens.details
 
-import StickyBottomColumn
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,12 +32,9 @@ import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsLoadedSt
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsLoadingState
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsUiState
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsViewModel
-import com.shurdev.ui_kit.actions.FavoriteAction
-import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.layouts.DefaultScreenLayout
 import com.shurdev.ui_kit.loaders.Loader
-import com.shurdev.ui_kit.R as uiKitResource
 
 @Composable
 internal fun GalleryPlantDetailsRoute(
@@ -63,12 +61,6 @@ internal fun GalleryPlantDetailsScreen(
 ) {
     DefaultScreenLayout(
         onBackInvoked = onPop,
-        actions = {
-            FavoriteAction(
-                isActive = false,
-                onClick = {}
-            )
-        }
     ) {
         Box(
             Modifier
@@ -89,18 +81,8 @@ internal fun GalleryPlantDetailsContent(
 ) {
     val typography = MaterialTheme.typography
 
-    StickyBottomColumn(
-        stickyBottom = {
-            val addPlant = stringResource(uiKitResource.string.add_plant)
-
-            PrimaryButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = addPlant,
-                onClick = {
-                    // TODO: Navigate to add plant
-                },
-            )
-        },
+    Column(
+        Modifier.verticalScroll(rememberScrollState())
     ) {
         AsyncImage(
             modifier = Modifier
@@ -112,7 +94,7 @@ internal fun GalleryPlantDetailsContent(
                 .data(plant.imageLink)
                 .placeholder(R.drawable.flower_placeholder_1)
                 .build(),
-            contentDescription = "Your Plant",
+            contentDescription = plant.name,
             contentScale = ContentScale.Crop
         )
 
