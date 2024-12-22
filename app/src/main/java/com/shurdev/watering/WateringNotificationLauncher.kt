@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import com.shurdev.data.R
 import com.shurdev.data.keys.NotificationKeys
@@ -30,12 +31,17 @@ class WateringNotificationLauncher(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val largeIcon = BitmapFactory.decodeResource(context.resources, com.shurdev.flowerapp.R.drawable.icon_launcher)
+        val aquaColor = 0x00FFFF
+
         val notification = NotificationCompat.Builder(context, NotificationKeys.CHANNEL_ID)
             .setContentText(null)
             .setContentTitle(context.getString(R.string.water_your_plant, plantName))
             .setContentIntent(intentToOpenApp)
-            // TODO: Change to app icon
+            .setColorized(true)
+            .setColor(aquaColor)
             .setSmallIcon(R.drawable.icon_water_drop_filled)
+            .setLargeIcon(largeIcon)
             .setPriority(NotificationManager.IMPORTANCE_HIGH)
             .setAutoCancel(true)
             .build()
