@@ -2,10 +2,11 @@ package com.shurdev.survey.view_model
 
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.survey.Answer
-import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.models.survey.AnsweredQuestion
+import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.survey.utils.SurveyActionListener
+import com.shurdev.ui_kit.coroutines.CustomCoroutineScope
 import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,8 @@ import javax.inject.Inject
 internal class SurveyViewModel @Inject constructor(
     private val surveyRepository: SurveyRepository,
 ) : BaseViewModel<SurveyUiState>(SurveyLoadingUiState), SurveyActionListener {
+
+    private val scope: CustomCoroutineScope = CustomCoroutineScope()
 
     init {
         updateUiState { SurveyLoadingUiState }
@@ -60,6 +63,7 @@ internal class SurveyViewModel @Inject constructor(
     }
 
     override fun onFinishSurvey() {
+
         if (uiState.value !is SurveyLoadedUiState) {
             return
         }
@@ -68,7 +72,7 @@ internal class SurveyViewModel @Inject constructor(
         val questions = loadedState.questions
         val answersIndices = loadedState.answersIndices
 
-        viewModelScope.launch {
+        scope.launch {
 
             val answers = getAnswers(answersIndices, questions)
             val results = getResults(answers, questions)
@@ -76,11 +80,14 @@ internal class SurveyViewModel @Inject constructor(
             runSuspendCatching {
                 surveyRepository.submitAnswers(answers = answers)
             }.onFailure {
-                println("Error: $it")
                 // TODO handle error
             }
 
-            surveyRepository.saveResultsToDatabase(results)
+            runSuspendCatching {
+                surveyRepository.saveResultsToDatabase(results)
+            }.onFailure {
+                // TODO handle error
+            }
         }
     }
 
