@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.shurdev.flowerapp.presentation.BottomNavigationItem
 
@@ -20,6 +21,7 @@ fun AppBottomNavigation(
     NavigationBar {
         items.forEach { item ->
             val isSelected = item == selectedItem
+            val name = stringResource(item.nameResId)
 
             NavigationBarItem(
                 icon = {
@@ -28,11 +30,11 @@ fun AppBottomNavigation(
                         painter = painterResource(
                             id = if (isSelected) item.selectedIconResId else item.unSelectedIconResId
                         ),
-                        contentDescription = item.name
+                        contentDescription = name
                     )
                 },
                 label = {
-                    Text(item.name)
+                    Text(name)
                 },
                 selected = isSelected,
                 onClick = {

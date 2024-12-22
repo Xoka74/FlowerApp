@@ -8,15 +8,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class BottomNavigationItem<T>(
-    val name: String,
+    val nameResId: Int,
     val selectedIconResId: Int,
     val unSelectedIconResId: Int,
-    val route: T
+    val route: T,
 ) {
 
     @Serializable
     data object MyPlants : BottomNavigationItem<MyPlantsRoute>(
-        name = "Мои растения",
+        nameResId = com.shurdev.my_plants.R.string.my_plants,
         selectedIconResId = R.drawable.icon_home_filled,
         unSelectedIconResId = R.drawable.icon_home_unfilled,
         route = MyPlantsRoute
@@ -24,7 +24,7 @@ sealed class BottomNavigationItem<T>(
 
     @Serializable
     data object Gallery : BottomNavigationItem<GalleryRoute>(
-        name = "Галерея",
+        nameResId = com.shurdev.gallery.R.string.gallery,
         selectedIconResId = R.drawable.icon_flower_filled,
         unSelectedIconResId = R.drawable.icon_flower_unfilled,
         route = GalleryRoute
@@ -32,7 +32,7 @@ sealed class BottomNavigationItem<T>(
 
     @Serializable
     data object Profile : BottomNavigationItem<ProfileRoute>(
-        name = "Профиль",
+        nameResId =  com.shurdev.profile.R.string.profile,
         selectedIconResId = R.drawable.icon_person_filled,
         unSelectedIconResId = R.drawable.icon_person_unfilled,
         route = ProfileRoute
