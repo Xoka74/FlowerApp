@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
 import com.shurdev.domain.models.trade.Trade
+import com.shurdev.trade.screens.createTrade.CreateTradeRoute
 import com.shurdev.trade.screens.trade.TradeRoute
 import com.shurdev.trade.screens.tradeDetails.TradeDetailsRoute
 import kotlinx.serialization.Serializable
@@ -17,16 +18,22 @@ fun NavController.navigateToTradeGraph() = navigate(TradeNavGraph)
 
 fun NavGraphBuilder.tradeNavGraph(
     onTradeItemClick: (Trade) -> Unit = {},
-    onBackInvoked: () -> Unit
+    onBackInvoked: () -> Unit,
+    onCreateTradeClick: () -> Unit
 ) {
     navigation<TradeNavGraph>(
         startDestination = TradeRoute,
     ) {
         tradeScreen(
-            onTradeItemClick = onTradeItemClick
+            onTradeItemClick = onTradeItemClick,
+            onCreateTradeClick = onCreateTradeClick
         )
 
         tradeDetailsScreen(
+            onBackInvoked = onBackInvoked
+        )
+
+        createTradeScreen(
             onBackInvoked = onBackInvoked
         )
     }
@@ -37,11 +44,13 @@ fun NavGraphBuilder.tradeNavGraph(
 object TradeRoute
 
 fun NavGraphBuilder.tradeScreen(
-    onTradeItemClick: (Trade) -> Unit = {}
+    onTradeItemClick: (Trade) -> Unit = {},
+    onCreateTradeClick: () -> Unit
 ) {
     composable<TradeRoute> {
         TradeRoute(
-            onTradeItemClick = onTradeItemClick
+            onTradeItemClick = onTradeItemClick,
+            onCreateTradeClick = onCreateTradeClick,
         )
     }
 }
@@ -66,4 +75,23 @@ fun NavGraphBuilder.tradeDetailsScreen(
 
 fun NavController.navigateToTradeDetailsScreen(tradeId: Int) {
     navigate(TradeDetails(tradeId))
+}
+
+
+@Serializable
+object CreateTrade
+
+fun NavGraphBuilder.createTradeScreen(
+    onBackInvoked: () -> Unit
+) {
+    composable<CreateTrade> {
+
+        CreateTradeRoute(
+            onBackInvoked = onBackInvoked
+        )
+    }
+}
+
+fun NavController.navigateToCreateTradeScreen() {
+    navigate(CreateTrade)
 }
