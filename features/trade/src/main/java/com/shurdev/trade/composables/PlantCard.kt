@@ -1,6 +1,7 @@
 package com.shurdev.trade.composables
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 
 @Composable
 fun PlantCard(
@@ -39,7 +40,8 @@ fun PlantCard(
 
         AsyncImage(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .aspectRatio(1f),
             model = ImageRequest
                 .Builder(LocalContext.current)
                 .placeholder(com.shurdev.trade.R.drawable.flower_placeholder_1)

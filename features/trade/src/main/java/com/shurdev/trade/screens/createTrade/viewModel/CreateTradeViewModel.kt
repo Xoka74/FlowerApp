@@ -1,7 +1,7 @@
 package com.shurdev.trade.screens.createTrade.viewModel
 
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.domain.repositories.TradeRepository
 import com.shurdev.trade.screens.createTrade.models.CreateTradeForm

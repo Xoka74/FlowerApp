@@ -1,6 +1,6 @@
 package com.shurdev.data.repositories
 
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.domain.repositories.TradeRepository
 import javax.inject.Inject

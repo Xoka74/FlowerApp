@@ -1,6 +1,6 @@
 package com.shurdev.domain.models.trade
 
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 
 data class Trade(
     val id: Int? = null,

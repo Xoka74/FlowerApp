@@ -1,6 +1,6 @@
 package com.shurdev.trade.screens.createTrade.models
 
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.ui_kit.viewModel.trackChanges.TrackChangesForm
 
 data class CreateTradeForm(

@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.trade.composables.PlantCard
 import com.shurdev.trade.screens.createTrade.models.CreateTradeForm
 import com.shurdev.trade.screens.createTrade.viewModel.CreateTradeViewModel
