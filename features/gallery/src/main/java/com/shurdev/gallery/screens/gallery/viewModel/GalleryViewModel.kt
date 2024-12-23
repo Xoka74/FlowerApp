@@ -1,7 +1,7 @@
 package com.shurdev.gallery.screens.gallery.viewModel
 
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.models.PlantFilters
+import com.shurdev.domain.models.plant.PlantFilters
 import com.shurdev.domain.repositories.PlantRepository
 import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching

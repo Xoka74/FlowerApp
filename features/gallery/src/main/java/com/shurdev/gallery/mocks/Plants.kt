@@ -1,6 +1,6 @@
 package com.shurdev.gallery.mocks
 
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 
 val Plants = (1..10)
     .map {

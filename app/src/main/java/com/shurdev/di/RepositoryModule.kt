@@ -6,12 +6,14 @@ import com.shurdev.data.repositories.PlantRepositoryImpl
 import com.shurdev.data.repositories.SurveyRepositoryImpl
 import com.shurdev.data.repositories.TradeRepositoryImpl
 import com.shurdev.data.repositories.UserRepositoryImpl
+import com.shurdev.watering.WateringAlertsRepositoryImpl
 import com.shurdev.domain.repositories.LocalSettingsRepository
 import com.shurdev.domain.repositories.MyPlantsRepository
 import com.shurdev.domain.repositories.PlantRepository
 import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.domain.repositories.TradeRepository
 import com.shurdev.domain.repositories.UserRepository
+import com.shurdev.domain.repositories.WateringAlertsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -45,4 +47,8 @@ interface RepositoryModule {
     @Binds
     @ViewModelScoped
     fun bindTradeRepository(impl: TradeRepositoryImpl): TradeRepository
+  
+    @Binds
+    @ViewModelScoped
+    fun bindWateringAlertsRepository(impl: WateringAlertsRepositoryImpl) : WateringAlertsRepository
 }

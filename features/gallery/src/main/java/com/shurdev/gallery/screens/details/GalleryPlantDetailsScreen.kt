@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.gallery.R
 import com.shurdev.gallery.mocks.Plants
 import com.shurdev.gallery.screens.details.viewModel.GalleryPlantDetailsErrorState

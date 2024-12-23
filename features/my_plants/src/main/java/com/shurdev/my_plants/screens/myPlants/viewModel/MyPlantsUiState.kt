@@ -1,7 +1,7 @@
 package com.shurdev.my_plants.screens.myPlants.viewModel
 
 import androidx.compose.runtime.Stable
-import com.shurdev.domain.models.MyPlant
+import com.shurdev.domain.models.myPlant.MyPlant
 
 @Stable
 sealed class MyPlantsUiState

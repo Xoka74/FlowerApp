@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.gallery.R
 import com.shurdev.gallery.components.PlantCategoriesList
 import com.shurdev.gallery.components.PlantsList

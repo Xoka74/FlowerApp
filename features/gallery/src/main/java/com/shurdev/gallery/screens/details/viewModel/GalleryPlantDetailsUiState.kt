@@ -1,7 +1,7 @@
 package com.shurdev.gallery.screens.details.viewModel
 
 import androidx.compose.runtime.Stable
-import com.shurdev.domain.models.Plant
+import com.shurdev.domain.models.plant.Plant
 
 @Stable
 sealed class GalleryPlantDetailsUiState
