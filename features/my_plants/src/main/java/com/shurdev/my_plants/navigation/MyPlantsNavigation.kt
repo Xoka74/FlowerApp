@@ -1,5 +1,6 @@
 package com.shurdev.my_plants.navigation
 
+import androidx.annotation.Keep
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -9,6 +10,7 @@ import com.shurdev.my_plants.screens.myPlants.MyPlantsRoute
 import kotlinx.serialization.Serializable
 import myPlantDetailsScreen
 
+@Keep
 @Serializable
 object MyPlantsNavGraph
 
@@ -34,6 +36,7 @@ fun NavGraphBuilder.myPlantsNavGraph(
     }
 }
 
+@Keep
 @Serializable
 object MyPlantsRoute
 

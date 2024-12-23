@@ -1,4 +1,4 @@
-package com.shurdev.di
+package com.shurdev.di.modules
 
 import com.shurdev.domain.repositories.MyPlantsRepository
 import com.shurdev.domain.repositories.WateringAlertsRepository

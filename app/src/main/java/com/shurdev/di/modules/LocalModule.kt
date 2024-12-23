@@ -1,4 +1,4 @@
-package com.shurdev.di
+package com.shurdev.di.modules
 
 import android.app.AlarmManager
 import android.content.Context
@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.shurdev.data.keys.LocalKeys
 import com.shurdev.data.local.AppDatabase
-import com.shurdev.watering.WateringAlertsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

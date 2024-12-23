@@ -1,5 +1,6 @@
 package com.shurdev.flowerapp.presentation.screens
 
+import androidx.annotation.Keep
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -13,6 +14,7 @@ import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.loaders.Loader
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 data object StartupRoute
 
@@ -28,6 +30,7 @@ fun NavGraphBuilder.startupScreen(
     }
 }
 
+@Keep
 @Composable
 internal fun StartupRoute(
     onStartupFinished: (SettingsLoadedState) -> Unit,

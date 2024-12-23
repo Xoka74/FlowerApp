@@ -1,7 +1,7 @@
-package com.shurdev.di
+package com.shurdev.di.modules
 
-import com.shurdev.data.remote.ApiConfig
 import com.shurdev.data.remote.api.SurveyApi
+import com.shurdev.di.qualifiers.BaseUrl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,9 +34,12 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        @BaseUrl baseUrl: String,
+    ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(ApiConfig.BASE_URL)
+            .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

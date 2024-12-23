@@ -1,5 +1,6 @@
 package com.shurdev.profile.navigation
 
+import androidx.annotation.Keep
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -7,6 +8,7 @@ import com.shurdev.profile.ProfileRoute
 import kotlinx.serialization.Serializable
 
 
+@Keep
 @Serializable
 object ProfileNavGraph
 
@@ -26,6 +28,7 @@ fun NavGraphBuilder.profileNavGraph(
     }
 }
 
+@Keep
 @Serializable
 object ProfileRoute
 

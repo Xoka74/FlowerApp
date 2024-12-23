@@ -1,11 +1,13 @@
 package com.shurdev.flowerapp.presentation
 
+import androidx.annotation.Keep
 import com.shurdev.flowerapp.R
 import com.shurdev.gallery.navigation.GalleryRoute
 import com.shurdev.my_plants.navigation.MyPlantsRoute
 import com.shurdev.profile.navigation.ProfileRoute
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 sealed class BottomNavigationItem<T>(
     val nameResId: Int,
@@ -14,6 +16,7 @@ sealed class BottomNavigationItem<T>(
     val route: T,
 ) {
 
+    @Keep
     @Serializable
     data object MyPlants : BottomNavigationItem<MyPlantsRoute>(
         nameResId = com.shurdev.my_plants.R.string.my_plants,
@@ -22,6 +25,7 @@ sealed class BottomNavigationItem<T>(
         route = MyPlantsRoute
     )
 
+    @Keep
     @Serializable
     data object Gallery : BottomNavigationItem<GalleryRoute>(
         nameResId = com.shurdev.gallery.R.string.gallery,
@@ -30,6 +34,7 @@ sealed class BottomNavigationItem<T>(
         route = GalleryRoute
     )
 
+    @Keep
     @Serializable
     data object Profile : BottomNavigationItem<ProfileRoute>(
         nameResId =  com.shurdev.profile.R.string.profile,
