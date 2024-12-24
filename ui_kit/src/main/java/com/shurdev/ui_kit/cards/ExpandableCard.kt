@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.shurdev.ui_kit.theme.FlowerAppTheme
 
 @Composable
 fun ExpandableCard(
@@ -29,10 +32,15 @@ fun ExpandableCard(
     onChanged: (Boolean) -> Unit = {},
     content: @Composable () -> Unit,
 ) {
+    val colors = MaterialTheme.colorScheme
     var expanded by remember { mutableStateOf(isExpandedByDefault) }
 
     Card(
         modifier = modifier,
+        colors = CardDefaults.cardColors(
+            containerColor = colors.surfaceContainer,
+            contentColor = colors.primary
+        )
     ) {
         ExpandableCardTitle(
             modifier = Modifier.padding(8.dp),
@@ -80,21 +88,32 @@ internal fun ExpandableCardTitle(
 @Preview
 @Composable
 fun PreviewExpandableCard() {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-    ) {
-        listOf(true, false).forEach {
-            ExpandableCard(
-                modifier = Modifier.fillMaxWidth(),
-                title = "Полив",
-                isExpandedByDefault = it,
+    FlowerAppTheme {
+        Scaffold { padding ->
+            val typography = MaterialTheme.typography
+            val colors = MaterialTheme.colorScheme
+
+            Column(
+                modifier=Modifier.padding(padding),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                Column(
-                    modifier = Modifier.padding(10.dp),
-                ) {
-                    Text(
-                        text = "Текст внутри карточки"
-                    )
+                listOf(true, false).forEach {
+                    ExpandableCard(
+                        modifier = Modifier.fillMaxWidth(),
+                        title = "Полив",
+                        isExpandedByDefault = it,
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(10.dp),
+                        ) {
+                            Text(
+                                text = "Текст внутри карточки",
+                                style = typography.titleMedium.copy(
+                                    color = colors.primary
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }

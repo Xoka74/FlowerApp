@@ -38,12 +38,11 @@ fun <T> T.useDebounce(
     return state
 }
 
-fun Uri?.getByteArray(context: Context): ByteArray {
-    val inputStream = this?.let { uri ->
-        context
+fun Uri.getByteArray(context: Context): ByteArray {
+    val inputStream = context
             .contentResolver
-            .openInputStream(uri)
-    }
+            .openInputStream(this)
+
 
     val bitmap = BitmapFactory.decodeStream(inputStream)
 

@@ -14,8 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.shurdev.ui_kit.theme.Black
-import com.shurdev.ui_kit.theme.Green
 
 @Composable
 fun PrimaryButton(
@@ -25,14 +23,17 @@ fun PrimaryButton(
     enabled: Boolean = true,
     isLoading: Boolean = false,
 ) {
+    val colors = MaterialTheme.colorScheme
+
     Button(
         modifier = modifier,
         enabled = enabled,
         onClick = onClick,
         shape = RoundedCornerShape(20.dp),
         colors = ButtonDefaults.buttonColors().copy(
-            containerColor = Green,
-            contentColor = Black,
+            // TODO
+            containerColor = colors.primaryContainer,
+            contentColor = colors.onPrimaryContainer,
         )
     ) {
         if (isLoading) {

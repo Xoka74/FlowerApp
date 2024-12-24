@@ -15,7 +15,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,11 +28,11 @@ import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsLoadingErrorStat
 import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsLoadingState
 import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsUiState
 import com.shurdev.my_plants.screens.myPlants.viewModel.MyPlantsViewModel
-import com.shurdev.ui_kit.R as uiKitResource
+import com.shurdev.ui_kit.bars.TopBar
 import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.loaders.Loader
-import com.shurdev.ui_kit.theme.PlantCardContentColor
+import com.shurdev.ui_kit.R as uiKitResource
 
 @Composable
 internal fun MyPlantsRoute(
@@ -74,16 +73,13 @@ internal fun MyPlantsScreenContent(
     onPlantClick: (MyPlant) -> Unit,
     onAddPlantClick: () -> Unit,
 ) {
-    val myPlants = stringResource(R.string.my_plants)
-
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
-        Text(
-            text = myPlants,
-            color = PlantCardContentColor,
-            fontSize = 24.sp,
-            style = TextStyle(fontWeight = FontWeight.Bold)
+        Spacer(Modifier.height(20.dp))
+
+        TopBar(
+            title = stringResource(R.string.my_plants)
         )
 
         Spacer(Modifier.height(12.dp))
