@@ -217,8 +217,11 @@ val surfaceContainerDarkHighContrast = Color(0xFF1E201A)
 val surfaceContainerHighDarkHighContrast = Color(0xFF282B24)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF33362E)
 
+val PlantCardBackgroundColor = Color(0xFFE8F2E8)
+val PlantCardContentColor = Color(0xFF0D1C0F)
 
-
+val TradeCardBackgroundColor = Color(0xFFE8F2E8)
+val TradeCardContentColor = Color(0xFF0D1C0F)
 
 
 

@@ -91,6 +91,7 @@ dependencies {
     implementation(projects.features.survey)
     implementation(projects.features.profile)
     implementation(projects.features.recommendedPlants)
+    implementation(projects.features.trade)
     implementation(projects.uiKit)
     implementation(projects.utils)
 

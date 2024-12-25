@@ -29,6 +29,7 @@ internal fun ProfileRoute(
     onTakeSurveyClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onRecommendedPlantsClick: () -> Unit,
+    onTradeClick: () -> Unit = {},
 ) {
 
     val viewModel = hiltViewModel<ProfileViewModel>()
@@ -39,7 +40,8 @@ internal fun ProfileRoute(
         onLogoutClick = viewModel::logout,
         onTakeSurveyClick = onTakeSurveyClick,
         onSettingsClick = onSettingsClick,
-        onRecommendedPlantsClick = onRecommendedPlantsClick
+        onRecommendedPlantsClick = onRecommendedPlantsClick,
+        onTradeClick = onTradeClick,
     )
 }
 
@@ -49,7 +51,8 @@ internal fun ProfileScreen(
     onLogoutClick: () -> Unit = {},
     onTakeSurveyClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
-    onRecommendedPlantsClick: () -> Unit,
+    onRecommendedPlantsClick: () -> Unit = {},
+    onTradeClick: () -> Unit = {},
 ) {
     when (uiState) {
         ProfileErrorState -> ErrorView()
@@ -59,7 +62,8 @@ internal fun ProfileScreen(
             onLogoutClick = onLogoutClick,
             onTakeSurveyClick = onTakeSurveyClick,
             onSettingsClick = onSettingsClick,
-            onRecommendedPlantsClick = onRecommendedPlantsClick
+            onRecommendedPlantsClick = onRecommendedPlantsClick,
+            onTradeClick = onTradeClick,
         )
     }
 }
@@ -70,7 +74,8 @@ internal fun ProfileScreenContent(
     onLogoutClick: () -> Unit = {},
     onTakeSurveyClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
-    onRecommendedPlantsClick: () -> Unit,
+    onRecommendedPlantsClick: () -> Unit = {},
+    onTradeClick: () -> Unit = {},
 ) {
     Column {
         Spacer(Modifier.height(20.dp))
@@ -92,7 +97,8 @@ internal fun ProfileScreenContent(
         ProfileMenu(
             onTakeSurveyClick = onTakeSurveyClick,
             onLogoutClick = onLogoutClick,
-            onRecommendedPlantsClick = onRecommendedPlantsClick
+            onRecommendedPlantsClick = onRecommendedPlantsClick,
+            onTradeClick = onTradeClick
         )
     }
 }
