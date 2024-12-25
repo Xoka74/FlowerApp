@@ -13,7 +13,8 @@ object ProfileNavGraph
 fun NavGraphBuilder.profileNavGraph(
     onTakeSurveyClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
-    onRecommendedPlantsClick: () -> Unit
+    onRecommendedPlantsClick: () -> Unit,
+    onTradeClick: () -> Unit = {},
 ) {
     navigation<ProfileNavGraph>(
         startDestination = ProfileRoute,
@@ -21,7 +22,8 @@ fun NavGraphBuilder.profileNavGraph(
         profileRoute(
             onTakeSurveyClick = onTakeSurveyClick,
             onSettingsClick = onSettingsClick,
-            onRecommendedPlantsClick = onRecommendedPlantsClick
+            onRecommendedPlantsClick = onRecommendedPlantsClick,
+            onTradeClick = onTradeClick,
         )
     }
 }
@@ -32,13 +34,15 @@ object ProfileRoute
 fun NavGraphBuilder.profileRoute(
     onTakeSurveyClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
-    onRecommendedPlantsClick: () -> Unit
+    onRecommendedPlantsClick: () -> Unit,
+    onTradeClick: () -> Unit = {},
 ) {
     composable<ProfileRoute> {
         ProfileRoute(
             onTakeSurveyClick = onTakeSurveyClick,
             onSettingsClick = onSettingsClick,
-            onRecommendedPlantsClick = onRecommendedPlantsClick
+            onRecommendedPlantsClick = onRecommendedPlantsClick,
+            onTradeClick = onTradeClick
         )
     }
 }

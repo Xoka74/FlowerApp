@@ -17,12 +17,13 @@ fun DefaultScreenLayout(
     modifier: Modifier = Modifier,
     onBackInvoked: (() -> Unit)? = null,
     actions: (@Composable RowScope.() -> Unit)? = null,
+    title: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     Column {
         if (actions != null || onBackInvoked != null) {
             TopAppBar(
-                title = {},
+                title = title,
                 windowInsets = WindowInsets(0, 0, 0, 0),
                 navigationIcon = { if (onBackInvoked != null) BackButton(onBackInvoked) },
                 actions = actions ?: {}
