@@ -12,6 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.models.myPlant.MyPlant
+import com.shurdev.my_plants.screens.details.composables.DeletePlantIconButton
+import com.shurdev.my_plants.screens.details.composables.EditIconButton
 import com.shurdev.my_plants.screens.details.composables.MyPlantDetailsContent
 import com.shurdev.my_plants.screens.details.viewModel.MyPlantDeletedState
 import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsErrorState
@@ -19,7 +21,6 @@ import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsLoadedState
 import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsLoadingState
 import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsUiState
 import com.shurdev.my_plants.screens.details.viewModel.MyPlantDetailsViewModel
-import com.shurdev.my_plants.screens.details.composables.DeletePlantIconButton
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.layouts.DefaultScreenLayout
 import com.shurdev.ui_kit.loaders.Loader
@@ -27,6 +28,7 @@ import com.shurdev.ui_kit.loaders.Loader
 @Composable
 internal fun MyPlantDetailsRoute(
     plantId: Int,
+    onEditClick: (MyPlant) -> Unit,
     onBackInvoked: () -> Unit,
 ) {
     val viewModel =
@@ -39,6 +41,7 @@ internal fun MyPlantDetailsRoute(
     MyPlantDetailsScreen(
         uiState = uiState,
         onBackInvoked = onBackInvoked,
+        onEditClick = onEditClick,
         onDeleteClick = viewModel::deletePlant,
     )
 }
@@ -47,6 +50,7 @@ internal fun MyPlantDetailsRoute(
 internal fun MyPlantDetailsScreen(
     uiState: MyPlantDetailsUiState,
     onBackInvoked: () -> Unit,
+    onEditClick: (MyPlant) -> Unit,
     onDeleteClick: () -> Unit,
 ) {
     LaunchedEffect(uiState) {
@@ -59,11 +63,17 @@ internal fun MyPlantDetailsScreen(
         modifier = Modifier.padding(horizontal = 16.dp),
         onBackInvoked = onBackInvoked,
         actions = {
-            DeletePlantIconButton(
-                onConfirm = onDeleteClick,
-                icon = Icons.Default.Delete,
-                contentDescription = null,
-            )
+            if (uiState is MyPlantDetailsLoadedState) {
+                EditIconButton(
+                    onTap = { uiState.plant.let(onEditClick) },
+                )
+
+                DeletePlantIconButton(
+                    onConfirm = onDeleteClick,
+                    icon = Icons.Default.Delete,
+                    contentDescription = null,
+                )
+            }
         }
     ) {
         when (uiState) {
@@ -84,6 +94,7 @@ internal fun MyPlantDetailsScreenPreview() {
     MyPlantDetailsScreen(
         onBackInvoked = {},
         onDeleteClick = {},
+        onEditClick = {},
         uiState = MyPlantDetailsLoadedState(
             plant = MyPlant(
                 id = 1,

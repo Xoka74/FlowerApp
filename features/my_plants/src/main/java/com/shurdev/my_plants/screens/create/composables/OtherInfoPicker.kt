@@ -30,7 +30,7 @@ fun OtherInfoPicker(
     ExpandableCard(
         title = otherInfoTitle,
         onChanged = onOtherInfoSelection,
-        isExpandedByDefault = false,
+        expanded = otherInfo != null,
     ) {
         val illuminationTitle = stringResource(R.string.illumination)
         val toxicityTitle = stringResource(R.string.toxicity)

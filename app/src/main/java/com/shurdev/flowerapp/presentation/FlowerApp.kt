@@ -22,6 +22,7 @@ import com.shurdev.gallery.navigation.galleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
+import com.shurdev.my_plants.screens.edit.navigation.navigateToEditMyPlantScreen
 import com.shurdev.onboarding.navigation.onboardingNavGraph
 import com.shurdev.profile.navigation.profileNavGraph
 import com.shurdev.recommended_plants.navigation.navigateToRecommendedPlantsGraph
@@ -113,10 +114,11 @@ fun FlowerApp() {
             myPlantsNavGraph(
                 onAddPlantClick = navController::navigateToMyPlantCreateScreen,
                 onBackInvoked = navController::navigateUp,
+                onPlantEditClick = { plant ->
+                    navController.navigateToEditMyPlantScreen(plant.id)
+                },
                 onPlantClick = { plant ->
-                    plant.id.let {
-                        navController.navigateToMyPlantDetailsScreen(plantId = it)
-                    }
+                    navController.navigateToMyPlantDetailsScreen(plant.id)
                 },
             )
 

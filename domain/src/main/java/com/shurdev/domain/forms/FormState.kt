@@ -1,4 +1,4 @@
-package com.shurdev.ui_kit.viewModel.form
+package com.shurdev.domain.forms
 
 sealed interface FormState
 
@@ -8,7 +8,8 @@ data object FormPreparationState : FormState
 
 data object FormPreparationFailedState : FormState
 
-data class FormValidationErrorState<T : FormValidationError>(val error: T) : FormState, EditableState
+data class FormValidationErrorState<T : FormValidationError>(val error: T) : FormState,
+    EditableState
 
 data object FormEditingState : FormState, EditableState
 

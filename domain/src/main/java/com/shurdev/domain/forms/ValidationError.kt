@@ -1,4 +1,4 @@
-package com.shurdev.my_plants.screens.create.models
+package com.shurdev.domain.forms
 
 enum class ValidationError {
     Required,

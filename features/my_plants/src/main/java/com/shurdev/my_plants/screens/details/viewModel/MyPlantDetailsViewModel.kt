@@ -20,19 +20,13 @@ class MyPlantDetailsViewModel @AssistedInject constructor(
 ) : BaseViewModel<MyPlantDetailsUiState>(MyPlantDetailsLoadingState) {
 
     init {
-        getPlant(plantId)
-    }
-
-    private fun getPlant(id: Int) {
-        updateUiState { MyPlantDetailsLoadingState }
-
         viewModelScope.launch {
-            runSuspendCatching {
-                val plant = myPlantsRepository.getById(id)
-
-                updateUiState { MyPlantDetailsLoadedState(plant = plant) }
-            }.onFailure {
-                updateUiState { MyPlantDetailsErrorState }
+            myPlantsRepository.getFlowById(plantId).collect { plant ->
+                if (plant != null) {
+                    updateUiState { MyPlantDetailsLoadedState(plant = plant) }
+                } else {
+                    updateUiState { MyPlantDeletedState }
+                }
             }
         }
     }
@@ -49,8 +43,6 @@ class MyPlantDetailsViewModel @AssistedInject constructor(
                     id = plantId,
                     name = state.plant.name
                 )
-
-                updateUiState { MyPlantDeletedState }
             }.onFailure {
                 updateUiState { MyPlantDetailsErrorState }
             }
