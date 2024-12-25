@@ -1,29 +1,23 @@
 package com.shurdev.trade.screens.trade
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.models.plant.Plant
 import com.shurdev.domain.models.trade.Trade
@@ -34,11 +28,15 @@ import com.shurdev.trade.screens.trade.viewModel.TradeLoadingErrorState
 import com.shurdev.trade.screens.trade.viewModel.TradeLoadingState
 import com.shurdev.trade.screens.trade.viewModel.TradeUiState
 import com.shurdev.trade.screens.trade.viewModel.TradeViewModel
+import com.shurdev.ui_kit.errors.ErrorView
+import com.shurdev.ui_kit.layouts.DefaultScreenLayout
+import com.shurdev.ui_kit.loaders.Loader
 
 @Composable
 internal fun TradeRoute(
     onTradeItemClick: (Trade) -> Unit = {},
-    onCreateTradeClick: () -> Unit
+    onCreateTradeClick: () -> Unit = {},
+    onBackInvoked: () -> Unit = {},
 ) {
 
     val viewModel = hiltViewModel<TradeViewModel>()
@@ -47,7 +45,8 @@ internal fun TradeRoute(
     TradeScreen(
         uiState = uiState,
         onTradeItemClick = onTradeItemClick,
-        onCreateTradeClick = onCreateTradeClick
+        onCreateTradeClick = onCreateTradeClick,
+        onBackInvoked = onBackInvoked,
     )
 }
 
@@ -55,61 +54,59 @@ internal fun TradeRoute(
 internal fun TradeScreen(
     uiState: TradeUiState,
     onTradeItemClick: (Trade) -> Unit = {},
-    onCreateTradeClick: () -> Unit = {}
+    onCreateTradeClick: () -> Unit = {},
+    onBackInvoked: () -> Unit = {},
 ) {
+    DefaultScreenLayout(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        title = stringResource(R.string.plants_trade),
+        onBackInvoked = onBackInvoked,
+        fab = {
+            FloatingActionButton(
+                modifier = Modifier.padding(10.dp),
+                onClick = onCreateTradeClick,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Создать"
+                )
+            }
+        },
+    ) {
+        when (uiState) {
+            is TradeLoadingState -> Loader()
+            is TradeLoadingErrorState -> ErrorView()
+            is TradeLoadedState -> TradeScreenContent(
+                onTradeItemClick = onTradeItemClick,
+                trades = uiState.trades,
+            )
+        }
+    }
+}
 
-    when (uiState) {
-        is TradeLoadingState -> {}
-        is TradeLoadingErrorState -> {}
-        is TradeLoadedState -> {
-
-            Scaffold(
-                floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = onCreateTradeClick,
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Add,
-                            tint = Color.White,
-                            contentDescription = "Создать"
-                        )
-                    }
-                }
-            ) { padding ->
-
-                Column(
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-
-                    Column {
-                        val trades = uiState.trades
-
-                        Text(
-                            text = stringResource(R.string.plants_trade),
-                            fontSize = 24.sp,
-                            style = TextStyle(fontWeight = FontWeight.Bold)
-                        )
-
-                        Spacer(Modifier.height(12.dp))
-
-                        LazyColumn(
-                            modifier = Modifier
-                                .weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(5.dp)
-                        ) {
-                            items(trades) { trade ->
-                                TradeItem(
-                                    trade = trade,
-                                    onItemClick = onTradeItemClick
-                                )
-                            }
-                        }
-                    }
+@Composable
+fun TradeScreenContent(
+    onTradeItemClick: (Trade) -> Unit = {},
+    trades: List<Trade>,
+) {
+    Box(
+        contentAlignment = Alignment.BottomEnd,
+    ) {
+        Column {
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f),
+                verticalArrangement = Arrangement.spacedBy(5.dp)
+            ) {
+                items(trades) { trade ->
+                    TradeItem(
+                        trade = trade,
+                        onItemClick = onTradeItemClick
+                    )
                 }
             }
         }
     }
-
 }
 
 @Preview(showBackground = true)

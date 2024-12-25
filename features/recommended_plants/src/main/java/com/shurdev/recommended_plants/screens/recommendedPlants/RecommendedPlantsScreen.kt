@@ -1,18 +1,11 @@
 package com.shurdev.recommended_plants.screens.recommendedPlants
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.models.plant.Plant
 import com.shurdev.recommended_plants.R
@@ -22,52 +15,47 @@ import com.shurdev.recommended_plants.screens.recommendedPlants.viewModel.Recomm
 import com.shurdev.recommended_plants.screens.recommendedPlants.viewModel.RecommendedPlantsLoadingState
 import com.shurdev.recommended_plants.screens.recommendedPlants.viewModel.RecommendedPlantsUiState
 import com.shurdev.recommended_plants.screens.recommendedPlants.viewModel.RecommendedPlantsViewModel
+import com.shurdev.ui_kit.layouts.DefaultScreenLayout
 
 @Composable
 internal fun RecommendedPlantsRoute(
-    onPlantClick: (Plant) -> Unit
+    onPlantClick: (Plant) -> Unit,
+    onBackInvoked: () -> Unit,
 ) {
     val viewModel = hiltViewModel<RecommendedPlantsViewModel>()
     val uiState by viewModel.uiState.collectAsState()
 
     RecommendedPlantsScreen(
         uiState = uiState,
-        onPlantClick = onPlantClick
+        onPlantClick = onPlantClick,
+        onBackInvoked = onBackInvoked,
     )
 }
 
 @Composable
 internal fun RecommendedPlantsScreen(
     uiState: RecommendedPlantsUiState,
-    onPlantClick: (Plant) -> Unit
+    onPlantClick: (Plant) -> Unit,
+    onBackInvoked: () -> Unit,
 ) {
 
-    Scaffold { padding ->
+    DefaultScreenLayout(
+        title = stringResource(R.string.recommendations),
+        onBackInvoked = onBackInvoked,
+    ) {
         when (uiState) {
-
+            is RecommendedPlantsLoadingState -> {}
+            is RecommendedPlantsLoadingErrorState -> {}
             is RecommendedPlantsLoadedState -> {
                 Column {
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 20.dp)
-                            .padding(horizontal = 16.dp),
-                        text = stringResource(R.string.recommended_flowers),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
                     RecommendedPlantsList(
                         plants = uiState.plants,
                         onPlantClick = onPlantClick
                     )
                 }
             }
-
-            is RecommendedPlantsLoadingState -> {}
-            is RecommendedPlantsLoadingErrorState -> {}
         }
     }
-
 }
 
 
@@ -83,6 +71,7 @@ internal fun RecommendedPlantsPreview() {
                 imageLink = ""
             )
         }),
-        onPlantClick = {}
+        onPlantClick = {},
+        onBackInvoked = {}
     )
 }

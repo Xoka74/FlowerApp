@@ -69,11 +69,7 @@ fun CreateTradeScreen(
     ConfirmLeaveScreenLayout(
         onBackInvoked = onBackInvoked,
         showConfirmLeave = hasChangesCheck,
-        title = {
-            Text(
-                text = stringResource(com.shurdev.trade.R.string.new_trade)
-            )
-        }
+        title = stringResource(com.shurdev.trade.R.string.new_trade),
     ) {
         StickyBottomColumn(
             modifier = Modifier.padding(20.dp),

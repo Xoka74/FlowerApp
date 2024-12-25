@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,25 +34,22 @@ import coil.compose.AsyncImage
 import com.shurdev.domain.models.plant.Plant
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.trade.R
-import com.shurdev.ui_kit.theme.TradeCardBackgroundColor
-import com.shurdev.ui_kit.theme.TradeCardContentColor
 
 @Composable
 fun TradeItem(
     modifier: Modifier = Modifier,
     trade: Trade,
-    onItemClick: (Trade) -> Unit = {}
+    onItemClick: (Trade) -> Unit = {},
 ) {
 
     val imageWidth = 128.dp
     val cornerRadius = 12.dp
 
     Card(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = TradeCardBackgroundColor,
-            contentColor = TradeCardContentColor
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
         ),
         onClick = { onItemClick(trade) }
     ) {
@@ -135,10 +133,10 @@ fun TradeItem(
                     fontSize = 12.sp
                 )
             }
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Icon(
                     modifier = Modifier
                         .size(20.dp),

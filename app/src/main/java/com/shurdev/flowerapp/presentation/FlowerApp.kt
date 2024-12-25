@@ -138,6 +138,7 @@ fun FlowerApp() {
             )
 
             recommendedPlantsNavGraph(
+                onBackInvoked = navController::navigateUp,
                 onPlantClick = {
                     // TODO
                 }

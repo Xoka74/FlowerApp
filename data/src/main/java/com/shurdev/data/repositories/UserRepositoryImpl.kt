@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor() : UserRepository {
     override suspend fun getUser(): User = User(
-        name = "Test user",
-        imageLink = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlyeul2vFjjUrN_lMMNkKqYFZGs1jrty9krw&s"
+        name = "John Doe",
+        imageLink = "https://avatar.iran.liara.run/public/15"
     )
 }

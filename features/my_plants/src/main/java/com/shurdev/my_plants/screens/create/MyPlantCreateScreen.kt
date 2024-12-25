@@ -1,8 +1,6 @@
 package com.shurdev.my_plants.screens.create
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -104,32 +102,30 @@ internal fun MyPlantCreateScreenPreview() {
         mutableStateOf(WateringFrequency.OnceAWeek)
     }
 
-    Scaffold { padding ->
-        Box(Modifier.padding(padding)) {
-            MyPlantCreateScreen(
-                onNameChanged = {},
-                onCreatePlantClick = {},
-                onFormSubmit = {},
-                formState = FormEditingState,
-                hasChangesCheck = { false },
-                onOtherInfoSelection = {},
-                onWateringSelectionChanged = {},
-                onLastWateringTimeChanged = {},
-                onImageLoaded = {},
-                onWateringFrequencyChanged = {
-                    frequency = it
-                },
-                onIlluminationChanged = {},
-                onToxicCategorySelected = {},
-                onToxicCategoryUnselected = {},
-                form = MyPlantForm(
-                    name = "",
-                    watering = PlantWatering(
-                        lastWateringTime = LocalDateTime.now(),
-                        frequency = frequency
-                    )
-                ),
-            )
-        }
+    Box(Modifier) {
+        MyPlantCreateScreen(
+            onNameChanged = {},
+            onCreatePlantClick = {},
+            onFormSubmit = {},
+            formState = FormEditingState,
+            hasChangesCheck = { false },
+            onOtherInfoSelection = {},
+            onWateringSelectionChanged = {},
+            onLastWateringTimeChanged = {},
+            onImageLoaded = {},
+            onWateringFrequencyChanged = {
+                frequency = it
+            },
+            onIlluminationChanged = {},
+            onToxicCategorySelected = {},
+            onToxicCategoryUnselected = {},
+            form = MyPlantForm(
+                name = "",
+                watering = PlantWatering(
+                    lastWateringTime = LocalDateTime.now(),
+                    frequency = frequency
+                )
+            ),
+        )
     }
 }

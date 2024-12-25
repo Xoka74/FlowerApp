@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -70,12 +70,10 @@ fun AppTextField(
 @Preview
 @Composable
 fun Preview() {
-    Scaffold { padding ->
+    Surface {
         Center {
             AppTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(padding),
+                modifier = Modifier.fillMaxWidth(),
                 label = "Text field",
                 text = "New plant",
                 error = "Some error",

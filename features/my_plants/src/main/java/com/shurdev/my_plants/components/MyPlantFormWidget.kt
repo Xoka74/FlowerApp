@@ -78,7 +78,8 @@ fun MyPlantFormWidget(
         )
 
         PlantImagePicker(
-            model = form.imageData ?: com.shurdev.my_plants.R.drawable.flower_placeholder_1,
+            model = form.imageData,
+            placeholder = com.shurdev.my_plants.R.drawable.placeholder_image,
             onRemoveClick = { onImageLoaded(null) },
             onPickTap = {
                 photoPickerLauncher.launch(

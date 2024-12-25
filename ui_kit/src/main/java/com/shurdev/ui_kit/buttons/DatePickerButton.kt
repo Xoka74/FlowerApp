@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 import java.util.TimeZone
 
 @Composable
@@ -67,7 +68,9 @@ fun DatePickerButton(
             if (selectedDateTime != null) {
                 Text(
                     selectedDateTime.format(
-                        DateTimeFormatter.ofPattern("dd MMM uuuu")
+                        DateTimeFormatter
+                            .ofPattern("dd MMM uuuu")
+                            .withLocale(Locale("RU"))
                     )
                 )
             }

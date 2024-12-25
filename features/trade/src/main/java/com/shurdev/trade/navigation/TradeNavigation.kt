@@ -19,14 +19,15 @@ fun NavController.navigateToTradeGraph() = navigate(TradeNavGraph)
 fun NavGraphBuilder.tradeNavGraph(
     onTradeItemClick: (Trade) -> Unit = {},
     onBackInvoked: () -> Unit,
-    onCreateTradeClick: () -> Unit
+    onCreateTradeClick: () -> Unit,
 ) {
     navigation<TradeNavGraph>(
         startDestination = TradeRoute,
     ) {
         tradeScreen(
             onTradeItemClick = onTradeItemClick,
-            onCreateTradeClick = onCreateTradeClick
+            onCreateTradeClick = onCreateTradeClick,
+            onBackInvoked = onBackInvoked,
         )
 
         tradeDetailsScreen(
@@ -45,12 +46,14 @@ object TradeRoute
 
 fun NavGraphBuilder.tradeScreen(
     onTradeItemClick: (Trade) -> Unit = {},
-    onCreateTradeClick: () -> Unit
+    onCreateTradeClick: () -> Unit = {},
+    onBackInvoked: () -> Unit = {},
 ) {
     composable<TradeRoute> {
         TradeRoute(
             onTradeItemClick = onTradeItemClick,
             onCreateTradeClick = onCreateTradeClick,
+            onBackInvoked = onBackInvoked,
         )
     }
 }
@@ -59,7 +62,7 @@ fun NavGraphBuilder.tradeScreen(
 data class TradeDetails(val tradeId: Int)
 
 fun NavGraphBuilder.tradeDetailsScreen(
-    onBackInvoked: () -> Unit
+    onBackInvoked: () -> Unit,
 ) {
     composable<TradeDetails> { backStackEntry ->
 
@@ -82,7 +85,7 @@ fun NavController.navigateToTradeDetailsScreen(tradeId: Int) {
 object CreateTrade
 
 fun NavGraphBuilder.createTradeScreen(
-    onBackInvoked: () -> Unit
+    onBackInvoked: () -> Unit,
 ) {
     composable<CreateTrade> {
 

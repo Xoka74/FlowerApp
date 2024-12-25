@@ -20,6 +20,8 @@ fun ProfileMenu(
         val tradeString = stringResource(com.shurdev.profile.R.string.plants_trade);
         val logoutString = stringResource(R.string.logout)
 
+//        HorizontalDivider()
+
         ProfileOption(
             text = takeSurveyString,
             onClick = onTakeSurveyClick,
@@ -35,11 +37,11 @@ fun ProfileMenu(
             onClick = onTradeClick
         )
 
-        HorizontalDivider()
+//        HorizontalDivider()
 
-        ProfileAction(
-            text = logoutString,
-            onClick = onLogoutClick,
-        )
+//        ProfileAction(
+//            text = logoutString,
+//            onClick = onLogoutClick,
+//        )
     }
 }

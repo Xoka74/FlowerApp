@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +29,7 @@ fun ProfileHeader(
     ) {
         AsyncImage(
             modifier = Modifier
+                .size(150.dp)
                 .clip(CircleShape),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(user.imageLink)
@@ -37,6 +40,9 @@ fun ProfileHeader(
 
         Spacer(Modifier.height(8.dp))
 
-        Text(user.name)
+        Text(
+            text = user.name,
+            style = MaterialTheme.typography.titleLarge,
+        )
     }
 }

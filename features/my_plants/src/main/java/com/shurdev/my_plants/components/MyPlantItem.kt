@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,15 +21,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.shurdev.domain.models.myPlant.MyPlant
 import com.shurdev.domain.models.myPlant.PlantWatering
 import com.shurdev.my_plants.R
 import com.shurdev.ui_kit.utils.getImage
-import com.shurdev.ui_kit.R as uiKitResource
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
+import com.shurdev.ui_kit.R as uiKitResource
 
 @Composable
 fun MyPlantItem(
@@ -40,9 +41,8 @@ fun MyPlantItem(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            // TODO
-//            containerColor = PlantCardBackgroundColor,
-//            contentColor = PlantCardContentColor
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
         ),
         onClick = { onItemClick(plant) }
     ) {
@@ -62,7 +62,7 @@ fun MyPlantItem(
                     .fillMaxWidth(0.25f)
                     .aspectRatio(1F)
                     .clip(RoundedCornerShape(12.dp)),
-                model = imageModel,
+                model = R.drawable.placeholder_list_image,
                 contentDescription = "Your Plant",
                 contentScale = ContentScale.Crop
             )
@@ -74,7 +74,7 @@ fun MyPlantItem(
             ) {
                 Text(
                     text = plant.name,
-                    fontSize = 22.sp,
+                    style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                 )
 
@@ -85,7 +85,9 @@ fun MyPlantItem(
                 if (watering != null) {
 
                     val nextWatering = watering.lastWateringTime.format(
-                        DateTimeFormatter.ofPattern("dd MMM uuuu")
+                        DateTimeFormatter
+                            .ofPattern("dd MMM uuuu")
+                            .withLocale(Locale("RU"))
                     )
 
                     val nextWateringString =
@@ -93,6 +95,8 @@ fun MyPlantItem(
 
                     Text(
                         text = nextWateringString,
+                        style = MaterialTheme.typography.bodyMedium,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }

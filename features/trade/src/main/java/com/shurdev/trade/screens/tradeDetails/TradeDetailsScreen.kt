@@ -52,7 +52,7 @@ fun TradeDetailsRoute(
 @Composable
 fun TradeDetailsScreen(
     uiState: TradeDetailsUiState,
-    onBackInvoked: () -> Unit
+    onBackInvoked: () -> Unit,
 ) {
 
     when (uiState) {
@@ -72,11 +72,7 @@ fun TradeDetailsScreen(
                     .padding(horizontal = 16.dp)
                     .verticalScroll(rememberScrollState()),
                 onBackInvoked = onBackInvoked,
-                title = {
-                    Text(
-                        text = titleText
-                    )
-                }
+                title = titleText,
             ) {
 
                 Column {

@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,7 +26,7 @@ fun MyPlantDetailsContent(
     val typography = MaterialTheme.typography
 
     val imageModel = myPlant.imageData.getImage(
-        defaultImageRes = R.drawable.flower_placeholder_1
+        defaultImageRes = R.drawable.placeholder_image
     )
 
     Column(modifier) {
@@ -54,14 +52,12 @@ fun MyPlantDetailsContent(
 @Preview
 @Composable
 fun PreviewMyPlantDetailsContent() {
-    Scaffold { padding ->
-        MyPlantDetailsContent(
-            modifier = Modifier.padding(padding),
-            myPlant = MyPlant(
-                id = 2,
-                name = "Новый цветок",
-                imageData = null
-            )
+    MyPlantDetailsContent(
+        modifier = Modifier,
+        myPlant = MyPlant(
+            id = 2,
+            name = "Новый цветок",
+            imageData = null
         )
-    }
+    )
 }

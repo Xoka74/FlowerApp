@@ -3,7 +3,6 @@ package com.shurdev.profile
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,8 +19,8 @@ import com.shurdev.profile.viewModel.ProfileLoadingState
 import com.shurdev.profile.viewModel.ProfileUiState
 import com.shurdev.profile.viewModel.ProfileViewModel
 import com.shurdev.ui_kit.actions.SettingsAction
-import com.shurdev.ui_kit.bars.TopBar
 import com.shurdev.ui_kit.errors.ErrorView
+import com.shurdev.ui_kit.layouts.DefaultScreenLayout
 import com.shurdev.ui_kit.loaders.Loader
 
 @Composable
@@ -77,28 +76,26 @@ internal fun ProfileScreenContent(
     onRecommendedPlantsClick: () -> Unit = {},
     onTradeClick: () -> Unit = {},
 ) {
-    Column {
-        Spacer(Modifier.height(20.dp))
+    DefaultScreenLayout(
+        title = stringResource(R.string.profile),
+        actions = {
+            // TODO: Uncomment when settings will be added
+//            SettingsAction(
+//                onClick = onSettingsClick,
+//            )
+        }
+    ) {
+        Column {
+            ProfileHeader(user)
 
-        TopBar(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            title = stringResource(R.string.profile),
-            actions = {
-                SettingsAction(
-                    onClick = onSettingsClick,
-                )
-            }
-        )
+            Spacer(Modifier.height(20.dp))
 
-        ProfileHeader(user)
-
-        Spacer(Modifier.height(20.dp))
-
-        ProfileMenu(
-            onTakeSurveyClick = onTakeSurveyClick,
-            onLogoutClick = onLogoutClick,
-            onRecommendedPlantsClick = onRecommendedPlantsClick,
-            onTradeClick = onTradeClick
-        )
+            ProfileMenu(
+                onTakeSurveyClick = onTakeSurveyClick,
+                onLogoutClick = onLogoutClick,
+                onRecommendedPlantsClick = onRecommendedPlantsClick,
+                onTradeClick = onTradeClick
+            )
+        }
     }
 }
