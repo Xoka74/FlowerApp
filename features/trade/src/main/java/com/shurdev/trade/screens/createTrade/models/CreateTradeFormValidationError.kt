@@ -1,6 +1,5 @@
 package com.shurdev.trade.screens.createTrade.models
 
-import com.shurdev.ui_kit.viewModel.form.FormValidationError
+import com.shurdev.domain.forms.FormValidationError
 
-class CreateTradeFormValidationError : FormValidationError() {
-}
+class CreateTradeFormValidationError : FormValidationError()

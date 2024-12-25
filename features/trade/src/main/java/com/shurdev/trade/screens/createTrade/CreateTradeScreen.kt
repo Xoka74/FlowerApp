@@ -16,6 +16,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.shurdev.domain.forms.EditableState
+import com.shurdev.domain.forms.FormEditingState
+import com.shurdev.domain.forms.FormState
+import com.shurdev.domain.forms.FormSubmittingState
 import com.shurdev.domain.models.plant.Plant
 import com.shurdev.trade.composables.PlantCard
 import com.shurdev.trade.screens.createTrade.models.CreateTradeForm
@@ -24,14 +28,10 @@ import com.shurdev.ui_kit.R
 import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.fields.AppTextField
 import com.shurdev.ui_kit.layouts.ConfirmLeaveScreenLayout
-import com.shurdev.ui_kit.viewModel.form.EditableState
-import com.shurdev.ui_kit.viewModel.form.FormEditingState
-import com.shurdev.ui_kit.viewModel.form.FormState
-import com.shurdev.ui_kit.viewModel.form.FormSubmittingState
 
 @Composable
 fun CreateTradeRoute(
-    onBackInvoked: () -> Unit
+    onBackInvoked: () -> Unit,
 ) {
 
     val viewModel = hiltViewModel<CreateTradeViewModel>()
@@ -61,7 +61,7 @@ fun CreateTradeScreen(
     onPlantToGiveChange: (Plant) -> Unit,
     hasChangesCheck: () -> Boolean,
     onBackInvoked: () -> Unit,
-    onCreateTradeClick: () -> Unit
+    onCreateTradeClick: () -> Unit,
 ) {
 
     val saveText = stringResource(R.string.save)

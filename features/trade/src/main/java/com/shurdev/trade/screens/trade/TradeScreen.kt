@@ -34,8 +34,6 @@ import com.shurdev.trade.screens.trade.viewModel.TradeLoadingErrorState
 import com.shurdev.trade.screens.trade.viewModel.TradeLoadingState
 import com.shurdev.trade.screens.trade.viewModel.TradeUiState
 import com.shurdev.trade.screens.trade.viewModel.TradeViewModel
-import com.shurdev.ui_kit.theme.Green
-import com.shurdev.ui_kit.theme.PlantCardContentColor
 
 @Composable
 internal fun TradeRoute(
@@ -68,7 +66,6 @@ internal fun TradeScreen(
             Scaffold(
                 floatingActionButton = {
                     FloatingActionButton(
-                        containerColor = Green,
                         onClick = onCreateTradeClick,
                     ) {
                         Icon(
@@ -89,7 +86,6 @@ internal fun TradeScreen(
 
                         Text(
                             text = stringResource(R.string.plants_trade),
-                            color = PlantCardContentColor,
                             fontSize = 24.sp,
                             style = TextStyle(fontWeight = FontWeight.Bold)
                         )
