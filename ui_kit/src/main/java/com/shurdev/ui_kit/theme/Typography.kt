@@ -8,30 +8,30 @@ import androidx.compose.ui.text.font.FontWeight
 import com.shurdev.ui_kit.R
 
 val epilogueFamily = FontFamily(
-    Font(R.font.epilogue_light, FontWeight.Light),
-    Font(R.font.epilogue_regular, FontWeight.Normal),
-    Font(R.font.epilogue_medium, FontWeight.Medium),
-    Font(R.font.epilogue_bold, FontWeight.Bold),
-    Font(R.font.epilogue_extra_bold, FontWeight.ExtraBold),
-    Font(R.font.epilogue_extra_light, FontWeight.ExtraLight),
-    Font(R.font.epilogue_black, FontWeight.Black),
-    Font(R.font.epilogue_thin, FontWeight.Thin),
-    Font(R.font.epilogue_semi_bold, FontWeight.SemiBold),
+    Font(R.font.montserrat_light, FontWeight.Light),
+    Font(R.font.montserrat_regular, FontWeight.Normal),
+    Font(R.font.montserrat_medium, FontWeight.Medium),
+    Font(R.font.montserrat_bold, FontWeight.Bold),
+    Font(R.font.montserrat_extra_bold, FontWeight.ExtraBold),
+    Font(R.font.montserrat_extra_light, FontWeight.ExtraLight),
+    Font(R.font.montserrat_black, FontWeight.Black),
+    Font(R.font.montserrat_thin, FontWeight.Thin),
+    Font(R.font.montserrat_semi_bold, FontWeight.SemiBold),
 
-    Font(R.font.epilogue_light_italic, FontWeight.Light, FontStyle.Italic),
-    Font(R.font.epilogue_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.epilogue_medium_italic, FontWeight.Medium, FontStyle.Italic),
-    Font(R.font.epilogue_bold_italic, FontWeight.Bold, FontStyle.Italic),
-    Font(R.font.epilogue_extra_bold_italic, FontWeight.ExtraBold, FontStyle.Italic),
-    Font(R.font.epilogue_extra_light_italic, FontWeight.ExtraLight, FontStyle.Italic),
-    Font(R.font.epilogue_black_italic, FontWeight.Black, FontStyle.Italic),
-    Font(R.font.epilogue_thin_italic, FontWeight.Thin, FontStyle.Italic),
-    Font(R.font.epilogue_semi_bold_italic, FontWeight.SemiBold, FontStyle.Italic),
+    Font(R.font.montserrat_light_italic, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.montserrat_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.montserrat_medium_italic, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.montserrat_bold_italic, FontWeight.Bold, FontStyle.Italic),
+    Font(R.font.montserrat_extra_bold_italic, FontWeight.ExtraBold, FontStyle.Italic),
+    Font(R.font.montserrat_extra_light_italic, FontWeight.ExtraLight, FontStyle.Italic),
+    Font(R.font.montserrat_black_italic, FontWeight.Black, FontStyle.Italic),
+    Font(R.font.montserrat_thin_italic, FontWeight.Thin, FontStyle.Italic),
+    Font(R.font.montserrat_semi_bold_italic, FontWeight.SemiBold, FontStyle.Italic),
 )
 
 val defaultTypography = Typography()
 
-val Typography = Typography(
+val AppTypography = Typography(
     displayLarge = defaultTypography.displayLarge.copy(fontFamily = epilogueFamily),
     displayMedium = defaultTypography.displayMedium.copy(fontFamily = epilogueFamily),
     displaySmall = defaultTypography.displaySmall.copy(fontFamily = epilogueFamily),

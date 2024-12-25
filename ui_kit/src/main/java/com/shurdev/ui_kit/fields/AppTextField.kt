@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -27,6 +28,8 @@ fun AppTextField(
     error: String? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
 ) {
+    val colors = MaterialTheme.colorScheme
+
     Column(
         horizontalAlignment = Alignment.Start,
     ) {
@@ -58,7 +61,7 @@ fun AppTextField(
             Text(
                 modifier = Modifier.padding(top = 8.dp),
                 text = error,
-                color = Color.Red
+                color = colors.error
             )
         }
     }

@@ -1,9 +1,9 @@
 package com.shurdev.gallery.screens.gallery
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,6 +26,7 @@ import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingErrorState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryUiState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryViewModel
+import com.shurdev.ui_kit.bars.TopBar
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.fields.SearchField
 import com.shurdev.ui_kit.loaders.Loader
@@ -53,56 +54,60 @@ internal fun GalleryScreen(
     onCategoryClick: (String) -> Unit,
     onSearchTextChange: (String) -> Unit,
 ) {
+    when (uiState) {
+        GalleryLoadingErrorState -> ErrorView()
+        GalleryLoadingState -> Loader()
+        is GalleryLoadedState -> GalleryScreenContent(
+            plants = uiState.plants,
+            onPlantClick = onPlantClick,
+            onCategoryClick = onCategoryClick,
+            onSearchTextChange = onSearchTextChange,
+        )
+    }
+}
 
-    Scaffold { padding ->
-        when (uiState) {
-            is GalleryLoadedState -> {
-                Column(
-                    modifier = Modifier
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .padding(top = 20.dp)
-                            .fillMaxWidth(),
-                        text = stringResource(R.string.search),
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+@Composable
+internal fun GalleryScreenContent(
+    plants: List<Plant>,
+    onPlantClick: (Plant) -> Unit,
+    onCategoryClick: (String) -> Unit,
+    onSearchTextChange: (String) -> Unit,
+) {
+    Column {
+        Spacer(Modifier.height(20.dp))
 
-                    SearchField(
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .padding(horizontal = 16.dp),
-                        hint = stringResource(R.string.search_hint),
-                        onSearchTextChange = onSearchTextChange,
-                        debounceTimeMillis = 800L
-                    )
+        TopBar(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            title = stringResource(R.string.search),
+        )
 
-                    PlantCategoriesList(
-                        categories = CATEGORIES,
-                        onCategoryClick = onCategoryClick
-                    )
+        Spacer(Modifier.height(10.dp))
 
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 20.dp)
-                            .padding(horizontal = 16.dp),
-                        text = stringResource(R.string.popular_plants),
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Normal
-                    )
+        SearchField(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            hint = stringResource(R.string.search_hint),
+            onSearchTextChange = onSearchTextChange,
+            debounceTimeMillis = 800L
+        )
 
-                    PlantsList(
-                        plants = uiState.plants,
-                        onPlantClick = onPlantClick
-                    )
-                }
-            }
+        PlantCategoriesList(
+            categories = CATEGORIES,
+            onCategoryClick = onCategoryClick
+        )
 
-            GalleryLoadingErrorState -> ErrorView()
-            GalleryLoadingState -> Loader()
-        }
+        Spacer(Modifier.height(20.dp))
+
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = stringResource(R.string.popular_plants),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Normal
+        )
+
+        PlantsList(
+            plants = plants,
+            onPlantClick = onPlantClick
+        )
     }
 }
 

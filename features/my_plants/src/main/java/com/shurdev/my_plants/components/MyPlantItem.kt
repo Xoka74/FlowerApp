@@ -25,12 +25,10 @@ import coil.compose.AsyncImage
 import com.shurdev.domain.models.myPlant.MyPlant
 import com.shurdev.domain.models.myPlant.PlantWatering
 import com.shurdev.my_plants.R
-import com.shurdev.ui_kit.theme.PlantCardBackgroundColor
-import com.shurdev.ui_kit.theme.PlantCardContentColor
 import com.shurdev.ui_kit.utils.getImage
+import com.shurdev.ui_kit.R as uiKitResource
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import com.shurdev.ui_kit.R as uiKitResource
 
 @Composable
 fun MyPlantItem(
@@ -42,8 +40,9 @@ fun MyPlantItem(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = PlantCardBackgroundColor,
-            contentColor = PlantCardContentColor
+            // TODO
+//            containerColor = PlantCardBackgroundColor,
+//            contentColor = PlantCardContentColor
         ),
         onClick = { onItemClick(plant) }
     ) {

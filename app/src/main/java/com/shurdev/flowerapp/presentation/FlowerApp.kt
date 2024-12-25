@@ -126,11 +126,9 @@ fun FlowerApp() {
 
             profileNavGraph(
                 onTakeSurveyClick = navController::navigateToSurveyGraph,
+                onRecommendedPlantsClick = navController::navigateToRecommendedPlantsGraph,
                 onSettingsClick = {
                     // TODO: Navigate to SettingsScreen
-                },
-                onRecommendedPlantsClick = {
-                    navController.navigateToRecommendedPlantsGraph()
                 },
                 onTradeClick = {
                     navController.navigateToTradeGraph()

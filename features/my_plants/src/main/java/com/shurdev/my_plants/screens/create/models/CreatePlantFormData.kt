@@ -15,7 +15,7 @@ data class CreatePlantForm(
 
     override fun validate(): CreatePlantFormValidationError? {
         if (name.isEmpty()) {
-            return CreatePlantFormValidationError(name = "Обязательное поле")
+            return CreatePlantFormValidationError(nameError = ValidationError.Required)
         }
 
         return null
