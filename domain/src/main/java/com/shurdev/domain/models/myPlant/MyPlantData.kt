@@ -1,6 +1,6 @@
 package com.shurdev.domain.models.myPlant
 
-data class CreateMyPlantIntent(
+data class MyPlantData(
     val name: String,
     val plantWatering: PlantWatering? = null,
     val otherInfo: PlantOtherInfo? = null,

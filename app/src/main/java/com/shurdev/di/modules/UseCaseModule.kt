@@ -4,6 +4,7 @@ import com.shurdev.domain.repositories.MyPlantsRepository
 import com.shurdev.domain.repositories.WateringAlertsRepository
 import com.shurdev.domain.usecases.CreateMyPlantUseCase
 import com.shurdev.domain.usecases.DeleteMyPlantUseCase
+import com.shurdev.domain.usecases.EditMyPlantUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +31,16 @@ class UseCaseModule {
         myPlantsRepository: MyPlantsRepository,
         wateringAlertsRepository: WateringAlertsRepository,
     ) = DeleteMyPlantUseCase(
+        myPlantsRepository = myPlantsRepository,
+        wateringAlertsRepository = wateringAlertsRepository,
+    )
+
+    @Provides
+    @ViewModelScoped
+    fun provideEditMyPlantUseCase(
+        myPlantsRepository: MyPlantsRepository,
+        wateringAlertsRepository: WateringAlertsRepository,
+    ) = EditMyPlantUseCase(
         myPlantsRepository = myPlantsRepository,
         wateringAlertsRepository = wateringAlertsRepository,
     )

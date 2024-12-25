@@ -12,7 +12,6 @@ class DeleteMyPlantUseCase(
         id: MyPlantId,
         name: String,
     ) {
-        // TODO: Add image deleting
         myPlantsRepository.delete(id, name)
 
         wateringAlertsRepository.cancel(

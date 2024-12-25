@@ -29,7 +29,7 @@ fun WateringPicker(
     ExpandableCard(
         title = wateringTitle,
         onChanged = onWateringSelectionChanged,
-        isExpandedByDefault = false,
+        expanded = watering != null,
     ) {
         Column {
             val wateringFrequencyTitle = stringResource(R.string.watering_frequency)

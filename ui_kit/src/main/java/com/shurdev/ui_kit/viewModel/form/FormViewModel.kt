@@ -1,5 +1,10 @@
 package com.shurdev.ui_kit.viewModel.form
 
+import com.shurdev.domain.forms.Form
+import com.shurdev.domain.forms.FormEditingState
+import com.shurdev.domain.forms.FormState
+import com.shurdev.domain.forms.FormValidationError
+import com.shurdev.domain.forms.FormValidationErrorState
 import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

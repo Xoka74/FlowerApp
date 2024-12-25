@@ -3,6 +3,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.shurdev.domain.models.myPlant.MyPlant
 import com.shurdev.domain.models.plant.PlantId
 import com.shurdev.my_plants.screens.details.MyPlantDetailsRoute
 import kotlinx.serialization.Serializable
@@ -16,6 +17,7 @@ fun NavController.navigateToMyPlantDetailsScreen(plantId: PlantId) =
 
 fun NavGraphBuilder.myPlantDetailsScreen(
     onBackInvoked: () -> Unit,
+    onEditClick: (MyPlant) -> Unit,
 ) {
     composable<MyPlantDetails> { backStackEntry ->
         val plantDetails: MyPlantDetails = backStackEntry.toRoute<MyPlantDetails>()
@@ -23,6 +25,7 @@ fun NavGraphBuilder.myPlantDetailsScreen(
         MyPlantDetailsRoute(
             plantId = plantDetails.plantId,
             onBackInvoked = onBackInvoked,
+            onEditClick = onEditClick,
         )
     }
 }

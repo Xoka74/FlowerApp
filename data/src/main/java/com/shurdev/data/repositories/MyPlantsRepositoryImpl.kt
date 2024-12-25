@@ -3,8 +3,9 @@ package com.shurdev.data.repositories
 import com.shurdev.data.daos.MyPlantsDao
 import com.shurdev.data.entities.MyPlantEntity
 import com.shurdev.data.mappers.toDomainModel
-import com.shurdev.domain.models.myPlant.CreateMyPlantIntent
+import com.shurdev.data.mappers.toEntity
 import com.shurdev.domain.models.myPlant.MyPlant
+import com.shurdev.domain.models.myPlant.MyPlantData
 import com.shurdev.domain.models.myPlant.MyPlantId
 import com.shurdev.domain.repositories.MyPlantsRepository
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,10 @@ class MyPlantsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun create(data: CreateMyPlantIntent): Long {
+    override suspend fun getFlowById(id: MyPlantId): Flow<MyPlant?> =
+        myPlantsDao.getFlowById(id).map { it?.toDomainModel() }
+
+    override suspend fun create(data: MyPlantData): Long {
         return withContext(Dispatchers.IO) {
             myPlantsDao.insert(
                 MyPlantEntity(
@@ -35,6 +39,12 @@ class MyPlantsRepositoryImpl @Inject constructor(
                     otherInfo = data.otherInfo,
                 )
             )
+        }
+    }
+
+    override suspend fun update(id: MyPlantId, data: MyPlantData) {
+        return withContext(Dispatchers.IO) {
+            myPlantsDao.update(data.toEntity(id))
         }
     }
 

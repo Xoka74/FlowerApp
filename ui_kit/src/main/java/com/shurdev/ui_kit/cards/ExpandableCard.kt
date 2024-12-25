@@ -13,10 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -28,12 +24,11 @@ import com.shurdev.ui_kit.theme.FlowerAppTheme
 fun ExpandableCard(
     modifier: Modifier = Modifier,
     title: String,
-    isExpandedByDefault: Boolean = false,
+    expanded: Boolean,
     onChanged: (Boolean) -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val colors = MaterialTheme.colorScheme
-    var expanded by remember { mutableStateOf(isExpandedByDefault) }
 
     Card(
         modifier = modifier,
@@ -46,10 +41,7 @@ fun ExpandableCard(
             modifier = Modifier.padding(8.dp),
             title = title,
             expanded = expanded,
-            onCheckedChange = {
-                expanded = !expanded
-                onChanged(expanded)
-            }
+            onCheckedChange = onChanged,
         )
 
         AnimatedVisibility(visible = expanded) {
@@ -94,14 +86,14 @@ fun PreviewExpandableCard() {
             val colors = MaterialTheme.colorScheme
 
             Column(
-                modifier=Modifier.padding(padding),
+                modifier = Modifier.padding(padding),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 listOf(true, false).forEach {
                     ExpandableCard(
                         modifier = Modifier.fillMaxWidth(),
                         title = "Полив",
-                        isExpandedByDefault = it,
+                        expanded = it
                     ) {
                         Column(
                             modifier = Modifier.padding(10.dp),
