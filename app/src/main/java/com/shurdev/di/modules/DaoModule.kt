@@ -1,4 +1,4 @@
-package com.shurdev.di
+package com.shurdev.di.modules
 
 import com.shurdev.data.daos.MyPlantsDao
 import com.shurdev.data.local.AppDatabase

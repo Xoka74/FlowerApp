@@ -1,11 +1,13 @@
 package com.shurdev.onboarding.navigation
 
+import androidx.annotation.Keep
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.shurdev.onboarding.OnboardingRoute
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 object OnboardingNavGraph
 
@@ -19,7 +21,7 @@ fun NavGraphBuilder.onboardingNavGraph(
     }
 }
 
-
+@Keep
 @Serializable
 object OnboardingRoute
 

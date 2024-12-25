@@ -1,3 +1,4 @@
+import androidx.annotation.Keep
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -6,6 +7,7 @@ import com.shurdev.domain.models.plant.PlantId
 import com.shurdev.my_plants.screens.details.MyPlantDetailsRoute
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 data class MyPlantDetails(val plantId: PlantId)
 

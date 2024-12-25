@@ -1,4 +1,4 @@
-package com.shurdev.di
+package com.shurdev.di.modules
 
 import android.content.SharedPreferences
 import com.shurdev.data.dataSource.SettingsDataSource
