@@ -15,6 +15,7 @@ fun ConfirmLeaveScreenLayout(
     onBackInvoked: (() -> Unit)? = null,
     actions: (@Composable RowScope.() -> Unit)? = null,
     showConfirmLeave: (() -> Boolean)? = null,
+    title: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     var showAlertDialog by remember { mutableStateOf(false) }
@@ -42,5 +43,6 @@ fun ConfirmLeaveScreenLayout(
         },
         actions = actions,
         content = content,
+        title = title
     )
 }
