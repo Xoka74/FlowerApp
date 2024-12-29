@@ -33,15 +33,9 @@ fun AppBottomNavigation(
                         contentDescription = name
                     )
                 },
-                label = {
-                    Text(name)
-                },
+                label = { Text(name) },
                 selected = isSelected,
-                onClick = {
-                    if (!isSelected) {
-                        onItemClick(item)
-                    }
-                }
+                onClick = { onItemClick(item) }
             )
         }
     }
