@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import com.shurdev.my_plants.screens.create.MyPlantCreateRoute
 import kotlinx.serialization.Serializable
 
-@Keep
 @Serializable
 object MyPlantCreateRoute
 

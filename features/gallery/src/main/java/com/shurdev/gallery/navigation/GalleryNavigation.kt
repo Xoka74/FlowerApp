@@ -1,8 +1,8 @@
 package com.shurdev.gallery.navigation
 
-import androidx.annotation.Keep
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
@@ -12,11 +12,11 @@ import com.shurdev.gallery.screens.details.GalleryPlantDetailsRoute
 import com.shurdev.gallery.screens.gallery.GalleryRoute
 import kotlinx.serialization.Serializable
 
-
-@Keep
 @Serializable
 object GalleryNavGraph
 
+fun NavController.navigateToGalleryNavGraph(builder: NavOptionsBuilder.() -> Unit) =
+    navigate(GalleryNavGraph, builder)
 
 fun NavGraphBuilder.galleryNavGraph(
     onPlantClick: (Plant) -> Unit,
@@ -29,14 +29,12 @@ fun NavGraphBuilder.galleryNavGraph(
             onPlantClick = onPlantClick,
         )
 
-
         galleryPlantDetailsScreen(
             onPop = onPop,
         )
     }
 }
 
-@Keep
 @Serializable
 object GalleryRoute
 
@@ -50,7 +48,6 @@ fun NavGraphBuilder.galleryScreen(
     }
 }
 
-@Keep
 @Serializable
 data class GalleryPlantDetails(val plantId: PlantId)
 

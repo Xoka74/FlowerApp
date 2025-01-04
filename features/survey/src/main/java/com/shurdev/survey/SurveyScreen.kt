@@ -29,11 +29,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun SurveyRoute(
-    onFinishSurvey: () -> Unit
+    onFinishSurvey: () -> Unit,
 ) {
     val viewModel = hiltViewModel<SurveyViewModel>()
     val uiState by viewModel.uiState.collectAsState()
-
     SurveyScreen(
         uiState = uiState,
         actionListener = viewModel,

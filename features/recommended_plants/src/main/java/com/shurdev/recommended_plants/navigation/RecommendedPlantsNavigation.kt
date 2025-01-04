@@ -1,6 +1,5 @@
 package com.shurdev.recommended_plants.navigation
 
-import androidx.annotation.Keep
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -9,7 +8,6 @@ import com.shurdev.domain.models.plant.Plant
 import com.shurdev.recommended_plants.screens.recommendedPlants.RecommendedPlantsRoute
 import kotlinx.serialization.Serializable
 
-@Keep
 @Serializable
 object RecommendedPlantsNavGraph
 
@@ -29,7 +27,6 @@ fun NavGraphBuilder.recommendedPlantsNavGraph(
     }
 }
 
-@Keep
 @Serializable
 object RecommendedPlantsRoute
 

@@ -16,11 +16,12 @@ import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
 import com.shurdev.flowerapp.presentation.screens.StartupRoute
 import com.shurdev.flowerapp.presentation.screens.startupScreen
 import com.shurdev.flowerapp.presentation.viewModel.SettingsViewModel
-import com.shurdev.gallery.navigation.GalleryNavGraph
 import com.shurdev.gallery.navigation.galleryNavGraph
+import com.shurdev.gallery.navigation.navigateToGalleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
+import com.shurdev.my_plants.screens.details.navigation.navigateToMyPlantDetailsScreen
 import com.shurdev.my_plants.screens.edit.navigation.navigateToEditMyPlantScreen
 import com.shurdev.onboarding.navigation.onboardingNavGraph
 import com.shurdev.profile.navigation.profileNavGraph
@@ -33,7 +34,6 @@ import com.shurdev.trade.navigation.navigateToCreateTradeScreen
 import com.shurdev.trade.navigation.navigateToTradeDetailsScreen
 import com.shurdev.trade.navigation.navigateToTradeGraph
 import com.shurdev.trade.navigation.tradeNavGraph
-import navigateToMyPlantDetailsScreen
 
 @Composable
 fun FlowerApp() {
@@ -86,7 +86,7 @@ fun FlowerApp() {
             startupScreen(
                 settingsViewModel = settingsViewModel,
                 onStartupFinished = { settings ->
-                    navController.navigate(GalleryNavGraph) {
+                    navController.navigateToGalleryNavGraph {
                         popUpTo(StartupRoute) {
                             inclusive = true
                         }

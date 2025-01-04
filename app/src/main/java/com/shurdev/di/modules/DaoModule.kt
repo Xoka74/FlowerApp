@@ -16,12 +16,12 @@ class DaoModule {
     @Provides
     @Singleton
     fun provideMyPlantDao(appDatabase: AppDatabase): MyPlantsDao {
-        return appDatabase.myPlantsDao
+        return appDatabase.myPlantsDao()
     }
 
     @Provides
     @Singleton
     fun provideSurveyResultsDao(database: AppDatabase): SurveyResultsDao {
-        return database.surveyResultsDao
+        return database.surveyResultsDao()
     }
 }
