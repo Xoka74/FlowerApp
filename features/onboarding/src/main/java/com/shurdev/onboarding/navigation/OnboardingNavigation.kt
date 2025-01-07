@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 object OnboardingNavGraph
 
 fun NavGraphBuilder.onboardingNavGraph(
-    onFinishOnboarding: () -> Unit
+    onFinishOnboarding: () -> Unit,
 ) {
     navigation<OnboardingNavGraph>(
         startDestination = OnboardingRoute,
@@ -21,12 +21,11 @@ fun NavGraphBuilder.onboardingNavGraph(
     }
 }
 
-@Keep
 @Serializable
 object OnboardingRoute
 
 fun NavGraphBuilder.onboardingScreen(
-    onFinishOnboarding: () -> Unit
+    onFinishOnboarding: () -> Unit,
 ) {
     composable<OnboardingRoute> {
         OnboardingRoute(

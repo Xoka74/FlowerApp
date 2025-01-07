@@ -26,9 +26,9 @@ import com.shurdev.data.entities.SurveyResultsEntity
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract val surveyResultsDao: SurveyResultsDao
+    abstract fun surveyResultsDao(): SurveyResultsDao
 
-    abstract val myPlantsDao: MyPlantsDao
+    abstract fun myPlantsDao(): MyPlantsDao
 
     companion object {
         const val NAME = "app_database"
