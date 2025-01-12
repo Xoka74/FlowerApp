@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.flowerapp.android.module.convention)
     alias(libs.plugins.flowerapp.android.room.convention)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -16,6 +17,10 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
 
     // Retrofit
     implementation(libs.retrofit)

@@ -92,6 +92,7 @@ dependencies {
     implementation(projects.features.profile)
     implementation(projects.features.recommendedPlants)
     implementation(projects.features.trade)
+    implementation(projects.features.settings)
     implementation(projects.uiKit)
     implementation(projects.utils)
 
@@ -117,6 +118,9 @@ dependencies {
     implementation(libs.converter.gson)
 
     implementation(libs.accompanist.permissions)
+
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

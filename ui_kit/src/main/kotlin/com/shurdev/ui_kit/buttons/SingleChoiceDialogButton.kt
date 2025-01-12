@@ -51,13 +51,16 @@ fun <T> SingleChoiceDialogButton(
             ) {
                 Text(
                     text = title,
-                    style = typography.titleSmall
+                    style = typography.titleMedium
                 )
 
                 Spacer(Modifier.weight(1f))
 
                 if (selectedItem != null) {
-                    Text(itemToString(selectedItem))
+                    Text(
+                        text = itemToString(selectedItem),
+                        style = typography.titleSmall,
+                    )
                 } else if (placeholderText != null) {
                     Text(placeholderText)
                 }
