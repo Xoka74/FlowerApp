@@ -2,6 +2,7 @@ package com.shurdev.di
 
 import com.shurdev.data.remote.ApiConfig
 import com.shurdev.data.remote.api.SurveyApi
+import com.shurdev.data.remote.api.TradeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,7 +45,13 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): SurveyApi {
+    fun provideSurveyApiService(retrofit: Retrofit): SurveyApi {
         return retrofit.create(SurveyApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTradeApiService(retrofit: Retrofit): TradeApi {
+        return retrofit.create(TradeApi::class.java)
     }
 }

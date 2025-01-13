@@ -9,4 +9,6 @@ interface TradeRepository {
     suspend fun getTradeById(id: Int): Trade?
 
     suspend fun createTrade(trade: Trade)
+
+    suspend fun confirmTrade(tradeId: Int)
 }

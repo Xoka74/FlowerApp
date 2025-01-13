@@ -1,11 +1,14 @@
 package com.shurdev.data.repositories
 
+import com.shurdev.data.remote.api.TradeApi
 import com.shurdev.domain.models.plant.Plant
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.domain.repositories.TradeRepository
 import javax.inject.Inject
 
-class TradeRepositoryImpl @Inject constructor() : TradeRepository {
+class TradeRepositoryImpl @Inject constructor(
+    private val tradeApi: TradeApi
+) : TradeRepository {
 
     override suspend fun getTrades(): List<Trade> {
         return trades
@@ -17,9 +20,12 @@ class TradeRepositoryImpl @Inject constructor() : TradeRepository {
     }
 
     override suspend fun createTrade(trade: Trade) {
-        // TODO send created trade to server
+        tradeApi.createTrade(trade)
     }
 
+    override suspend fun confirmTrade(tradeId: Int) {
+        tradeApi.confirmTrade(tradeId)
+    }
 
     private val trades: List<Trade> = (1..10)
         .map {
