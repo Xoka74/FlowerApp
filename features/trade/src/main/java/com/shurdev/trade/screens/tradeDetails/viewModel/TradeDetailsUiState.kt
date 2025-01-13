@@ -10,7 +10,11 @@ sealed class TradeDetailsUiState
 data object TradeDetailsLoadingState : TradeDetailsUiState()
 
 @Stable
-data class TradeDetailsLoadedState(val trade: Trade) : TradeDetailsUiState()
+data class TradeDetailsLoadedState(
+    val trade: Trade,
+    val shouldDisplayConfirmButton: Boolean,
+    val errorMessage: String? = null
+) : TradeDetailsUiState()
 
 @Stable
 data object TradeDetailsLoadingErrorState : TradeDetailsUiState()

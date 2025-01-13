@@ -1,8 +1,10 @@
 package com.shurdev.trade.screens.tradeDetails
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -10,10 +12,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,6 +37,7 @@ import com.shurdev.trade.screens.tradeDetails.viewModel.TradeDetailsLoadingError
 import com.shurdev.trade.screens.tradeDetails.viewModel.TradeDetailsLoadingState
 import com.shurdev.trade.screens.tradeDetails.viewModel.TradeDetailsUiState
 import com.shurdev.trade.screens.tradeDetails.viewModel.TradeDetailsViewModel
+import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.layouts.DefaultScreenLayout
 
 @Composable
@@ -45,14 +54,18 @@ fun TradeDetailsRoute(
 
     TradeDetailsScreen(
         uiState = uiState,
-        onBackInvoked = onBackInvoked
+        onBackInvoked = onBackInvoked,
+        onConfirmButtonClicked = viewModel::confirmTrade,
+        onErrorHandled = viewModel::clearErrorMessage
     )
 }
 
 @Composable
 fun TradeDetailsScreen(
     uiState: TradeDetailsUiState,
-    onBackInvoked: () -> Unit
+    onBackInvoked: () -> Unit,
+    onConfirmButtonClicked: () -> Unit,
+    onErrorHandled: () -> Unit = {},
 ) {
 
     when (uiState) {
@@ -65,60 +78,107 @@ fun TradeDetailsScreen(
             val plantToGet = trade.plantToGet
             val plantToGive = trade.plantToGive
 
-            val titleText = stringResource(R.string.exchange) + " с ${trade.authorName}"
+            val shouldDisplayConfirmButton = uiState.shouldDisplayConfirmButton
 
-            DefaultScreenLayout(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .verticalScroll(rememberScrollState()),
-                onBackInvoked = onBackInvoked,
-                title = {
-                    Text(
-                        text = titleText
-                    )
+            val errorMessage = uiState.errorMessage
+
+            val snackbarHostState = remember { SnackbarHostState() }
+
+            if (errorMessage != null) {
+                LaunchedEffect(errorMessage) {
+                    println("Error message: $errorMessage")
+                    snackbarHostState.showSnackbar(errorMessage)
+                    onErrorHandled()
                 }
-            ) {
+            }
 
-                Column {
+            Scaffold { padding ->
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
+                val titleText = stringResource(R.string.exchange) + " с ${trade.authorName}"
+
+                Box {
+                    DefaultScreenLayout(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .verticalScroll(rememberScrollState()),
+                        onBackInvoked = onBackInvoked,
+                        title = {
+                            Text(
+                                text = titleText
+                            )
+                        }
                     ) {
-                        Icon(
-                            imageVector = Icons.Filled.LocationOn,
-                            contentDescription = ""
-                        )
 
-                        Text(
-                            text = "Москва"
-                        )
+                        Column {
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.LocationOn,
+                                    contentDescription = ""
+                                )
+
+                                Text(
+                                    text = "Москва"
+                                )
+                            }
+
+                            Spacer(
+                                modifier = Modifier.height(12.dp)
+                            )
+
+                            Text(
+                                text = stringResource(R.string.your_plant)
+                            )
+
+                            PlantCard(
+                                plant = plantToGive
+                            )
+
+
+                            Spacer(
+                                modifier = Modifier.height(12.dp)
+                            )
+
+                            Text(
+                                text = stringResource(R.string.in_exchange_for)
+                            )
+
+                            PlantCard(
+                                plant = plantToGet
+                            )
+
+                            Text(
+                                text = stringResource(R.string.contact_data)
+                            )
+
+                            OutlinedCard {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp),
+                                    text = "Telegram: @durov" // TODO add real user contact
+                                )
+                            }
+
+                            if (shouldDisplayConfirmButton) {
+                                PrimaryButton(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    text = stringResource(R.string.make_trade),
+                                    onClick = onConfirmButtonClicked
+                                )
+                            }
+                        }
                     }
+                }
 
-                    Spacer(
-                        modifier = Modifier.height(12.dp)
-                    )
-
-                    Text(
-                        text = stringResource(R.string.your_plant)
-                    )
-
-                    PlantCard(
-                        plant = plantToGive
-                    )
-
-
-                    Spacer(
-                        modifier = Modifier.height(12.dp)
-                    )
-
-                    Text(
-                        text = stringResource(R.string.in_exchange_for)
-                    )
-
-                    PlantCard(
-                        plant = plantToGet
-                    )
-
+                Box(
+                    modifier = Modifier.padding(padding),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    SnackbarHost(hostState = snackbarHostState)
                 }
             }
         }
@@ -142,9 +202,11 @@ fun TradeDetailsScreenPreview() {
                     description = "Великолепный",
                     imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
                 ),
-                authorName = "Юрий"
-            )
+                authorName = "Юрий",
+            ),
+            shouldDisplayConfirmButton = true
         ),
-        onBackInvoked = {}
+        onBackInvoked = {},
+        onConfirmButtonClicked = {}
     )
 }

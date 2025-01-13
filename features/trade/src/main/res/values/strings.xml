@@ -7,4 +7,6 @@
     <string name="in_exchange_for">В обмен на:</string>
     <string name="exchange">Обмен</string>
     <string name="new_trade">Новый обмен</string>
+    <string name="contact_data">Контактные данные:</string>
+    <string name="make_trade">Обменяться</string>
 </resources>
