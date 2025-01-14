@@ -66,7 +66,6 @@ fun TradeDetailsScreen(
     onBackInvoked: () -> Unit,
     onConfirmButtonClicked: () -> Unit,
     onErrorHandled: () -> Unit = {},
-    onBackInvoked: () -> Unit,
 ) {
 
     when (uiState) {
@@ -99,75 +98,74 @@ fun TradeDetailsScreen(
 
                 val titleText = stringResource(R.string.exchange) + " с ${trade.authorName}"
 
-            DefaultScreenLayout(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .verticalScroll(rememberScrollState()),
-                onBackInvoked = onBackInvoked,
-                title = titleText,
-            ) {
+                DefaultScreenLayout(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .verticalScroll(rememberScrollState()),
+                    onBackInvoked = onBackInvoked,
+                    title = titleText,
+                ) {
 
-                        Column {
+                    Column {
 
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.LocationOn,
-                                    contentDescription = ""
-                                )
-
-                                Text(
-                                    text = city
-                                )
-                            }
-
-                            Spacer(
-                                modifier = Modifier.height(12.dp)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.LocationOn,
+                                contentDescription = ""
                             )
 
                             Text(
-                                text = stringResource(R.string.your_plant)
+                                text = city
                             )
+                        }
 
-                            PlantCard(
-                                plant = plantToGive
-                            )
+                        Spacer(
+                            modifier = Modifier.height(12.dp)
+                        )
+
+                        Text(
+                            text = stringResource(R.string.your_plant)
+                        )
+
+                        PlantCard(
+                            plant = plantToGive
+                        )
 
 
-                            Spacer(
-                                modifier = Modifier.height(12.dp)
-                            )
+                        Spacer(
+                            modifier = Modifier.height(12.dp)
+                        )
 
+                        Text(
+                            text = stringResource(R.string.in_exchange_for)
+                        )
+
+                        PlantCard(
+                            plant = plantToGet
+                        )
+
+                        Text(
+                            text = "${stringResource(R.string.contact_data)}:"
+                        )
+
+                        OutlinedCard {
                             Text(
-                                text = stringResource(R.string.in_exchange_for)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                text = trade.contactData
                             )
+                        }
 
-                            PlantCard(
-                                plant = plantToGet
+                        if (shouldDisplayConfirmButton) {
+                            PrimaryButton(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                text = stringResource(R.string.make_trade),
+                                onClick = onConfirmButtonClicked
                             )
-
-                            Text(
-                                text = "${stringResource(R.string.contact_data)}:"
-                            )
-
-                            OutlinedCard {
-                                Text(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp),
-                                    text = trade.contactData
-                                )
-                            }
-
-                            if (shouldDisplayConfirmButton) {
-                                PrimaryButton(
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    text = stringResource(R.string.make_trade),
-                                    onClick = onConfirmButtonClicked
-                                )
-                            }
                         }
                     }
                 }

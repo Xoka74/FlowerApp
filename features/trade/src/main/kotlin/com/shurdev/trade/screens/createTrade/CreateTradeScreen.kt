@@ -23,6 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.shurdev.domain.forms.EditableState
+import com.shurdev.domain.forms.FormEditingState
+import com.shurdev.domain.forms.FormState
+import com.shurdev.domain.forms.FormSubmittingState
 import com.shurdev.domain.models.trade.PlantTrade
 import com.shurdev.trade.composables.MyPlantCard
 import com.shurdev.trade.models.MyPlantPresentation
@@ -32,10 +36,6 @@ import com.shurdev.ui_kit.R
 import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.fields.AppTextField
 import com.shurdev.ui_kit.layouts.ConfirmLeaveScreenLayout
-import com.shurdev.ui_kit.viewModel.form.EditableState
-import com.shurdev.ui_kit.viewModel.form.FormEditingState
-import com.shurdev.ui_kit.viewModel.form.FormState
-import com.shurdev.ui_kit.viewModel.form.FormSubmittingState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,10 +51,8 @@ fun CreateTradeRoute(
     val form by viewModel.formDataState.collectAsState()
     val formState by viewModel.uiState.collectAsState()
 
-    val plantToGet = getPlantToGet()
     val plantToGive = getPlantToGive()
 
-//    plantToGet?.let { viewModel.updatePlantToGetName(it) }
     plantToGive?.let {
         viewModel.updatePlantToGive(
             MyPlantPresentation(
@@ -70,7 +68,6 @@ fun CreateTradeRoute(
         onCityChange = viewModel::updateCity,
         onAuthorNameChange = viewModel::updateAuthorName,
         onContactDataChange = viewModel::updateContactData,
-        onPlantToGetClicked = onPlantToGetClicked,
         onPlantToGiveClicked = onPlantToGiveClicked,
         onPlantToGetNameChange = viewModel::updatePlantToGetName,
         hasChangesCheck = { false },
@@ -87,7 +84,6 @@ fun CreateTradeScreen(
     onCityChange: (String) -> Unit,
     onAuthorNameChange: (String) -> Unit,
     onContactDataChange: (String) -> Unit,
-    onPlantToGetClicked: () -> Unit,
     onPlantToGiveClicked: () -> Unit,
     onPlantToGetNameChange: (String) -> Unit,
     hasChangesCheck: () -> Boolean,
@@ -118,11 +114,7 @@ fun CreateTradeScreen(
             ConfirmLeaveScreenLayout(
                 onBackInvoked = onBackInvoked,
                 showConfirmLeave = hasChangesCheck,
-                title = {
-                    Text(
-                        text = stringResource(com.shurdev.trade.R.string.new_trade)
-                    )
-                }
+                title = stringResource(com.shurdev.trade.R.string.new_trade)
             ) {
                 StickyBottomColumn(
                     modifier = Modifier.padding(20.dp),
@@ -239,7 +231,6 @@ fun CreateTradePreview() {
         onCityChange = {},
         onAuthorNameChange = {},
         onContactDataChange = {},
-        onPlantToGetClicked = {},
         onPlantToGiveClicked = {},
         hasChangesCheck = { true },
         onBackInvoked = {},

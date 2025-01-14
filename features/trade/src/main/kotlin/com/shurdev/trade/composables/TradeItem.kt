@@ -34,8 +34,6 @@ import coil.compose.AsyncImage
 import com.shurdev.domain.models.trade.PlantTrade
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.trade.R
-import com.shurdev.ui_kit.theme.TradeCardBackgroundColor
-import com.shurdev.ui_kit.theme.TradeCardContentColor
 import com.shurdev.ui_kit.utils.getImage
 
 @Composable

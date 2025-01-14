@@ -30,12 +30,14 @@ import com.shurdev.settings.viewModel.navigation.settingsScreen
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
+import com.shurdev.trade.mappers.toPlantTrade
+import com.shurdev.trade.models.MyPlantPresentation
 import com.shurdev.trade.navigation.navigateToCreateTradeScreen
+import com.shurdev.trade.navigation.navigateToPlantPickScreen
 import com.shurdev.trade.navigation.navigateToTradeDetailsScreen
 import com.shurdev.trade.navigation.navigateToTradeGraph
 import com.shurdev.trade.navigation.tradeNavGraph
 import com.shurdev.trade.screens.plantPick.PlantPickType
-import navigateToMyPlantDetailsScreen
 
 @Composable
 fun FlowerApp() {
@@ -173,9 +175,10 @@ fun FlowerApp() {
                 onPlantToGiveClicked = {
                     navController.navigateToPlantPickScreen(PlantPickType.PlantToGive)
                 },
-                settingsScreen(
-                    onDismiss = navController::navigateUp,
-                )
+            )
+
+            settingsScreen(
+                onDismiss = navController::navigateUp,
             )
         }
     }

@@ -49,7 +49,6 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideSurveyApiService(retrofit: Retrofit): SurveyApi {
     fun providePlantApi(retrofit: Retrofit): PlantApi {
         return retrofit.create(PlantApi::class.java)
     }
@@ -62,7 +61,7 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideTradeApiService(retrofit: Retrofit): TradeApi {
+    fun provideTradeApi(retrofit: Retrofit): TradeApi {
         return retrofit.create(TradeApi::class.java)
     }
 }

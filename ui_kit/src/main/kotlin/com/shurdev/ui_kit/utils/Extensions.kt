@@ -4,14 +4,11 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.platform.LocalContext
-import coil.request.ImageRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -54,21 +51,4 @@ fun Uri.getByteArray(context: Context): ByteArray {
     inputStream?.close()
 
     return byteArray
-}
-
-@Composable
-fun ByteArray?.getImage(
-    @DrawableRes defaultImageRes: Int
-): ImageRequest {
-
-    return if (this != null) {
-        ImageRequest.Builder(LocalContext.current)
-            .data(this)
-            .placeholder(defaultImageRes)
-            .build()
-    } else {
-        ImageRequest.Builder(LocalContext.current)
-            .data(defaultImageRes)
-            .build()
-    }
 }

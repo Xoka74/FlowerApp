@@ -21,17 +21,10 @@ class CreateTradeViewModel @Inject constructor(
     initialData = CreateTradeForm()
 ) {
 
-    init{
+    init {
         updateFormData {
             it.copy(
-                plantToGive = Plant(
-                    id = 1,
-                    name = "Роза",
-                    description = "Потрясающая роза, " +
-                            "ежедневно радующая глаз " +
-                            "своей красотой",
-//                    imageLink = "https://postila.ru/data/35/c9/c4/31/35c9c431d95e258318a20252c603ddc5feb288d5f9b31ac3a2ea23e4a2744eb4.jpg"
-                )
+                plantToGive = null
             )
         }
     }
