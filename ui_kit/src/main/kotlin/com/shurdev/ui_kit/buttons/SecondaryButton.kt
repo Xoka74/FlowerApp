@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun PrimaryButton(
+fun SecondaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -16,37 +16,36 @@ fun PrimaryButton(
     isLoading: Boolean = false,
 ) {
     val colors = MaterialTheme.colorScheme
-
     BaseButton(
         modifier = modifier,
         text = text,
         onClick = onClick,
         enabled = enabled,
         isLoading = isLoading,
-        containerColor = colors.primaryContainer,
-        contentColor = colors.onPrimaryContainer,
+        containerColor = colors.secondaryContainer,
+        contentColor = colors.onSecondaryContainer,
     )
 }
 
 
 @Preview
 @Composable
-fun PreviewButton() {
+fun PreviewSecondaryButton() {
     Column {
-        PrimaryButton(
+        SecondaryButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {},
             text = "Some button"
         )
 
-        PrimaryButton(
+        SecondaryButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {},
             text = "Some button",
             isLoading = true,
         )
 
-        PrimaryButton(
+        SecondaryButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {},
             text = "Some button",

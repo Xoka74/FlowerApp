@@ -28,7 +28,7 @@ class RecommendedPlantsViewModel @Inject constructor(
 
         viewModelScope.launch {
             runSuspendCatching {
-                val plants = plantRepository.getPlants()
+                val plants = plantRepository.getRecommendedPlants()
                 _uiState.update { RecommendedPlantsLoadedState(plants = plants) }
             }.onFailure {
                 _uiState.update { RecommendedPlantsLoadingErrorState }

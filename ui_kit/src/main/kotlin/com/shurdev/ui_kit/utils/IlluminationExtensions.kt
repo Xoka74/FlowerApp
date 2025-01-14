@@ -10,7 +10,7 @@ fun Illumination.toResString(): String {
     val id =  when (this) {
         Illumination.Bright -> R.string.bright
         Illumination.PartialShade -> R.string.partial_shade
-        Illumination.Average -> R.string.average
+        Illumination.AverageIllumination -> R.string.average
     }
 
     return stringResource(id)

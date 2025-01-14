@@ -6,9 +6,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,27 +34,19 @@ fun SearchField(
         onChange = onSearchTextChange
     )
 
-    TextField(
+    AppTextField(
         modifier = modifier
             .fillMaxWidth()
             .background(Color.LightGray, RoundedCornerShape(16.dp)),
-        value = currentSearchText,
-        onValueChange = {
+        text = currentSearchText,
+        onTextChange = {
             currentSearchText = it
         },
         singleLine = true,
-        placeholder = {
-            Text(text = hint)
-        },
+        hint = hint,
         leadingIcon = {
             Icon(Icons.Filled.Search, contentDescription = "Search Icon")
         },
-        colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        ),
-        shape = RoundedCornerShape(12.dp),
     )
 }
 
