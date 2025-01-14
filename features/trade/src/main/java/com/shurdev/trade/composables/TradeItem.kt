@@ -1,7 +1,5 @@
 package com.shurdev.trade.composables
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,19 +25,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.shurdev.domain.models.myPlant.MyPlant
-import com.shurdev.domain.models.plant.Plant
+import com.shurdev.domain.models.trade.PlantTrade
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.trade.R
 import com.shurdev.ui_kit.theme.TradeCardBackgroundColor
 import com.shurdev.ui_kit.theme.TradeCardContentColor
-import java.io.ByteArrayOutputStream
+import com.shurdev.ui_kit.utils.getImage
 
 @Composable
 fun TradeItem(
@@ -73,13 +69,17 @@ fun TradeItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
+                val plantToGetImageModel = trade.plantToGet.imageData.getImage(
+                    defaultImageRes = R.drawable.flower_placeholder_1
+                )
+
                 Column {
                     AsyncImage(
                         modifier = Modifier
                             .width(imageWidth)
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(cornerRadius)),
-                        model = trade.plantToGet.imageLink,
+                        model = plantToGetImageModel,
                         contentDescription = "",
                         placeholder = painterResource(R.drawable.flower_placeholder_1),
                         fallback = painterResource(R.drawable.flower_placeholder_1),
@@ -98,13 +98,17 @@ fun TradeItem(
                     contentDescription = ""
                 )
 
+                val plantToGiveImageModel = trade.plantToGet.imageData.getImage(
+                    defaultImageRes = R.drawable.flower_placeholder_1
+                )
+
                 Column {
                     AsyncImage(
                         modifier = Modifier
                             .width(imageWidth)
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(cornerRadius)),
-                        model = trade.plantToGive.imageLink,
+                        model = plantToGiveImageModel,
                         contentDescription = "",
                         placeholder = painterResource(R.drawable.flower_placeholder_1),
                         fallback = painterResource(R.drawable.flower_placeholder_1),
@@ -167,15 +171,13 @@ fun TradeItem(
 fun TradeItemPreview() {
     TradeItem(
         trade = Trade(
-            plantToGet = Plant(
+            plantToGet = PlantTrade(
                 name = "Роза",
-                description = "Колючая",
-                imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
+                imageData = null,
             ),
-            plantToGive = Plant(
+            plantToGive = PlantTrade(
                 name = "Тюльпан",
-                description = "Большой",
-                imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
+                imageData = null,
             ),
             authorName = "Юрий",
             contactData = "tg: @uri777",

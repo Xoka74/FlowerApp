@@ -10,20 +10,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.shurdev.domain.models.plant.Plant
+import com.shurdev.domain.models.trade.PlantTrade
+import com.shurdev.trade.R
+import com.shurdev.ui_kit.utils.getImage
 
 @Composable
 fun PlantCard(
     modifier: Modifier = Modifier,
-    plant: Plant? = null,
+    plant: PlantTrade? = null,
     onCardClick: () -> Unit = {},
     placeholder: @Composable () -> Unit = {},
 ) {
@@ -38,15 +37,15 @@ fun PlantCard(
             return@OutlinedCard
         }
 
+        val imageModel = plant.imageData.getImage(
+            defaultImageRes = R.drawable.flower_placeholder_1
+        )
+
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
-            model = ImageRequest
-                .Builder(LocalContext.current)
-                .placeholder(com.shurdev.trade.R.drawable.flower_placeholder_1)
-                .data(plant.imageLink)
-                .build(),
+            model = imageModel,
             contentDescription = "",
             contentScale = ContentScale.Crop
         )
@@ -63,7 +62,7 @@ fun PlantCard(
             fontSize = 22.sp
         )
 
-        Spacer(
+        /*Spacer(
             modifier = Modifier
                 .height(8.dp)
         )
@@ -73,7 +72,7 @@ fun PlantCard(
                 .padding(horizontal = 8.dp),
             text = plant.description,
             fontWeight = FontWeight.Light
-        )
+        )*/
 
         Spacer(
             modifier = Modifier
@@ -86,13 +85,14 @@ fun PlantCard(
 @Composable
 fun PlantCardPreview() {
     PlantCard(
-        plant = Plant(
-            id = 1,
+        plant = PlantTrade(
+//            id = 1,
             name = "Роза",
-            description = "Потрясающая роза, " +
-                    "ежедневно радующая глаз " +
-                    "своей красотой",
-            imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
+            imageData = null,
+//            description = "Потрясающая роза, " +
+//                    "ежедневно радующая глаз " +
+//                    "своей красотой",
+//            imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
         )
     )
 }

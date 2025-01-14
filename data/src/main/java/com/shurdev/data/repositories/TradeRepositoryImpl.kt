@@ -1,9 +1,10 @@
 package com.shurdev.data.repositories
 
 import com.shurdev.data.mappers.toCreateTradeDto
+import com.shurdev.data.mappers.toTrade
 import com.shurdev.data.remote.api.TradeApi
-import com.shurdev.domain.models.plant.Plant
 import com.shurdev.domain.models.trade.CreateTradeModel
+import com.shurdev.domain.models.trade.PlantTrade
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.domain.repositories.TradeRepository
 import javax.inject.Inject
@@ -13,12 +14,15 @@ class TradeRepositoryImpl @Inject constructor(
 ) : TradeRepository {
 
     override suspend fun getTrades(): List<Trade> {
+//        val tradesDtos = tradeApi.getTrades()
         return trades
     }
 
     override suspend fun getTradeById(id: Int): Trade? {
-        return trades
-            .firstOrNull { it.id == id }
+        val tradeFromApi = tradeApi.getTradeById(id)
+        return tradeFromApi?.toTrade()
+//        return trades
+//            .firstOrNull { it.id == id }
     }
 
     override suspend fun createTrade(trade: CreateTradeModel) {
@@ -33,17 +37,19 @@ class TradeRepositoryImpl @Inject constructor(
         .map {
             Trade(
                 id = it,
-                plantToGet = Plant(
-                    id = it,
+                plantToGet = PlantTrade(
+//                    id = it,
                     name = "Get plant $it",
-                    description = "Get description $it",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
+                    imageData = null,
+//                    description = "Get description $it",
+//                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
                 ),
-                plantToGive = Plant(
-                    id = it,
+                plantToGive = PlantTrade(
+//                    id = it,
                     name = "Give plant $it",
-                    description = "Give description $it",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
+                    imageData = null,
+//                    description = "Give description $it",
+//                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
                 ),
                 authorName = "Author $it",
                 city = "City $it",

@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.plant.Plant
+import com.shurdev.domain.models.trade.PlantTrade
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.trade.R
 import com.shurdev.trade.composables.PlantCard
@@ -194,15 +194,13 @@ fun TradeDetailsScreenPreview() {
         uiState = TradeDetailsLoadedState(
             trade = Trade(
                 id = 1,
-                plantToGet = Plant(
+                plantToGet = PlantTrade(
                     name = "Роза",
-                    description = "Колючая",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
+                    imageData = null,
                 ),
-                plantToGive = Plant(
+                plantToGive = PlantTrade(
                     name = "Тюльпан",
-                    description = "Великолепный",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
+                    imageData = null,
                 ),
                 authorName = "Юрий",
                 city = "Тольятти",

@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.plant.Plant
+import com.shurdev.domain.models.trade.PlantTrade
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.trade.R
 import com.shurdev.trade.composables.TradeItem
@@ -123,15 +123,13 @@ internal fun TradeScreenPreview() {
         uiState = TradeLoadedState(
             trades = listOf(
                 Trade(
-                    plantToGet = Plant(
+                    plantToGet = PlantTrade(
                         name = "Роза",
-                        description = "Колючая",
-                        imageLink = "",
+                        imageData = null,
                     ),
-                    plantToGive = Plant(
+                    plantToGive = PlantTrade(
                         name = "Тюльпан",
-                        description = "Большой",
-                        imageLink = ""
+                        imageData = null,
                     ),
                     authorName = "Юрий",
                     city = "Тольятти",
