@@ -3,6 +3,7 @@ package com.shurdev.flowerapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.shurdev.auth.data.repositories.GoogleAuthCallbackHolder
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,11 +15,16 @@ import com.shurdev.settings.viewModel.SettingsLoadedState
 import com.shurdev.settings.viewModel.SettingsViewModel
 import com.shurdev.ui_kit.theme.FlowerAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var googleAuthCallbackHolder: GoogleAuthCallbackHolder
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        googleAuthCallbackHolder.updateCallback(this)
         setContent {
             val settingsViewModel = hiltViewModel<SettingsViewModel>()
 
@@ -40,5 +46,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        googleAuthCallbackHolder.clearCallback()
+        super.onDestroy()
     }
 }

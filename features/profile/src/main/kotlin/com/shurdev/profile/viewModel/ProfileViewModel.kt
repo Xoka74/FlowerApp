@@ -1,7 +1,8 @@
 package com.shurdev.profile.viewModel
 
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.repositories.UserRepository
+import com.shurdev.domain.repositories.LogoutRepository
+import com.shurdev.domain.repositories.MeRepository
 import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,17 +11,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val userRepository: UserRepository,
+    private val meRepository: MeRepository,
+    private val logoutRepository: LogoutRepository,
 ) : BaseViewModel<ProfileUiState>(ProfileLoadingState) {
     init {
         loadProfile()
     }
 
-    private fun loadProfile() {
+    fun loadProfile() {
         updateUiState { ProfileLoadingState }
         viewModelScope.launch {
             runSuspendCatching {
-                val user = userRepository.getUser()
+                val user = meRepository.getUser()
                 updateUiState { ProfileLoadedState(user) }
             }.onFailure {
                 updateUiState { ProfileErrorState }
@@ -29,6 +31,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun logout() {
-        // TODO: Implement me
+        viewModelScope.launch {
+            logoutRepository.logout()
+        }
     }
 }

@@ -17,11 +17,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.shurdev.domain.models.user.User
+import com.shurdev.domain.models.user.MeUser
 
 @Composable
 fun ProfileHeader(
-    user: User,
+    user: MeUser,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -32,7 +32,7 @@ fun ProfileHeader(
                 .size(150.dp)
                 .clip(CircleShape),
             model = ImageRequest.Builder(LocalContext.current)
-                .data(user.imageLink)
+                .data("https://avatar.iran.liara.run/public/15")
                 .build(),
             contentDescription = "Profile",
             contentScale = ContentScale.Crop
@@ -41,7 +41,7 @@ fun ProfileHeader(
         Spacer(Modifier.height(8.dp))
 
         Text(
-            text = user.name,
+            text = user.name + ' ' + user.surname,
             style = MaterialTheme.typography.titleLarge,
         )
     }

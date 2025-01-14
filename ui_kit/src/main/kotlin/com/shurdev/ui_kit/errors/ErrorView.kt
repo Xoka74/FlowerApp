@@ -12,7 +12,9 @@ import androidx.compose.ui.unit.dp
 import com.shurdev.ui_kit.theme.FlowerAppTheme
 
 @Composable
-fun ErrorView() {
+fun ErrorView(
+    text: String? = null,
+) {
     val colors = MaterialTheme.colorScheme
 
     Card(
@@ -23,7 +25,7 @@ fun ErrorView() {
     ) {
         Text(
             modifier = Modifier.padding(20.dp),
-            text = "Произошла ошибка",
+            text = text ?: "Произошла ошибка",
         )
     }
 }

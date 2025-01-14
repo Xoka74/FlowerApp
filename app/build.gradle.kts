@@ -18,7 +18,7 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.shurdev.flowerapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.shurdev.flowerapp"
@@ -32,14 +32,15 @@ android {
         }
     }
 
-    signingConfigs {
-        register("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = file(keystoreProperties["storeFile"] as String)
-            storePassword = keystoreProperties["storePassword"] as String
-        }
-    }
+    // TODO: Fix issue with Google Sign In not working with release SHA1
+//    signingConfigs {
+//        register("release") {
+//            keyAlias = keystoreProperties["keyAlias"] as String
+//            keyPassword = keystoreProperties["keyPassword"] as String
+//            storeFile = file(keystoreProperties["storeFile"] as String)
+//            storePassword = keystoreProperties["storePassword"] as String
+//        }
+//    }
 
     buildTypes {
         release {
@@ -50,7 +51,7 @@ android {
 
             isMinifyEnabled = true
 
-            signingConfig = signingConfigs.named("release").get()
+//            signingConfig = signingConfigs.named("release").get()
         }
     }
 
@@ -82,9 +83,14 @@ android {
 }
 
 dependencies {
+    implementation(libs.googleid)
+    implementation(libs.androidx.credentials)
+    implementation(libs.credentials.play.services.auth)
+
     // Local dependencies
     implementation(projects.domain)
     implementation(projects.data)
+    implementation(projects.features.auth)
     implementation(projects.features.myPlants)
     implementation(projects.features.gallery)
     implementation(projects.features.onboarding)

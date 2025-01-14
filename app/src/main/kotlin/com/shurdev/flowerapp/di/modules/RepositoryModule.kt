@@ -1,19 +1,19 @@
 package com.shurdev.flowerapp.di.modules
 
+import com.shurdev.auth.data.repositories.AuthRepositoryImpl
 import com.shurdev.data.repositories.MyPlantsRepositoryImpl
 import com.shurdev.data.repositories.PlantRepositoryImpl
 import com.shurdev.data.repositories.SettingsRepositoryImpl
-import com.shurdev.data.repositories.StartupRepositoryImpl
 import com.shurdev.data.repositories.SurveyRepositoryImpl
 import com.shurdev.data.repositories.TradeRepositoryImpl
-import com.shurdev.data.repositories.UserRepositoryImpl
+import com.shurdev.data.repositories.MeRepositoryImpl
+import com.shurdev.domain.repositories.AuthRepository
 import com.shurdev.domain.repositories.MyPlantsRepository
 import com.shurdev.domain.repositories.PlantRepository
 import com.shurdev.domain.repositories.SettingsRepository
-import com.shurdev.domain.repositories.StartupRepository
 import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.domain.repositories.TradeRepository
-import com.shurdev.domain.repositories.UserRepository
+import com.shurdev.domain.repositories.MeRepository
 import com.shurdev.domain.repositories.WateringAlertsRepository
 import com.shurdev.flowerapp.watering.WateringAlertsRepositoryImpl
 import dagger.Binds
@@ -36,11 +36,7 @@ interface RepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
-
-    @Binds
-    @ViewModelScoped
-    fun bindStartupRepository(impl: StartupRepositoryImpl): StartupRepository
+    fun bindMeRepository(impl: MeRepositoryImpl): MeRepository
 
     @Binds
     @ViewModelScoped
@@ -57,4 +53,8 @@ interface RepositoryModule {
     @Binds
     @ViewModelScoped
     fun bindWateringAlertsRepository(impl: WateringAlertsRepositoryImpl): WateringAlertsRepository
+
+    @Binds
+    @ViewModelScoped
+    fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 }
