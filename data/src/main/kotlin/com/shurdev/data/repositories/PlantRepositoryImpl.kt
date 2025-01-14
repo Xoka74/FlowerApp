@@ -1,116 +1,44 @@
 package com.shurdev.data.repositories
 
+import com.shurdev.data.mappers.toDomainModel
+import com.shurdev.data.mappers.toSortDirection
+import com.shurdev.data.mappers.toSortField
+import com.shurdev.data.remote.api.PlantApi
 import com.shurdev.domain.models.plant.Plant
-import com.shurdev.domain.models.plant.PlantFilters
+import com.shurdev.domain.models.plant.PlantId
+import com.shurdev.domain.models.plant.SearchOptions
 import com.shurdev.domain.repositories.PlantRepository
 import javax.inject.Inject
 
-class PlantRepositoryImpl @Inject constructor() : PlantRepository {
+class PlantRepositoryImpl @Inject constructor(
+    private val plantApi: PlantApi,
+) : PlantRepository {
 
-    override suspend fun getPlants(filters: PlantFilters?): List<Plant> {
-        return plants.filter { item ->
-            filters?.let {
-                doesPlantMatchFilters(item, it)
-            } ?: true
-        }
+    override suspend fun getPlants(options: SearchOptions): List<Plant> {
+        val result = plantApi.getPlants(
+            query = options.search,
+            toxicCategories = if (options.filters.toxicCategories.isEmpty()) null else options.filters.toxicCategories.joinToString(
+                ","
+            ),
+            illuminations = if (options.filters.illuminations.isEmpty()) null else options.filters.illuminations.joinToString(
+                ","
+            ),
+            frequencies = if (options.filters.wateringFrequencies.isEmpty()) null else options.filters.wateringFrequencies.joinToString(
+                ","
+            ),
+            sortField = options.sorting.toSortField().toString(),
+            sortDirection = options.sorting.toSortDirection().toString(),
+        )
+
+        return result.flowers.map { it.toDomainModel() }
     }
 
     override suspend fun getRecommendedPlants(): List<Plant> {
-        return recommendedPlants
+        // TODO: Переделать, когда будет готов бэкенд
+        return getPlants(SearchOptions())
     }
 
-    override suspend fun getPlantById(id: Int): Plant? = plants.firstOrNull { it.id == id }
-
-    private val plants: List<Plant> = listOf(
-        Plant(
-            id = 1,
-            name = "Подсолнух обыкновенный",
-            description = "Подсолнечник относится к обширному полиморфному роду Helianthus семейства астровые — Asteraceae. Подсолнечник посевной — однолетнее растение с прямостоячим, грубым, покрытым жёсткими волосками стеблем высотой от 0,6 до 2,5 м и мощной корневой системой, проникающей в почву на глубину до 2 — 3 м. Среднее число листьев в разных условиях составляет у среднеспелых сортов 28 — 32, раннеспелых и скороспелых — 24 — 28.",
-            imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
-        ),
-        Plant(
-            id = 2,
-            name = "Алоэ вера",
-            description = "Этот вид освоился в южной половине Аравийского полуострова, в Северной Африке (Марокко, Мавритания, Египет), а также в Судане, на Канарских островах, в Кабо-Верде, на острове Мадейра.\n" +
-                    "\n" +
-                    "Растение в диком виде встречается на Канарских островах.\n" +
-                    "\n" +
-                    "Алоэ может существовать в условиях, когда другие растения вянут и умирают. В экстремальных ситуациях это растение закрывает поры, удерживая влагу.",
-            imageLink = "https://www.mayflor.ru/img/work/article/a_57_109.JPG"
-        ),
-        Plant(
-            id = 3,
-            name = "Сансевиерия",
-            description = "Сансевиерия, также известная как “железный агава” или “тещин язык”, является популярным комнатным растением, которое произрастает в тропических и субтропических регионах Африки и Азии. Вот описание этого растения, используя ключевые фразы:\n" +
-                    "\n" +
-                    "Массивные, мечевидные листья: Сансевиерия имеет длинные и жесткие листья, которые могут быть плоскими или слегка выпуклыми. Листья имеют форму меча или линейную форму и могут достигать значительной длины.",
-            imageLink = "https://cdn.botanichka.ru/wp-content/uploads/2020/05/sansevieriya-isklyuchitelno-vyinoslivoe-rastenie-dlya-ukrasheniya-interera-01.jpg"
-        ),
-        Plant(
-            id = 4,
-            name = "Спатифиллум",
-            description = "Спатифиллум (Spathiphyllum), также известный как “Женское счастье”, — это изящное растение с элегантными зелеными листьями и белыми соцветиями. Оно не только украшает ваш интерьер, но и является отличным очистителем воздуха, удаляя вредные вещества из окружающей среды.\n" +
-                    "\n" +
-                    "Глянцевые темно-зеленые листья: Спатифиллум имеет крупные, блестящие темно-зеленые листья, которые часто имеют овальную или ланцетную форму. Листья могут быть гладкими и блестящими, создавая эффектный внешний вид.",
-            imageLink = "https://geoglass.ru/wp-content/uploads/2021/09/spatifilum-v-gorshke-1-1750x2000.jpg"
-        ),
-        Plant(
-            id = 5,
-            name = "Фикус Мокламе",
-            description = "Фикус Мокламе — это удивительное комнатное растение, которое привлекает внимание своей необычной листвой. Его листья имеют необычную форму, напоминающую клыки слона, и отличаются богатым зеленым цветом с яркими белыми и кремовыми пятнами или краями.\n" +
-                    "\n" +
-                    "Одна из привлекательных особенностей Фикуса Мокламе — это его способность расти в разных условиях. Он может приспособиться к низкому освещению, хотя предпочитает яркий, но непрямой свет. Растение также способно выжить в сухих условиях, но регулярный полив и умеренная влажность воздуха помогут ему процветать.",
-            imageLink = "https://geoglass.ru/wp-content/uploads/2022/05/Fikus-mokleym.jpg"
-        ),
-        Plant(
-            id = 6,
-            name = "Суккулент Каменная роза",
-            description = "Суккулент Молодило – родом из Западной Африки, с его листвой в форме лиры добавит тропическую атмосферу в вашем интерьере. Не судите его только по внешнему виду, Фидель – настоящий выносливый парень, способный приспособиться к разным условиям выращивания.\n" +
-                    "\n" +
-                    "Молодило отличается своими мясистыми, толстыми и сочными листьями, которые содержат запасы воды. Листья могут иметь различную форму и окраску в зависимости от вида и сорта молодила. Они могут быть округлыми, овальными, ланцетными или зубчатыми, а их окрас может варьироваться от зеленого до фиолетового, серебристого или красного.",
-            imageLink = "https://geoglass.ru/wp-content/uploads/2024/04/%D0%A1%D0%A3%D0%9A%D0%9A%D0%A3%D0%9B%D0%95%D0%9D%D0%A2-%D0%A0%D0%9E%D0%97%D0%90-.jpg"
-        ),
-        Plant(
-            id = 7,
-            name = "Мирсина африканская",
-            description = "Мирсина, также известная как Миртовое дерево, является прекрасным комнатным растением с элегантной листвой и приятным ароматом. Она произрастает в тропических регионах и может стать прекрасным дополнением к вашему интерьеру.\n" +
-                    "\n" +
-                    "Листья Мирсины имеют блестящую зеленую окраску и часто имеют элегантные закругленные формы. Это растение обладает уникальной текстурой и выглядит привлекательно в любом помещении.",
-            imageLink = "https://geoglass.ru/wp-content/uploads/2023/01/dsc08005.jpg"
-        ),
-        Plant(
-            id = 8,
-            name = "Замиокулькас домашний",
-            description = "Замиокулькас (лат. Zamioculcas zamiifolia) — это вечнозеленое комнатное растение, которое произрастает в тропических районах Африки, особенно в Восточной Африке. Оно также известно под названиями «долларовое дерево». Замиокулькас привлекает внимание своей необычной формой и глянцевыми, темно-зелеными листьями, которые имеют восковый блеск.\n" +
-                    "\n" +
-                    "Это растение обладает прочными стеблями, из которых вырастают перистые или перекидные листья. Листья замиокулькаса состоят из нескольких пар листочков, которые могут быть округлыми или овальными в форме, напоминающими перья. Они растут на длинных плотных черешках, которые придают растению изящность.",
-            imageLink = "https://geoglass.ru/wp-content/uploads/2022/07/Zamiokulkas-foto-tsvetok-1.jpg"
-        ),
-        Plant(
-            id = 9,
-            name = "Хамедорея Элеганс",
-            description = "\n" +
-                    "Хамедорея Элеганс также известная как пальма-парлорная, является популярным комнатным растением, которое прекрасно подходит для озеленения помещения.\n" +
-                    "\n" +
-                    "Красота и элегантность: Хамедорея элеганс имеет грациозные перистые листья, которые создают атмосферу природной красоты и элегантности в помещении. Ее изящная форма и ярко-зеленая листва делают ее прекрасным декоративным элементом для любого интерьера.\n" +
-                    "\n",
-            imageLink = "https://geoglass.ru/wp-content/uploads/2022/06/DSC05474-875x875.jpg"
-        ),
-        Plant(
-            id = 10,
-            name = "Пальма Ховея",
-            description = "Ховея (Kentia Palm) — это сильный цветок, который легко справляется с трудными условиями выращивания. Он обожает полутень и благодаря своим длинным листьям, растущим из узкого основания, идеально подходит для заполнения углов комнаты, не занимая много места на полу.\n" +
-                    "\n" +
-                    "Поставьте его перед глухой стеной, и его изогнутые ветви будут создавать прекрасные игры теней. Ховея имеет длинные и крепкие стебли, обычно вьющиеся или висящие. Листья ховеи плотные и блестящие.\n" +
-                    "Ховея – красивое и интересное растение, которое может стать прекрасным дополнением к интерьеру дома или офиса.",
-            imageLink = "https://geoglass.ru/wp-content/uploads/2022/06/Rastenie-hoveya.jpg"
-        ),
-    )
-
-    private val recommendedPlants = plants.filterIndexed { index, _ -> index % 2 == 0 }
-
-    private fun doesPlantMatchFilters(plant: Plant, filters: PlantFilters): Boolean {
-        return plant.name.contains(filters.name ?: "", ignoreCase = true)
-                || plant.description.contains(filters.description ?: "", ignoreCase = true)
+    override suspend fun getPlantById(id: PlantId): Plant {
+        return plantApi.getPlantById(id).toDomainModel()
     }
 }

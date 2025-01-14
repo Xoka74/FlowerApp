@@ -1,9 +1,7 @@
 package com.shurdev.gallery.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -17,13 +15,9 @@ import com.shurdev.gallery.mocks.Plants
 internal fun PlantsList(
     modifier: Modifier = Modifier,
     plants: List<Plant>,
-    onPlantClick: (Plant) -> Unit
+    onPlantClick: (Plant) -> Unit,
 ) {
-    LazyColumn(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .padding(top = 10.dp),
-    ) {
+    LazyColumn(modifier) {
         items(plants) { plant ->
             PlantItem(
                 plant = plant,

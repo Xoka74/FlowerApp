@@ -119,12 +119,10 @@ internal fun TradeScreenPreview() {
                     plantToGet = Plant(
                         name = "Роза",
                         description = "Колючая",
-                        imageLink = "",
                     ),
                     plantToGive = Plant(
                         name = "Тюльпан",
                         description = "Большой",
-                        imageLink = ""
                     ),
                     authorName = "Юрий"
                 )

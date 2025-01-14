@@ -1,13 +1,13 @@
 package com.shurdev.domain.repositories
 
 import com.shurdev.domain.models.plant.Plant
-import com.shurdev.domain.models.plant.PlantFilters
-
+import com.shurdev.domain.models.plant.PlantId
+import com.shurdev.domain.models.plant.SearchOptions
 
 interface PlantRepository {
-    suspend fun getPlants(filters: PlantFilters? = null): List<Plant>
+    suspend fun getPlants(options: SearchOptions): List<Plant>
 
     suspend fun getRecommendedPlants(): List<Plant>
 
-    suspend fun getPlantById(id: Int): Plant?
+    suspend fun getPlantById(id: PlantId): Plant?
 }
