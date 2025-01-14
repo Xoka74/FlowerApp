@@ -2,6 +2,8 @@
 <resources>
     <string name="add_to_favorite">Добавить в избранное</string>
     <string name="add_plant">Добавить растение</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
     <string name="settings">Настройки</string>
     <string name="logout">Выйти</string>
     <string name="take_survey">Пройти опрос</string>
@@ -27,6 +29,7 @@
     <string name="toxicity">Токсичность</string>
     <string name="next_watering">Следующий полив: %1$s</string>
     <string name="required_field">Обязательное поле</string>
+    <string name="nothing_found">Ничего не найдено</string>
 
     <string name="once_a_week">Раз в неделю</string>
     <string name="twice_a_week">2 раза в неделю</string>
@@ -37,7 +40,16 @@
     <string name="partial_shade">Частичная тень</string>
     <string name="average">Средняя</string>
 
+    <string name="dark">Темная</string>
+    <string name="light">Светлая</string>
+    <string name="system">Системная</string>
+
     <string name="kids">Дети</string>
     <string name="pets">Питомцы</string>
     <string name="people">Люди</string>
+
+    <string name="by_name_ascending">С начала алфавита</string>
+    <string name="by_name_descending">С конца алфавита</string>
+    <string name="by_size_ascending">Сначала маленькие</string>
+    <string name="by_size_descending">Сначала большие</string>
 </resources>

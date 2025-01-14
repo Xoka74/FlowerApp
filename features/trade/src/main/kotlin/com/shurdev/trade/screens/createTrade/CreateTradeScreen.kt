@@ -174,7 +174,6 @@ fun CreateTradePreview() {
                 description = "Потрясающая роза, " +
                         "ежедневно радующая глаз " +
                         "своей красотой",
-                imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
             )
         ),
         formState = FormEditingState,

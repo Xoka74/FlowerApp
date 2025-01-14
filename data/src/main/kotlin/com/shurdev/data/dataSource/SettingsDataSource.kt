@@ -1,18 +1,19 @@
 package com.shurdev.data.dataSource
 
-import android.content.SharedPreferences
-import com.shurdev.data.keys.LocalKeys
+import androidx.datastore.core.DataStore
+import com.shurdev.data.mappers.toDomainModel
+import com.shurdev.data.models.SettingsEntity
+import com.shurdev.domain.models.settings.Settings
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SettingsDataSource @Inject constructor(
-    private val prefs: SharedPreferences,
+    private val dataStore: DataStore<SettingsEntity>,
 ) {
-    fun isFirstRun(): Boolean = prefs.getBoolean(LocalKeys.FIRST_RUN, true)
+    val settings: Flow<Settings> = dataStore.data.map { it.toDomainModel() }
 
-    fun setFirstRun() {
-        return with(prefs.edit()) {
-            putBoolean(LocalKeys.FIRST_RUN, false)
-            apply()
-        }
+    suspend fun updateSettings(transform: suspend (SettingsEntity) -> SettingsEntity) {
+        dataStore.updateData(transform = transform)
     }
 }

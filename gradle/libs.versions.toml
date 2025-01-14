@@ -4,6 +4,7 @@ androidGradlePlugin = "8.7.3"
 coilCompose = "2.7.0"
 coreSplashscreen = "1.0.1"
 desugarJdkLibs = "2.1.4"
+datastore = "1.1.1"
 javaxInject = "1"
 kotlin = "2.1.0"
 coreKtx = "1.13.1"
@@ -18,13 +19,15 @@ room = "2.6.1"
 hiltNavigation = "1.2.0"
 hilt = "2.54"
 ksp = "2.1.0-1.0.29"
-kotlinxSerializationJson = "1.7.3"
+kotlinxSerializationJson = "1.8.0"
 secrets = "2.0.1"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }

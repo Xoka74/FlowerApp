@@ -123,7 +123,6 @@ internal fun PlantItemPreview() {
         plant = Plant(
             name = "Роза",
             description = "Челябинская",
-            imageLink = ""
         ),
         onPlantClick = {}
     )

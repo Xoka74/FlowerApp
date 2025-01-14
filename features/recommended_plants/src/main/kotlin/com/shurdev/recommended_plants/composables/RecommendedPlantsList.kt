@@ -45,7 +45,6 @@ internal fun RecommendedPlantsListPreview() {
                 id = it,
                 name = "Name$it",
                 description = "Description$it",
-                imageLink = ""
             )
         },
         onPlantClick = {}

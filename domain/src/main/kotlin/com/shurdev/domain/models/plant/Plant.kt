@@ -6,5 +6,5 @@ data class Plant(
     val id: PlantId? = null,
     val name: String,
     val description: String,
-    val imageLink: String,
+    val imageLink: ByteArray? = null,
 )

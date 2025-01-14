@@ -2,6 +2,7 @@
 <resources>
     <string name="search">Поиск</string>
     <string name="search_hint">Поиск по галерее</string>
-    <string name="popular_plants">Популярные растения</string>
     <string name="gallery">Галерея</string>
+    <string name="filters">Фильтры</string>
+    <string name="sorting">Сортировка</string>
 </resources>
