@@ -30,10 +30,14 @@ import com.shurdev.settings.viewModel.navigation.settingsScreen
 import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
+import com.shurdev.trade.mappers.toPlantTrade
+import com.shurdev.trade.models.MyPlantPresentation
 import com.shurdev.trade.navigation.navigateToCreateTradeScreen
+import com.shurdev.trade.navigation.navigateToPlantPickScreen
 import com.shurdev.trade.navigation.navigateToTradeDetailsScreen
 import com.shurdev.trade.navigation.navigateToTradeGraph
 import com.shurdev.trade.navigation.tradeNavGraph
+import com.shurdev.trade.screens.plantPick.PlantPickType
 
 @Composable
 fun FlowerApp() {
@@ -144,7 +148,33 @@ fun FlowerApp() {
                     }
                 },
                 onBackInvoked = navController::navigateUp,
-                onCreateTradeClick = navController::navigateToCreateTradeScreen,
+                onCreateTradeClick = {
+                    navController.navigateToCreateTradeScreen()
+                },
+                onPlantToGetClicked = {
+                    navController.navigateToPlantPickScreen(PlantPickType.PlantToGet)
+                },
+                onPlantPicked = { pickedPlant, plantPickType ->
+                    navController.previousBackStackEntry?.savedStateHandle?.set(
+                        key = plantPickType.type,
+                        value = MyPlantPresentation(
+                            name = pickedPlant.name,
+                            imageData = pickedPlant.imageData
+                        )
+                    )
+
+                    navController.popBackStack()
+                },
+                getPlantToGive = {
+                    navController
+                        .currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.get<MyPlantPresentation>(PlantPickType.PlantToGive.type)
+                        ?.toPlantTrade()
+                },
+                onPlantToGiveClicked = {
+                    navController.navigateToPlantPickScreen(PlantPickType.PlantToGive)
+                },
             )
 
             settingsScreen(

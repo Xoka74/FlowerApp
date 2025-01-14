@@ -20,6 +20,26 @@ class TradeDetailsViewModel @AssistedInject constructor(
         loadTrade(tradeId = tradeId)
     }
 
+    fun confirmTrade() {
+        viewModelScope.launch {
+            runSuspendCatching {
+                tradeRepository.confirmTrade(tradeId)
+            }.onFailure { exception ->
+                setErrorMessage(exception.message)
+            }
+        }
+    }
+
+    fun clearErrorMessage() {
+        setErrorMessage(null)
+    }
+
+    private fun setErrorMessage(errorMessage: String?) {
+        loadedState?.let { state ->
+            updateUiState { state.copy(errorMessage = errorMessage) }
+        }
+    }
+
     private fun loadTrade(tradeId: Int) {
         viewModelScope.launch {
             updateUiState { TradeDetailsLoadingState }
@@ -28,7 +48,12 @@ class TradeDetailsViewModel @AssistedInject constructor(
                 val trade = tradeRepository.getTradeById(tradeId)
 
                 if (trade != null) {
-                    updateUiState { TradeDetailsLoadedState(trade) }
+                    updateUiState {
+                        TradeDetailsLoadedState(
+                            trade = trade,
+                            shouldDisplayConfirmButton = true // TODO
+                        )
+                    }
                 } else {
                     updateUiState { TradeDetailsLoadingErrorState }
                 }
@@ -38,6 +63,9 @@ class TradeDetailsViewModel @AssistedInject constructor(
             }
         }
     }
+
+    private val loadedState: TradeDetailsLoadedState?
+        get() = uiState.value as? TradeDetailsLoadedState
 
     @AssistedFactory
     interface ViewModelFactory {

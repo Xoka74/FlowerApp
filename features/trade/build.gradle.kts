@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.flowerapp.android.module.feature)
     alias(libs.plugins.flowerapp.android.module.compose)
     alias(libs.plugins.flowerapp.android.hilt.convention)
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 android {

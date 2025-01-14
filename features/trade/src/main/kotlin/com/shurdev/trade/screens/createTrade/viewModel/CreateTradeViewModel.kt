@@ -1,11 +1,13 @@
 package com.shurdev.trade.screens.createTrade.viewModel
 
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.models.plant.Plant
-import com.shurdev.domain.models.trade.Trade
+import com.shurdev.domain.models.trade.CreateTradeModel
 import com.shurdev.domain.repositories.TradeRepository
+import com.shurdev.trade.models.MyPlantPresentation
 import com.shurdev.trade.screens.createTrade.models.CreateTradeForm
 import com.shurdev.trade.screens.createTrade.models.CreateTradeFormValidationError
+import com.shurdev.ui_kit.utils.compressImage
+import com.shurdev.ui_kit.utils.toBase64
 import com.shurdev.ui_kit.viewModel.trackChanges.TrackChangesFormViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,35 +21,58 @@ class CreateTradeViewModel @Inject constructor(
     initialData = CreateTradeForm()
 ) {
 
+    init {
+        updateFormData {
+            it.copy(
+                plantToGive = null
+            )
+        }
+    }
+
     override fun sendForm() {
 
-        val plantToGet = formData.plantToGet
-        val plantToGive = formData.plantToGive
-
-        if (plantToGet == null || plantToGive == null) {
-            return
-        }
+        val plantToGive = formData.plantToGive ?: return
 
         viewModelScope.launch {
 
             runSuspendCatching {
                 tradeRepository.createTrade(
-                    trade = Trade(
-                        plantToGet = plantToGet,
-                        plantToGive = plantToGive,
-                        authorName = formData.authorName,
+                    trade = CreateTradeModel(
+                        id = 0,
+                        plantToGetName = formData.plantToGetName,
+                        plantToGiveName = plantToGive.name,
+                        plantToGiveImage = plantToGive.imageData?.compressImage(75)?.toBase64()
+                            ?: "",
+                        city = formData.city,
+                        description = formData.description,
                     )
                 )
-            }.onFailure {
-                println("Error: $it")
-                // TODO
+
+            }.onFailure { e ->
+
+                updateFormData {
+                    it.copy(
+                        errorMessage = e.message
+                    )
+                }
             }
         }
+    }
+
+    fun handleError(errorMessage: String, handler: (String) -> Unit) {
+        handler(errorMessage)
+        updateFormData { it.copy(errorMessage = null) }
     }
 
     fun updateCity(newCity: String) {
         updateFormData {
             it.copy(city = newCity)
+        }
+    }
+
+    fun updateContactData(newContactData: String) {
+        updateFormData {
+            it.copy(contactData = newContactData)
         }
     }
 
@@ -57,7 +82,7 @@ class CreateTradeViewModel @Inject constructor(
         }
     }
 
-    fun updatePlantToGive(newPlantToGive: Plant) {
+    fun updatePlantToGive(newPlantToGive: MyPlantPresentation) {
         updateFormData {
             it.copy(
                 plantToGive = newPlantToGive
@@ -65,10 +90,10 @@ class CreateTradeViewModel @Inject constructor(
         }
     }
 
-    fun updatePlantToGet(newPlantToGet: Plant) {
+    fun updatePlantToGetName(newPlantToGetName: String) {
         updateFormData {
             it.copy(
-                plantToGet = newPlantToGet
+                plantToGetName = newPlantToGetName
             )
         }
     }

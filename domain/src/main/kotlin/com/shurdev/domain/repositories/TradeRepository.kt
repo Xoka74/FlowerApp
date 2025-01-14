@@ -1,5 +1,6 @@
 package com.shurdev.domain.repositories
 
+import com.shurdev.domain.models.trade.CreateTradeModel
 import com.shurdev.domain.models.trade.Trade
 
 interface TradeRepository {
@@ -8,5 +9,7 @@ interface TradeRepository {
 
     suspend fun getTradeById(id: Int): Trade?
 
-    suspend fun createTrade(trade: Trade)
+    suspend fun createTrade(trade: CreateTradeModel)
+
+    suspend fun confirmTrade(tradeId: Int)
 }
