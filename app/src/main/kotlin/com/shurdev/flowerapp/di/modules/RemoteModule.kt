@@ -1,5 +1,9 @@
 package com.shurdev.flowerapp.di.modules
 
+import com.shurdev.auth.data.authenticator.AppAuthenticator
+import com.shurdev.auth.data.interceptors.LogoutInterceptor
+import com.shurdev.auth.data.interceptors.TokenInterceptor
+import com.shurdev.data.remote.api.MeApi
 import com.shurdev.data.remote.api.PlantApi
 import com.shurdev.data.remote.api.SurveyApi
 import com.shurdev.flowerapp.di.qualifiers.BaseUrl
@@ -28,9 +32,17 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        tokenInterceptor: TokenInterceptor,
+        logoutInterceptor: LogoutInterceptor,
+        authenticator: AppAuthenticator,
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(logoutInterceptor)
+            .addInterceptor(tokenInterceptor)
+            .authenticator(authenticator)
             .build()
     }
 
@@ -63,5 +75,11 @@ class RemoteModule {
     @Singleton
     fun provideTradeApi(retrofit: Retrofit): TradeApi {
         return retrofit.create(TradeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMeApi(retrofit: Retrofit): MeApi {
+        return retrofit.create(MeApi::class.java)
     }
 }

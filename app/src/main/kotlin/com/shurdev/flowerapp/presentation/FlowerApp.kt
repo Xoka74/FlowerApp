@@ -4,18 +4,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.shurdev.auth.base.AuthViewModel
+import com.shurdev.auth.presentation.ui.screens.login.navigation.LoginRoute
+import com.shurdev.auth.presentation.ui.screens.login.navigation.loginScreen
 import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
-import com.shurdev.flowerapp.presentation.screens.startup.StartupRoute
-import com.shurdev.flowerapp.presentation.screens.startup.startupScreen
+import com.shurdev.flowerapp.presentation.screens.splash.navigation.SplashRoute
+import com.shurdev.flowerapp.presentation.screens.splash.navigation.splashScreen
+import com.shurdev.gallery.navigation.GalleryRoute
 import com.shurdev.gallery.navigation.galleryNavGraph
-import com.shurdev.gallery.navigation.navigateToGalleryNavGraph
 import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
 import com.shurdev.my_plants.navigation.myPlantsNavGraph
 import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
@@ -27,7 +33,6 @@ import com.shurdev.recommended_plants.navigation.navigateToRecommendedPlantsGrap
 import com.shurdev.recommended_plants.navigation.recommendedPlantsNavGraph
 import com.shurdev.settings.viewModel.navigation.navigateToSettings
 import com.shurdev.settings.viewModel.navigation.settingsScreen
-import com.shurdev.survey.navigation.SurveyNavGraph
 import com.shurdev.survey.navigation.navigateToSurveyGraph
 import com.shurdev.survey.navigation.surveyNavGraph
 import com.shurdev.trade.mappers.toPlantTrade
@@ -58,6 +63,10 @@ fun FlowerApp() {
         currentDestination?.hasRoute(item.route::class) == true
     }
 
+    val authViewModel = hiltViewModel<AuthViewModel>()
+
+    val isAuthorizedState by authViewModel.isAuthenticated.collectAsState()
+
     Scaffold(
         bottomBar = {
             if (selectedDestination != null) {
@@ -83,21 +92,11 @@ fun FlowerApp() {
         NavHost(
             modifier = Modifier.padding(padding),
             navController = navController,
-            startDestination = StartupRoute,
+            startDestination = SplashRoute,
         ) {
-            startupScreen(
-                onStartupFinished = { settings ->
-                    navController.navigateToGalleryNavGraph {
-                        popUpTo(StartupRoute) {
-                            inclusive = true
-                        }
-                    }
+            splashScreen()
 
-                    if (settings.isFirstRun) {
-                        navController.navigate(SurveyNavGraph)
-                    }
-                },
-            )
+            loginScreen()
 
             onboardingNavGraph(
                 onFinishOnboarding = navController::navigateToSurveyGraph
@@ -130,8 +129,8 @@ fun FlowerApp() {
             profileNavGraph(
                 onTakeSurveyClick = navController::navigateToSurveyGraph,
                 onRecommendedPlantsClick = navController::navigateToRecommendedPlantsGraph,
-                onSettingsClick = navController::navigateToSettings,
                 onTradeClick = navController::navigateToTradeGraph,
+                onSettingsClick = navController::navigateToSettings,
             )
 
             recommendedPlantsNavGraph(
@@ -142,14 +141,12 @@ fun FlowerApp() {
             )
 
             tradeNavGraph(
+                onBackInvoked = navController::navigateUp,
+                onCreateTradeClick = navController::navigateToCreateTradeScreen,
                 onTradeItemClick = { trade ->
                     trade.id?.let {
                         navController.navigateToTradeDetailsScreen(tradeId = it)
                     }
-                },
-                onBackInvoked = navController::navigateUp,
-                onCreateTradeClick = {
-                    navController.navigateToCreateTradeScreen()
                 },
                 onPlantToGetClicked = {
                     navController.navigateToPlantPickScreen(PlantPickType.PlantToGet)
@@ -180,6 +177,20 @@ fun FlowerApp() {
             settingsScreen(
                 onDismiss = navController::navigateUp,
             )
+        }
+
+        LaunchedEffect(isAuthorizedState) {
+            val route: Any = when (isAuthorizedState) {
+                true -> GalleryRoute
+                false -> LoginRoute
+                null -> SplashRoute
+            }
+
+            navController.navigate(route) {
+                popUpTo(navController.graph.startDestinationId) {
+                    inclusive = true
+                }
+            }
         }
     }
 }

@@ -3,4 +3,5 @@
     <string name="recommended_plants">Рекомендованные растения</string>
     <string name="plants_trade">Обмен растениями</string>
     <string name="profile">Профиль</string>
+    <string name="are_you_sure_you_want_to_logout">Вы уверены, что хотите выйти из аккаунта?</string>
 </resources>

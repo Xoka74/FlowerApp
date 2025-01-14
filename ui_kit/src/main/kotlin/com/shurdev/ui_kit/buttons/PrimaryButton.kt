@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -14,6 +15,7 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isLoading: Boolean = false,
+    icon: Painter? = null,
 ) {
     val colors = MaterialTheme.colorScheme
 
@@ -23,6 +25,7 @@ fun PrimaryButton(
         onClick = onClick,
         enabled = enabled,
         isLoading = isLoading,
+        icon = icon,
         containerColor = colors.primaryContainer,
         contentColor = colors.onPrimaryContainer,
     )

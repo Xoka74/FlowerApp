@@ -1,8 +1,12 @@
 package com.shurdev.profile
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.user.User
 import com.shurdev.profile.composables.ProfileHeader
 import com.shurdev.profile.composables.ProfileMenu
 import com.shurdev.profile.viewModel.ProfileErrorState
@@ -21,7 +24,6 @@ import com.shurdev.profile.viewModel.ProfileViewModel
 import com.shurdev.ui_kit.actions.SettingsAction
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.layouts.DefaultScreenLayout
-import com.shurdev.ui_kit.loaders.Loader
 
 @Composable
 internal fun ProfileRoute(
@@ -53,29 +55,6 @@ internal fun ProfileScreen(
     onRecommendedPlantsClick: () -> Unit = {},
     onTradeClick: () -> Unit = {},
 ) {
-    when (uiState) {
-        ProfileErrorState -> ErrorView()
-        ProfileLoadingState -> Loader()
-        is ProfileLoadedState -> ProfileScreenContent(
-            user = uiState.user,
-            onLogoutClick = onLogoutClick,
-            onTakeSurveyClick = onTakeSurveyClick,
-            onSettingsClick = onSettingsClick,
-            onRecommendedPlantsClick = onRecommendedPlantsClick,
-            onTradeClick = onTradeClick,
-        )
-    }
-}
-
-@Composable
-internal fun ProfileScreenContent(
-    user: User,
-    onLogoutClick: () -> Unit = {},
-    onTakeSurveyClick: () -> Unit = {},
-    onSettingsClick: () -> Unit = {},
-    onRecommendedPlantsClick: () -> Unit = {},
-    onTradeClick: () -> Unit = {},
-) {
     DefaultScreenLayout(
         title = stringResource(R.string.profile),
         actions = {
@@ -85,7 +64,19 @@ internal fun ProfileScreenContent(
         }
     ) {
         Column {
-            ProfileHeader(user)
+            when (uiState) {
+                ProfileErrorState -> ErrorView()
+                ProfileLoadingState -> Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    CircularProgressIndicator()
+                }
+
+                is ProfileLoadedState -> ProfileHeader(
+                    user = uiState.user,
+                )
+            }
 
             Spacer(Modifier.height(20.dp))
 

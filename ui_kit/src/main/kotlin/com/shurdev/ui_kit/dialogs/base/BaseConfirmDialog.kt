@@ -19,7 +19,7 @@ fun BaseConfirmDialog(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     title: String,
-    text: String,
+    text: String? = null,
     confirmText: String,
     dismissText: String,
     icon: ImageVector,
@@ -38,12 +38,14 @@ fun BaseConfirmDialog(
                 )
             }
         },
-        text = {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-            ) {
-                Text(text)
+        text = text?.let { value ->
+            {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Text(value)
+                }
             }
         },
         onDismissRequest = onDismissRequest,
