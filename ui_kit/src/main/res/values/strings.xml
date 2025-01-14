@@ -40,6 +40,10 @@
     <string name="partial_shade">Частичная тень</string>
     <string name="average">Средняя</string>
 
+    <string name="dark">Темная</string>
+    <string name="light">Светлая</string>
+    <string name="system">Системная</string>
+
     <string name="kids">Дети</string>
     <string name="pets">Питомцы</string>
     <string name="people">Люди</string>

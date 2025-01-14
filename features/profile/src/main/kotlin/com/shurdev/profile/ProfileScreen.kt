@@ -79,10 +79,9 @@ internal fun ProfileScreenContent(
     DefaultScreenLayout(
         title = stringResource(R.string.profile),
         actions = {
-            // TODO: Uncomment when settings will be added
-//            SettingsAction(
-//                onClick = onSettingsClick,
-//            )
+            SettingsAction(
+                onClick = onSettingsClick,
+            )
         }
     ) {
         Column {
