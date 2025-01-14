@@ -131,12 +131,10 @@ fun TradeDetailsScreenPreview() {
                 plantToGet = Plant(
                     name = "Роза",
                     description = "Колючая",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
                 ),
                 plantToGive = Plant(
                     name = "Тюльпан",
                     description = "Великолепный",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
                 ),
                 authorName = "Юрий"
             )

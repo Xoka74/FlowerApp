@@ -29,13 +29,11 @@ class TradeRepositoryImpl @Inject constructor() : TradeRepository {
                     id = it,
                     name = "Get plant $it",
                     description = "Get description $it",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
                 ),
                 plantToGive = Plant(
                     id = it,
                     name = "Give plant $it",
                     description = "Give description $it",
-                    imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
                 ),
                 authorName = "Author $it"
             )

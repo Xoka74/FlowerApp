@@ -1,5 +1,6 @@
 package com.shurdev.flowerapp.di.modules
 
+import com.shurdev.data.remote.api.PlantApi
 import com.shurdev.data.remote.api.SurveyApi
 import com.shurdev.flowerapp.di.qualifiers.BaseUrl
 import dagger.Module
@@ -47,7 +48,13 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): SurveyApi {
+    fun providePlantApi(retrofit: Retrofit): PlantApi {
+        return retrofit.create(PlantApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSurveyApi(retrofit: Retrofit): SurveyApi {
         return retrofit.create(SurveyApi::class.java)
     }
 }
