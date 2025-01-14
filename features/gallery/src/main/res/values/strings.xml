@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search">Поиск</string>
-    <string name="search_hint">Растения, статьи, советы и другое</string>
-    <string name="popular_plants">Популярные растения</string>
+    <string name="search_hint">Поиск по галерее</string>
+    <string name="gallery">Галерея</string>
+    <string name="filters">Фильтры</string>
+    <string name="sorting">Сортировка</string>
 </resources>

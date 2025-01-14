@@ -1,6 +1,7 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -34,3 +35,4 @@ include(":features:onboarding")
 include(":features:profile")
 include(":features:recommended_plants")
 include(":features:trade")
+include(":features:settings")

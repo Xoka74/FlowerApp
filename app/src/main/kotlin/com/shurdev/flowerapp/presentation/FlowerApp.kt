@@ -1,0 +1,182 @@
+package com.shurdev.flowerapp.presentation
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.shurdev.flowerapp.presentation.composables.AppBottomNavigation
+import com.shurdev.flowerapp.presentation.screens.startup.StartupRoute
+import com.shurdev.flowerapp.presentation.screens.startup.startupScreen
+import com.shurdev.gallery.navigation.galleryNavGraph
+import com.shurdev.gallery.navigation.navigateToGalleryNavGraph
+import com.shurdev.gallery.navigation.navigateToGalleryPlantDetailsScreen
+import com.shurdev.my_plants.navigation.myPlantsNavGraph
+import com.shurdev.my_plants.screens.create.navigation.navigateToMyPlantCreateScreen
+import com.shurdev.my_plants.screens.details.navigation.navigateToMyPlantDetailsScreen
+import com.shurdev.my_plants.screens.edit.navigation.navigateToEditMyPlantScreen
+import com.shurdev.onboarding.navigation.onboardingNavGraph
+import com.shurdev.profile.navigation.profileNavGraph
+import com.shurdev.recommended_plants.navigation.navigateToRecommendedPlantsGraph
+import com.shurdev.recommended_plants.navigation.recommendedPlantsNavGraph
+import com.shurdev.settings.viewModel.navigation.navigateToSettings
+import com.shurdev.settings.viewModel.navigation.settingsScreen
+import com.shurdev.survey.navigation.SurveyNavGraph
+import com.shurdev.survey.navigation.navigateToSurveyGraph
+import com.shurdev.survey.navigation.surveyNavGraph
+import com.shurdev.trade.navigation.navigateToCreateTradeScreen
+import com.shurdev.trade.navigation.navigateToTradeDetailsScreen
+import com.shurdev.trade.navigation.navigateToTradeGraph
+import com.shurdev.trade.navigation.tradeNavGraph
+import com.shurdev.trade.screens.plantPick.PlantPickType
+import navigateToMyPlantDetailsScreen
+
+@Composable
+fun FlowerApp() {
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+    val currentDestination = navBackStackEntry?.destination
+
+    val bottomNavigationItems = remember {
+        listOf(
+            BottomNavigationItem.MyPlants,
+            BottomNavigationItem.Gallery,
+            BottomNavigationItem.Profile,
+        )
+    }
+
+    val selectedDestination = bottomNavigationItems.firstOrNull { item ->
+        currentDestination?.hasRoute(item.route::class) == true
+    }
+
+    Scaffold(
+        bottomBar = {
+            if (selectedDestination != null) {
+                BottomAppBar {
+                    AppBottomNavigation(
+                        items = bottomNavigationItems,
+                        selectedItem = selectedDestination,
+                        onItemClick = { item ->
+                            navController.navigate(item.route) {
+                                popUpTo(selectedDestination.route) {
+                                    saveState = true
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    ) { padding ->
+        NavHost(
+            modifier = Modifier.padding(padding),
+            navController = navController,
+            startDestination = StartupRoute,
+        ) {
+            startupScreen(
+                onStartupFinished = { settings ->
+                    navController.navigateToGalleryNavGraph {
+                        popUpTo(StartupRoute) {
+                            inclusive = true
+                        }
+                    }
+
+                    if (settings.isFirstRun) {
+                        navController.navigate(SurveyNavGraph)
+                    }
+                },
+            )
+
+            onboardingNavGraph(
+                onFinishOnboarding = navController::navigateToSurveyGraph
+            )
+
+            surveyNavGraph(
+                onFinishSurvey = navController::navigateUp
+            )
+
+            galleryNavGraph(
+                onPop = navController::navigateUp,
+                onPlantClick = { plant ->
+                    plant.id?.let {
+                        navController.navigateToGalleryPlantDetailsScreen(plantId = it)
+                    }
+                }
+            )
+
+            myPlantsNavGraph(
+                onAddPlantClick = navController::navigateToMyPlantCreateScreen,
+                onBackInvoked = navController::navigateUp,
+                onPlantEditClick = { plant ->
+                    navController.navigateToEditMyPlantScreen(plant.id)
+                },
+                onPlantClick = { plant ->
+                    navController.navigateToMyPlantDetailsScreen(plant.id)
+                },
+            )
+
+            profileNavGraph(
+                onTakeSurveyClick = navController::navigateToSurveyGraph,
+                onRecommendedPlantsClick = navController::navigateToRecommendedPlantsGraph,
+                onSettingsClick = navController::navigateToSettings,
+                onTradeClick = navController::navigateToTradeGraph,
+            )
+
+            recommendedPlantsNavGraph(
+                onBackInvoked = navController::navigateUp,
+                onPlantClick = {
+                    // TODO
+                }
+            )
+
+            tradeNavGraph(
+                onTradeItemClick = { trade ->
+                    trade.id?.let {
+                        navController.navigateToTradeDetailsScreen(tradeId = it)
+                    }
+                },
+                onBackInvoked = navController::navigateUp,
+                onCreateTradeClick = {
+                    navController.navigateToCreateTradeScreen()
+                },
+                onPlantToGetClicked = {
+                    navController.navigateToPlantPickScreen(PlantPickType.PlantToGet)
+                },
+                onPlantPicked = { pickedPlant, plantPickType ->
+                    navController.previousBackStackEntry?.savedStateHandle?.set(
+                        key = plantPickType.type,
+                        value = MyPlantPresentation(
+                            name = pickedPlant.name,
+                            imageData = pickedPlant.imageData
+                        )
+                    )
+
+                    navController.popBackStack()
+                },
+                getPlantToGive = {
+                    navController
+                        .currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.get<MyPlantPresentation>(PlantPickType.PlantToGive.type)
+                        ?.toPlantTrade()
+                },
+                onPlantToGiveClicked = {
+                    navController.navigateToPlantPickScreen(PlantPickType.PlantToGive)
+                },
+                settingsScreen(
+                    onDismiss = navController::navigateUp,
+                )
+            )
+        }
+    }
+}

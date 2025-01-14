@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="recommended_flowers">Рекомендованные растения</string>
+    <string name="recommendations">Рекомендации</string>
 </resources>
