@@ -1,14 +1,21 @@
 package com.shurdev.trade.screens.createTrade
 
 import StickyBottomColumn
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,8 +23,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shurdev.domain.models.plant.Plant
-import com.shurdev.trade.composables.PlantCard
+import com.shurdev.domain.models.trade.PlantTrade
+import com.shurdev.trade.composables.MyPlantCard
+import com.shurdev.trade.models.MyPlantPresentation
 import com.shurdev.trade.screens.createTrade.models.CreateTradeForm
 import com.shurdev.trade.screens.createTrade.viewModel.CreateTradeViewModel
 import com.shurdev.ui_kit.R
@@ -28,26 +36,47 @@ import com.shurdev.ui_kit.viewModel.form.EditableState
 import com.shurdev.ui_kit.viewModel.form.FormEditingState
 import com.shurdev.ui_kit.viewModel.form.FormState
 import com.shurdev.ui_kit.viewModel.form.FormSubmittingState
+import kotlinx.coroutines.launch
 
 @Composable
 fun CreateTradeRoute(
-    onBackInvoked: () -> Unit
+    onBackInvoked: () -> Unit,
+    onPlantToGetClicked: () -> Unit,
+    onPlantToGiveClicked: () -> Unit,
+    getPlantToGet: () -> PlantTrade?,
+    getPlantToGive: () -> PlantTrade?,
 ) {
 
     val viewModel = hiltViewModel<CreateTradeViewModel>()
     val form by viewModel.formDataState.collectAsState()
     val formState by viewModel.uiState.collectAsState()
 
+    val plantToGet = getPlantToGet()
+    val plantToGive = getPlantToGive()
+
+//    plantToGet?.let { viewModel.updatePlantToGetName(it) }
+    plantToGive?.let {
+        viewModel.updatePlantToGive(
+            MyPlantPresentation(
+                name = it.name,
+                imageData = it.imageData
+            )
+        )
+    }
+
     CreateTradeScreen(
         form = form,
         formState = formState,
+        onCityChange = viewModel::updateCity,
+        onAuthorNameChange = viewModel::updateAuthorName,
+        onContactDataChange = viewModel::updateContactData,
+        onPlantToGetClicked = onPlantToGetClicked,
+        onPlantToGiveClicked = onPlantToGiveClicked,
+        onPlantToGetNameChange = viewModel::updatePlantToGetName,
         hasChangesCheck = { false },
         onBackInvoked = onBackInvoked,
         onCreateTradeClick = viewModel::submitForm,
-        onCityChange = viewModel::updateCity,
-        onAuthorNameChange = viewModel::updateAuthorName,
-        onPlantToGetChange = viewModel::updatePlantToGet,
-        onPlantToGiveChange = viewModel::updatePlantToGive
+        onHandleError = viewModel::handleError
     )
 }
 
@@ -57,112 +86,146 @@ fun CreateTradeScreen(
     formState: FormState,
     onCityChange: (String) -> Unit,
     onAuthorNameChange: (String) -> Unit,
-    onPlantToGetChange: (Plant) -> Unit,
-    onPlantToGiveChange: (Plant) -> Unit,
+    onContactDataChange: (String) -> Unit,
+    onPlantToGetClicked: () -> Unit,
+    onPlantToGiveClicked: () -> Unit,
+    onPlantToGetNameChange: (String) -> Unit,
     hasChangesCheck: () -> Boolean,
     onBackInvoked: () -> Unit,
-    onCreateTradeClick: () -> Unit
+    onCreateTradeClick: () -> Unit,
+    onHandleError: ((errorMessage: String, handler: (String) -> Unit) -> Unit)? = null,
 ) {
 
     val saveText = stringResource(R.string.save)
 
-    ConfirmLeaveScreenLayout(
-        onBackInvoked = onBackInvoked,
-        showConfirmLeave = hasChangesCheck,
-        title = {
-            Text(
-                text = stringResource(com.shurdev.trade.R.string.new_trade)
-            )
+    val errorMessage = form.errorMessage
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    if (errorMessage != null) {
+        LaunchedEffect(errorMessage) {
+            onHandleError?.invoke(errorMessage) {
+                scope.launch {
+                    snackbarHostState.showSnackbar(errorMessage)
+                }
+            }
         }
-    ) {
-        StickyBottomColumn(
-            modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            stickyBottom = {
-                PrimaryButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = saveText,
-                    onClick = onCreateTradeClick,
-                    isLoading = formState is FormSubmittingState,
-                    enabled = formState is EditableState
-                )
-            },
-        ) {
+    }
 
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
-
-            Text(
-                text = "Отдать цветок:"
-            )
-
-            val plantToGive = form.plantToGive
-
-            PlantCard(
-                plant = plantToGive,
-                modifier = Modifier,
-                placeholder = {
+    Scaffold { padding ->
+        Box {
+            ConfirmLeaveScreenLayout(
+                onBackInvoked = onBackInvoked,
+                showConfirmLeave = hasChangesCheck,
+                title = {
                     Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 32.dp),
-                        text = "Выберите отдаваемое растение",
-                        textAlign = TextAlign.Center
+                        text = stringResource(com.shurdev.trade.R.string.new_trade)
                     )
                 }
-            )
+            ) {
+                StickyBottomColumn(
+                    modifier = Modifier.padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    stickyBottom = {
+                        PrimaryButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = saveText,
+                            onClick = onCreateTradeClick,
+                            isLoading = formState is FormSubmittingState,
+                            enabled = formState is EditableState
+                        )
+                    },
+                ) {
 
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
+                    Spacer(
+                        modifier = Modifier.height(16.dp)
+                    )
 
-            Text(
-                text = "Желаемый цветок:"
-            )
-
-            val plantToGet = form.plantToGet
-
-            PlantCard(
-                plant = plantToGet,
-                modifier = Modifier,
-                onCardClick = {},
-                placeholder = {
                     Text(
+                        text = "Отдать цветок:"
+                    )
+
+                    val plantToGive = form.plantToGive
+
+                    MyPlantCard(
+                        myPlant = plantToGive,
+                        modifier = Modifier,
+                        onCardClick = onPlantToGiveClicked,
+                        placeholder = {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 32.dp),
+                                text = "Выберите отдаваемое растение",
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    )
+
+                    Spacer(
+                        modifier = Modifier.height(16.dp)
+                    )
+
+                    Text(
+                        text = "Желаемый цветок:"
+                    )
+
+                    AppTextField(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 32.dp),
-                        text = "Выберите желаемое растение",
-                        textAlign = TextAlign.Center,
+                            .fillMaxWidth(),
+                        text = form.plantToGetName,
+                        onTextChange = onPlantToGetNameChange,
+                        hint = stringResource(com.shurdev.trade.R.string.desired_plant_name)
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(16.dp)
+                    )
+
+                    AppTextField(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = form.city,
+                        onTextChange = onCityChange,
+                        hint = stringResource(com.shurdev.trade.R.string.city)
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(16.dp)
+                    )
+
+                    AppTextField(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = form.authorName,
+                        onTextChange = onAuthorNameChange,
+                        hint = stringResource(com.shurdev.trade.R.string.your_name)
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(16.dp)
+                    )
+
+                    AppTextField(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = form.contactData,
+                        onTextChange = onContactDataChange,
+                        hint = stringResource(com.shurdev.trade.R.string.contact_data)
                     )
                 }
-            )
+            }
 
-            Spacer(
-                modifier = Modifier
-                    .height(16.dp)
-            )
-
-            AppTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = form.city,
-                onTextChange = onCityChange,
-                hint = "Город"
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .height(16.dp)
-            )
-
-            AppTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = form.authorName,
-                onTextChange = onAuthorNameChange,
-                hint = "Ваше имя"
-            )
+            Box(
+                modifier = Modifier.padding(padding),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                SnackbarHost(hostState = snackbarHostState)
+            }
         }
     }
 }
@@ -171,23 +234,16 @@ fun CreateTradeScreen(
 @Composable
 fun CreateTradePreview() {
     CreateTradeScreen(
-        form = CreateTradeForm(
-            plantToGive = Plant(
-                id = 1,
-                name = "Роза",
-                description = "Потрясающая роза, " +
-                        "ежедневно радующая глаз " +
-                        "своей красотой",
-                imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
-            )
-        ),
+        form = CreateTradeForm(),
         formState = FormEditingState,
-        onBackInvoked = {},
-        hasChangesCheck = { true },
-        onCreateTradeClick = {},
         onCityChange = {},
-        onPlantToGetChange = {},
-        onPlantToGiveChange = {},
         onAuthorNameChange = {},
+        onContactDataChange = {},
+        onPlantToGetClicked = {},
+        onPlantToGiveClicked = {},
+        hasChangesCheck = { true },
+        onBackInvoked = {},
+        onCreateTradeClick = {},
+        onPlantToGetNameChange = {}
     )
 }

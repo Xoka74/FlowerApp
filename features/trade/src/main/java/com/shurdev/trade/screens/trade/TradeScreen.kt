@@ -133,7 +133,9 @@ internal fun TradeScreenPreview() {
                         description = "Большой",
                         imageLink = ""
                     ),
-                    authorName = "Юрий"
+                    authorName = "Юрий",
+                    city = "Тольятти",
+                    contactData = "+79828282829"
                 )
             )
         )

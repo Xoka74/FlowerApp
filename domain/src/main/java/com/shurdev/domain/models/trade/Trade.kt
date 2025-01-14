@@ -7,4 +7,6 @@ data class Trade(
     val plantToGet: Plant,
     val plantToGive: Plant,
     val authorName: String,
+    val contactData: String,
+    val city: String,
 )

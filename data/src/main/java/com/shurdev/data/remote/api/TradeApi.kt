@@ -1,5 +1,7 @@
 package com.shurdev.data.remote.api
 
+import com.shurdev.data.remote.dtos.CreateTradeDto
+import com.shurdev.data.remote.dtos.GetTradeByIdDto
 import com.shurdev.domain.models.trade.Trade
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,14 +16,14 @@ interface TradeApi {
     @GET("/api/trades/{id}")
     suspend fun getTradeById(
         @Path("id") int: Int,
-    ): Trade?
+    ): GetTradeByIdDto?
 
     @POST("/api/trades")
     suspend fun createTrade(
-        @Body trade: Trade
+        @Body trade: CreateTradeDto
     )
 
-    @POST("/api/trades/{id}/confirm")
+    @POST("/api/trades/{id}/deactivate")
     suspend fun confirmTrade(
         @Path("id") id: Int
     )

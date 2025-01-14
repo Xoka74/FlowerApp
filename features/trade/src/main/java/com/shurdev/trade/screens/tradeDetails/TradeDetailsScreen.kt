@@ -78,6 +78,8 @@ fun TradeDetailsScreen(
             val plantToGet = trade.plantToGet
             val plantToGive = trade.plantToGive
 
+            val city = trade.city
+
             val shouldDisplayConfirmButton = uiState.shouldDisplayConfirmButton
 
             val errorMessage = uiState.errorMessage
@@ -120,7 +122,7 @@ fun TradeDetailsScreen(
                                 )
 
                                 Text(
-                                    text = "Москва"
+                                    text = city
                                 )
                             }
 
@@ -150,7 +152,7 @@ fun TradeDetailsScreen(
                             )
 
                             Text(
-                                text = stringResource(R.string.contact_data)
+                                text = "${stringResource(R.string.contact_data)}:"
                             )
 
                             OutlinedCard {
@@ -158,7 +160,7 @@ fun TradeDetailsScreen(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(8.dp),
-                                    text = "Telegram: @durov" // TODO add real user contact
+                                    text = trade.contactData
                                 )
                             }
 
@@ -203,6 +205,8 @@ fun TradeDetailsScreenPreview() {
                     imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg"
                 ),
                 authorName = "Юрий",
+                city = "Тольятти",
+                contactData = "+79828282829"
             ),
             shouldDisplayConfirmButton = true
         ),

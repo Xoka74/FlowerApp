@@ -1,7 +1,9 @@
 package com.shurdev.data.repositories
 
+import com.shurdev.data.mappers.toCreateTradeDto
 import com.shurdev.data.remote.api.TradeApi
 import com.shurdev.domain.models.plant.Plant
+import com.shurdev.domain.models.trade.CreateTradeModel
 import com.shurdev.domain.models.trade.Trade
 import com.shurdev.domain.repositories.TradeRepository
 import javax.inject.Inject
@@ -19,8 +21,8 @@ class TradeRepositoryImpl @Inject constructor(
             .firstOrNull { it.id == id }
     }
 
-    override suspend fun createTrade(trade: Trade) {
-        tradeApi.createTrade(trade)
+    override suspend fun createTrade(trade: CreateTradeModel) {
+        tradeApi.createTrade(trade.toCreateTradeDto())
     }
 
     override suspend fun confirmTrade(tradeId: Int) {
@@ -43,7 +45,9 @@ class TradeRepositoryImpl @Inject constructor(
                     description = "Give description $it",
                     imageLink = "https://cdn.britannica.com/84/73184-050-05ED59CB/Sunflower-field-Fargo-North-Dakota.jpg",
                 ),
-                authorName = "Author $it"
+                authorName = "Author $it",
+                city = "City $it",
+                contactData = "Contact $it"
             )
         }
 }
