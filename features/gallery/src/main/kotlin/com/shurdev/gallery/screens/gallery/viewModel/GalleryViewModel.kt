@@ -43,7 +43,7 @@ class GalleryViewModel @Inject constructor(
         _searchOptions.update { it.copy(search = text) }
     }
 
-    private fun loadPlants() {
+    fun loadPlants() {
         updateUiState { GalleryLoadingState }
         viewModelScope.launch {
             runSuspendCatching {

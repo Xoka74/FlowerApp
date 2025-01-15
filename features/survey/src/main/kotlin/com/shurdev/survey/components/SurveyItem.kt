@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.selection.selectable
@@ -25,14 +24,15 @@ import com.shurdev.survey.model.SurveyData
 
 @Composable
 internal fun SurveyItem(
+    modifier: Modifier = Modifier,
     data: SurveyData,
     onAnswerClick: (index: Int) -> Unit,
-    selectedOption: Int
+    selectedOption: Int,
 ) {
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
     ) {
         // TODO add image
 
@@ -91,7 +91,6 @@ fun SurveyItemPreview() {
     SurveyItem(
         data = SurveyData(
             id = 1,
-            imageSrc = "",
             content = QUESTIONS[0]
         ),
         onAnswerClick = {},

@@ -2,7 +2,6 @@ package com.shurdev.profile.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -24,7 +23,6 @@ fun ProfileHeader(
     user: MeUser,
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AsyncImage(
@@ -34,7 +32,7 @@ fun ProfileHeader(
             model = ImageRequest.Builder(LocalContext.current)
                 .data("https://avatar.iran.liara.run/public/15")
                 .build(),
-            contentDescription = "Profile",
+            contentDescription = null,
             contentScale = ContentScale.Crop
         )
 

@@ -30,6 +30,8 @@
     <string name="next_watering">Следующий полив: %1$s</string>
     <string name="required_field">Обязательное поле</string>
     <string name="nothing_found">Ничего не найдено</string>
+    <string name="try_again">Попробовать еще раз</string>
+    <string name="go_back">Вернуться назад</string>
 
     <string name="once_a_week">Раз в неделю</string>
     <string name="twice_a_week">2 раза в неделю</string>

@@ -1,37 +1,31 @@
 package com.shurdev.recommended_plants.screens.recommendedPlants.viewModel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shurdev.domain.repositories.PlantRepository
+import com.shurdev.domain.repositories.SurveyRepository
+import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecommendedPlantsViewModel @Inject constructor(
-    private val plantRepository: PlantRepository
-) : ViewModel() {
-
-    private var _uiState = MutableStateFlow<RecommendedPlantsUiState>(RecommendedPlantsLoadingState)
-    val uiState = _uiState.asStateFlow()
+    private val surveyRepository: SurveyRepository,
+) : BaseViewModel<RecommendedPlantsUiState>(RecommendedPlantsLoadingState) {
 
     init {
         getRecommendedPlants()
     }
 
     private fun getRecommendedPlants() {
-        _uiState.value = RecommendedPlantsLoadingState
+        updateUiState { RecommendedPlantsLoadingState }
 
         viewModelScope.launch {
             runSuspendCatching {
-                val plants = plantRepository.getRecommendedPlants()
-                _uiState.update { RecommendedPlantsLoadedState(plants = plants) }
+                val plants = surveyRepository.getRecommendedPlants()
+                updateUiState { RecommendedPlantsLoadedState(plants = plants) }
             }.onFailure {
-                _uiState.update { RecommendedPlantsLoadingErrorState }
+                updateUiState { RecommendedPlantsLoadingErrorState }
             }
         }
     }

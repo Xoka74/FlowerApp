@@ -10,6 +10,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import com.shurdev.profile.viewModel.ProfileLoadingState
 import com.shurdev.profile.viewModel.ProfileUiState
 import com.shurdev.profile.viewModel.ProfileViewModel
 import com.shurdev.ui_kit.actions.SettingsAction
+import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.layouts.DefaultScreenLayout
 
@@ -43,6 +45,7 @@ internal fun ProfileRoute(
         onSettingsClick = onSettingsClick,
         onRecommendedPlantsClick = onRecommendedPlantsClick,
         onTradeClick = onTradeClick,
+        onTryAgain = viewModel::loadProfile,
     )
 }
 
@@ -54,6 +57,7 @@ internal fun ProfileScreen(
     onSettingsClick: () -> Unit = {},
     onRecommendedPlantsClick: () -> Unit = {},
     onTradeClick: () -> Unit = {},
+    onTryAgain: () -> Unit = {},
 ) {
     DefaultScreenLayout(
         title = stringResource(R.string.profile),
@@ -64,18 +68,28 @@ internal fun ProfileScreen(
         }
     ) {
         Column {
-            when (uiState) {
-                ProfileErrorState -> ErrorView()
-                ProfileLoadingState -> Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    CircularProgressIndicator()
-                }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                when (uiState) {
+                    ProfileLoadingState -> CircularProgressIndicator()
+                    is ProfileLoadedState -> ProfileHeader(user = uiState.user)
+                    ProfileErrorState -> {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            ErrorView()
 
-                is ProfileLoadedState -> ProfileHeader(
-                    user = uiState.user,
-                )
+                            Spacer(Modifier.height(8.dp))
+
+                            PrimaryButton(
+                                text = stringResource(com.shurdev.ui_kit.R.string.try_again),
+                                onClick = onTryAgain,
+                            )
+                        }
+                    }
+                }
             }
 
             Spacer(Modifier.height(20.dp))

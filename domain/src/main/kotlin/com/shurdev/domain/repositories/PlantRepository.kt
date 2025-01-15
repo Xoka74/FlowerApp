@@ -7,7 +7,5 @@ import com.shurdev.domain.models.plant.SearchOptions
 interface PlantRepository {
     suspend fun getPlants(options: SearchOptions): List<Plant>
 
-    suspend fun getRecommendedPlants(): List<Plant>
-
     suspend fun getPlantById(id: PlantId): Plant?
 }

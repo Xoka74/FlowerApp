@@ -2,11 +2,9 @@ package com.shurdev.survey.view_model
 
 import androidx.lifecycle.viewModelScope
 import com.shurdev.domain.models.survey.Answer
-import com.shurdev.domain.models.survey.AnsweredQuestion
 import com.shurdev.domain.models.survey.Question
 import com.shurdev.domain.repositories.SurveyRepository
 import com.shurdev.survey.utils.SurveyActionListener
-import com.shurdev.ui_kit.coroutines.CustomCoroutineScope
 import com.shurdev.ui_kit.viewModel.base.BaseViewModel
 import com.shurdev.utils.runSuspendCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,37 +15,17 @@ import javax.inject.Inject
 internal class SurveyViewModel @Inject constructor(
     private val surveyRepository: SurveyRepository,
 ) : BaseViewModel<SurveyUiState>(SurveyLoadingUiState), SurveyActionListener {
-
-    private val scope: CustomCoroutineScope = CustomCoroutineScope()
-
     init {
+        loadQuestions()
+    }
+
+    fun loadQuestions() {
         updateUiState { SurveyLoadingUiState }
 
         viewModelScope.launch {
             runSuspendCatching {
-                val answeredQuestions = surveyRepository.getResultsFromDatabase()
-
-                val questions: List<Question>
-                val answersIndices: List<Int>
-
-                if (answeredQuestions.isEmpty()) {
-                    questions = surveyRepository.getQuestions()
-                    answersIndices = List(questions.size) { 0 }
-                } else {
-                    questions = answeredQuestions.map { it.question }
-
-                    answersIndices = answeredQuestions.map { result ->
-                        val answer = result.answer
-                        val question = questions.first { it.id == answer.questionId }
-
-                        val answerIndex = question.answerOptions.indexOfFirst { answerOption ->
-                            answerOption == answer.answer
-                        }
-
-                        return@map answerIndex
-                    }
-                }
-
+                val questions = surveyRepository.getQuestions()
+                val answersIndices = List(questions.size) { 0 }
 
                 updateUiState {
                     SurveyLoadedUiState(
@@ -63,52 +41,24 @@ internal class SurveyViewModel @Inject constructor(
     }
 
     override fun onFinishSurvey() {
-
-        if (uiState.value !is SurveyLoadedUiState) {
-            return
-        }
-
-        val loadedState = uiState.value as SurveyLoadedUiState
-        val questions = loadedState.questions
-        val answersIndices = loadedState.answersIndices
-
-        scope.launch {
-
+        viewModelScope.launch {
+            val loadedState = (uiState.value as? SurveyLoadedUiState) ?: return@launch
+            val questions = loadedState.questions
+            val answersIndices = loadedState.answersIndices
             val answers = getAnswers(answersIndices, questions)
-            val results = getResults(answers, questions)
 
             runSuspendCatching {
                 surveyRepository.submitAnswers(answers = answers)
             }.onFailure {
                 // TODO handle error
+                print("error")
             }
-
-            runSuspendCatching {
-                surveyRepository.saveResultsToDatabase(results)
-            }.onFailure {
-                // TODO handle error
-            }
-        }
-    }
-
-    private fun getResults(
-        answers: List<Answer>,
-        questions: List<Question>
-    ): List<AnsweredQuestion> {
-
-        return questions.mapIndexed { index, question ->
-            val answer = answers[index]
-
-            AnsweredQuestion(
-                question = question,
-                answer = answer
-            )
         }
     }
 
     private fun getAnswers(
         answersIndices: List<Int>,
-        questions: List<Question>
+        questions: List<Question>,
     ): List<Answer> {
 
         return answersIndices.mapIndexed { index, selectedAnswerIndex ->
@@ -116,42 +66,31 @@ internal class SurveyViewModel @Inject constructor(
 
             Answer(
                 answer = question.answerOptions[selectedAnswerIndex],
-                questionId = question.id
+                questionId = question.id,
+                options = question.answerOptions,
             )
         }
     }
 
     override fun onAnswerClick(answerIndex: Int) {
-        if (uiState.value !is SurveyLoadedUiState) {
-            return
-        }
-
-        updateUiState {
-            val loadedState = uiState.value as SurveyLoadedUiState
-
-            val currentQuestion = loadedState.currentQuestionIndex
-            val answersIndices = loadedState.answersIndices.toMutableList()
+        transformUiState<SurveyLoadedUiState, SurveyLoadedUiState> { state ->
+            val currentQuestion = state.currentQuestionIndex
+            val answersIndices = state.answersIndices.toMutableList()
 
             answersIndices[currentQuestion] = answerIndex
 
-            return@updateUiState loadedState.copy(
+            state.copy(
                 answersIndices = answersIndices
             )
         }
     }
 
     override fun onSwipe(targetPage: Int) {
-        if (uiState.value !is SurveyLoadedUiState) {
-            return
-        }
-
-        updateUiState {
-            val loadedState = uiState.value as SurveyLoadedUiState
-
-            if (targetPage >= loadedState.questions.size) {
-                return@updateUiState loadedState
+        transformUiState<SurveyLoadedUiState, SurveyLoadedUiState> { state ->
+            if (targetPage >= state.questions.size) {
+                state
             } else {
-                return@updateUiState loadedState.copy(
+                state.copy(
                     currentQuestionIndex = targetPage
                 )
             }
@@ -159,18 +98,13 @@ internal class SurveyViewModel @Inject constructor(
     }
 
     override fun onBackClick() {
-        if (uiState.value !is SurveyLoadedUiState) {
-            return
-        }
-
-        updateUiState {
-            val loadedState = uiState.value as SurveyLoadedUiState
-            val currentQuestion = loadedState.currentQuestionIndex
+        transformUiState<SurveyLoadedUiState, SurveyLoadedUiState> { state ->
+            val currentQuestion = state.currentQuestionIndex
 
             if (currentQuestion == 0) {
-                return@updateUiState loadedState
+                state
             } else {
-                return@updateUiState loadedState.copy(
+                state.copy(
                     currentQuestionIndex = currentQuestion - 1
                 )
             }
@@ -178,34 +112,23 @@ internal class SurveyViewModel @Inject constructor(
     }
 
     override fun onSkipClick() {
-        if (uiState.value !is SurveyLoadedUiState) {
-            return
-        }
-
-        updateUiState {
-            val loadedState = uiState.value as SurveyLoadedUiState
-
-            return@updateUiState loadedState.copy(
+        transformUiState<SurveyLoadedUiState, SurveyLoadedUiState> { state ->
+            state.copy(
                 isSkipped = true
             )
         }
     }
 
     override fun onNextClick() {
-        if (uiState.value !is SurveyLoadedUiState) {
-            return
-        }
+        transformUiState<SurveyLoadedUiState, SurveyLoadedUiState> { state ->
+            val currentQuestion = state.currentQuestionIndex
 
-        updateUiState {
-            val loadedState = uiState.value as SurveyLoadedUiState
-            val currentQuestion = loadedState.currentQuestionIndex
-
-            if (currentQuestion == loadedState.questions.size - 1) {
-                return@updateUiState loadedState.copy(
+            if (currentQuestion == state.questions.size - 1) {
+                state.copy(
                     isFinished = true
                 )
             } else {
-                return@updateUiState loadedState.copy(
+                state.copy(
                     currentQuestionIndex = currentQuestion + 1
                 )
             }
