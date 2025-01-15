@@ -11,10 +11,10 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-val keystoreProperties = Properties()
-
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+//val keystorePropertiesFile = rootProject.file("keystore.properties")
+//val keystoreProperties = Properties()
+//
+//keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.shurdev.flowerapp"
