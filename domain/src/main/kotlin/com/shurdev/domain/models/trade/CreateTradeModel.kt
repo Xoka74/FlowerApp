@@ -7,5 +7,7 @@ data class CreateTradeModel(
     val plantToGetName: String,
     val city: String,
     val description:String,
-    val plantToGiveImage: String
+    val plantToGiveImage: String,
+    val contactData: String,
+    val authorName: String,
 )

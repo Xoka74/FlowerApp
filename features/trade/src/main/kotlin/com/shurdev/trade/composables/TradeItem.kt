@@ -67,37 +67,8 @@ fun TradeItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                val plantToGetImageModel = trade.plantToGet.imageData.getImage(
-                    defaultImageRes = R.drawable.flower_placeholder_1
-                )
-
-                Column {
-                    AsyncImage(
-                        modifier = Modifier
-                            .width(imageWidth)
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(cornerRadius)),
-                        model = plantToGetImageModel,
-                        contentDescription = "",
-                        placeholder = painterResource(R.drawable.flower_placeholder_1),
-                        fallback = painterResource(R.drawable.flower_placeholder_1),
-                        contentScale = ContentScale.Crop,
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally),
-                        text = trade.plantToGet.name,
-                    )
-                }
-
-                Image(
-                    painter = painterResource(R.drawable.icon_exchange),
-                    contentDescription = ""
-                )
-
-                val plantToGiveImageModel = trade.plantToGet.imageData.getImage(
-                    defaultImageRes = R.drawable.flower_placeholder_1
+                val plantToGiveImageModel = trade.plantToGive.imageData.getImage(
+                    defaultImageRes = R.drawable.question_mark
                 )
 
                 Column {
@@ -117,6 +88,35 @@ fun TradeItem(
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally),
                         text = trade.plantToGive.name,
+                    )
+                }
+
+                Image(
+                    painter = painterResource(R.drawable.icon_exchange),
+                    contentDescription = ""
+                )
+
+                val plantToGetImageModel = trade.plantToGet.imageData.getImage(
+                    defaultImageRes = R.drawable.question_mark
+                )
+
+                Column {
+                    AsyncImage(
+                        modifier = Modifier
+                            .width(imageWidth)
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(cornerRadius)),
+                        model = plantToGetImageModel,
+                        contentDescription = "",
+                        placeholder = painterResource(R.drawable.flower_placeholder_1),
+                        fallback = painterResource(R.drawable.flower_placeholder_1),
+                        contentScale = ContentScale.Crop,
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally),
+                        text = trade.plantToGet.name,
                     )
                 }
             }

@@ -62,7 +62,7 @@ fun MyPlantItem(
                     .fillMaxWidth(0.25f)
                     .aspectRatio(1F)
                     .clip(RoundedCornerShape(12.dp)),
-                model = R.drawable.placeholder_list_image,
+                model = imageModel,
                 contentDescription = "Your Plant",
                 contentScale = ContentScale.Crop
             )
