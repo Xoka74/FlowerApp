@@ -33,11 +33,6 @@ class PlantRepositoryImpl @Inject constructor(
         return result.flowers.map { it.toDomainModel() }
     }
 
-    override suspend fun getRecommendedPlants(): List<Plant> {
-        // TODO: Переделать, когда будет готов бэкенд
-        return getPlants(SearchOptions())
-    }
-
     override suspend fun getPlantById(id: PlantId): Plant {
         return plantApi.getPlantById(id).toDomainModel()
     }

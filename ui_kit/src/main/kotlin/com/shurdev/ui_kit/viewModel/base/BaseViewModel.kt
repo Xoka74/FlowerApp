@@ -13,4 +13,14 @@ abstract class BaseViewModel<TState>(
     val uiState = _uiState.asStateFlow()
 
     protected fun updateUiState(function: (TState) -> TState) = _uiState.update(function)
+
+    protected inline fun <reified TStateFrom : TState, TStateTo : TState> transformUiState(
+        crossinline function: (TStateFrom) -> TStateTo,
+    ) {
+        val value = uiState.value
+
+        if (value is TStateFrom) {
+            updateUiState { function(value) }
+        }
+    }
 }

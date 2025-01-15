@@ -2,9 +2,9 @@ package com.shurdev.survey.view_model
 
 import com.shurdev.domain.models.survey.Question
 
-internal sealed class SurveyUiState
+internal sealed interface SurveyUiState
 
-internal data object SurveyLoadingUiState : SurveyUiState()
+internal data object SurveyLoadingUiState : SurveyUiState
 
 internal data class SurveyLoadedUiState(
     val questions: List<Question>,
@@ -12,6 +12,6 @@ internal data class SurveyLoadedUiState(
     val currentQuestionIndex: Int,
     val isFinished: Boolean = false,
     val isSkipped: Boolean = false,
-) : SurveyUiState()
+) : SurveyUiState
 
-internal data object SurveyErrorUiState : SurveyUiState()
+internal data object SurveyErrorUiState : SurveyUiState

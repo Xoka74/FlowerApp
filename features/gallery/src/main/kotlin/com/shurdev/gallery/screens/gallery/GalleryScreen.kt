@@ -29,6 +29,7 @@ import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingErrorState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryLoadingState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryUiState
 import com.shurdev.gallery.screens.gallery.viewModel.GalleryViewModel
+import com.shurdev.ui_kit.buttons.PrimaryButton
 import com.shurdev.ui_kit.dialogs.SingleChoiceDialog
 import com.shurdev.ui_kit.errors.ErrorView
 import com.shurdev.ui_kit.fields.SearchField
@@ -54,6 +55,7 @@ internal fun GalleryRoute(
         onSearchTextChange = galleryViewModel::updateSearchText,
         onFiltersUpdated = galleryViewModel::updateFilters,
         onSortingUpdated = galleryViewModel::updateSorting,
+        onTryAgain = galleryViewModel::loadPlants,
     )
 }
 
@@ -66,6 +68,7 @@ internal fun GalleryScreen(
     onSearchTextChange: (String) -> Unit,
     onSortingUpdated: (SortType) -> Unit,
     onFiltersUpdated: (PlantFilters) -> Unit,
+    onTryAgain: () -> Unit,
 ) {
     var isFiltersVisible by remember { mutableStateOf(false) }
     var isSortingVisible by remember { mutableStateOf(false) }
@@ -100,6 +103,13 @@ internal fun GalleryScreen(
 
                 GalleryLoadingErrorState -> Center {
                     ErrorView()
+
+                    Spacer(Modifier.height(8.dp))
+
+                    PrimaryButton(
+                        text = stringResource(com.shurdev.ui_kit.R.string.try_again),
+                        onClick = onTryAgain
+                    )
                 }
 
                 is GalleryLoadedState -> when (uiState.plants.isEmpty()) {
@@ -148,5 +158,6 @@ internal fun GalleryScreenPreview() {
         sorting = SortType.ByNameAscending,
         onFiltersUpdated = {},
         onSortingUpdated = {},
+        onTryAgain = {},
     )
 }

@@ -1,8 +1,8 @@
 package com.shurdev.domain.repositories
 
+import com.shurdev.domain.models.plant.Plant
 import com.shurdev.domain.models.survey.Answer
 import com.shurdev.domain.models.survey.Question
-import com.shurdev.domain.models.survey.AnsweredQuestion
 
 interface SurveyRepository {
 
@@ -10,7 +10,5 @@ interface SurveyRepository {
 
     suspend fun submitAnswers(answers: List<Answer>)
 
-    suspend fun saveResultsToDatabase(results: List<AnsweredQuestion>)
-
-    suspend fun getResultsFromDatabase(): List<AnsweredQuestion>
+    suspend fun getRecommendedPlants(): List<Plant>
 }

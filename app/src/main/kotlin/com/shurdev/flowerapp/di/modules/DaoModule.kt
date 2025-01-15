@@ -2,7 +2,6 @@ package com.shurdev.flowerapp.di.modules
 
 import com.shurdev.data.daos.MyPlantsDao
 import com.shurdev.data.local.AppDatabase
-import com.shurdev.data.daos.SurveyResultsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,11 +16,5 @@ class DaoModule {
     @Singleton
     fun provideMyPlantDao(appDatabase: AppDatabase): MyPlantsDao {
         return appDatabase.myPlantsDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSurveyResultsDao(database: AppDatabase): SurveyResultsDao {
-        return database.surveyResultsDao()
     }
 }
