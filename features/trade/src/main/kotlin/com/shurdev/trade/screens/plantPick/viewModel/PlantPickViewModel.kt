@@ -10,6 +10,9 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = PlantPickViewModel.ViewModelFactory::class)
@@ -19,34 +22,45 @@ class PlantPickViewModel @AssistedInject constructor(
     private val myPlantsRepository: MyPlantsRepository,
 ) : BaseViewModel<PlantPickUiState>(PlantPickLoadingState) {
 
+    private val _searchText = MutableStateFlow("")
+    val searchText = _searchText.asStateFlow()
+
     init {
+        subscribeToChanges()
+    }
+
+    private fun subscribeToChanges() {
+        viewModelScope.launch { searchText.collect { loadPlants() } }
+    }
+
+    fun onSearch(newSearchText: String) {
+        _searchText.update { newSearchText }
+    }
+
+
+    private fun loadPlants() {
         viewModelScope.launch {
-            loadPlants()
-        }
-    }
+            runCatching {
+                updateUiState { PlantPickLoadingState }
 
-    fun onSearchTextText(newSearchText: String) {
-
-    }
-
-    private suspend fun loadPlants() {
-        updateUiState { PlantPickLoadingState }
-
-        runCatching {
-
-            if (plantPickType == PlantPickType.PlantToGive) {
                 myPlantsRepository.getAll().collect { plants ->
                     updateUiState {
-                        PlantPickLoadedState(plants = plants.map { myPlant ->
-                            myPlant.toPresentationModel()!!
-                        })
+                        PlantPickLoadedState(
+                            plants = plants
+                                .filter { myPlant ->
+                                    myPlant.name.lowercase()
+                                        .contains(searchText.value.lowercase())
+                                }
+                                .map { myPlant ->
+                                    myPlant.toPresentationModel()!!
+                                })
                     }
 
                 }
-            }
 
-        }.onFailure {
-            updateUiState { PlantPickLoadingErrorState }
+            }.onFailure {
+                updateUiState { PlantPickLoadingErrorState }
+            }
         }
     }
 

@@ -16,4 +16,5 @@
     <string name="desired_plant">Желаемое растение</string>
     <string name="give_plant">Отдать растение</string>
     <string name="desired_plant_name">Название желаемого растения</string>
+    <string name="find_plant">Найти растение</string>
 </resources>
