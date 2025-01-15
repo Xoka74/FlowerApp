@@ -150,12 +150,17 @@ fun TradeDetailsScreen(
                             text = "${stringResource(R.string.contact_data)}:"
                         )
 
+                        val contactData = if (trade.contactData.isNotBlank())
+                            trade.contactData
+                        else
+                            "Telegram: @bear_ekb123"
+
                         OutlinedCard {
                             Text(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp),
-                                text = trade.contactData
+                                text = contactData
                             )
                         }
 

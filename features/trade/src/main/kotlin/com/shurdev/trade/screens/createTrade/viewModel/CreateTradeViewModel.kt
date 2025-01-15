@@ -1,6 +1,7 @@
 package com.shurdev.trade.screens.createTrade.viewModel
 
 import androidx.lifecycle.viewModelScope
+import com.shurdev.domain.forms.FormSubmittedState
 import com.shurdev.domain.models.trade.CreateTradeModel
 import com.shurdev.domain.repositories.TradeRepository
 import com.shurdev.trade.models.MyPlantPresentation
@@ -45,9 +46,13 @@ class CreateTradeViewModel @Inject constructor(
                             ?: "",
                         city = formData.city,
                         description = formData.description,
+                        contactData = formData.contactData,
+                        authorName = formData.authorName,
                     )
                 )
 
+            }.onSuccess {
+                updateUiState { FormSubmittedState(Unit) }
             }.onFailure { e ->
 
                 updateFormData {

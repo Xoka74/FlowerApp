@@ -38,7 +38,7 @@ fun PlantCard(
         }
 
         val imageModel = plant.imageData.getImage(
-            defaultImageRes = R.drawable.flower_placeholder_1
+            defaultImageRes = R.drawable.question_mark
         )
 
         AsyncImage(

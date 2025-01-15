@@ -14,15 +14,15 @@ class TradeRepositoryImpl @Inject constructor(
 ) : TradeRepository {
 
     override suspend fun getTrades(): List<Trade> {
-//        val tradesDtos = tradeApi.getTrades()
-        return trades
+        val tradesDtos = tradeApi.getTrades()
+        return tradesDtos?.data?.trades
+            ?.map { it.toTrade() }
+            ?: listOf()
     }
 
     override suspend fun getTradeById(id: Int): Trade? {
         val tradeFromApi = tradeApi.getTradeById(id)
-        return tradeFromApi?.toTrade()
-//        return trades
-//            .firstOrNull { it.id == id }
+        return tradeFromApi?.data?.toTrade()
     }
 
     override suspend fun createTrade(trade: CreateTradeModel) {

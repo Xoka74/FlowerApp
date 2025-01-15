@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.shurdev.domain.forms.EditableState
 import com.shurdev.domain.forms.FormEditingState
 import com.shurdev.domain.forms.FormState
+import com.shurdev.domain.forms.FormSubmittedState
 import com.shurdev.domain.forms.FormSubmittingState
 import com.shurdev.domain.models.trade.PlantTrade
 import com.shurdev.trade.composables.MyPlantCard
@@ -73,7 +74,8 @@ fun CreateTradeRoute(
         hasChangesCheck = { false },
         onBackInvoked = onBackInvoked,
         onCreateTradeClick = viewModel::submitForm,
-        onHandleError = viewModel::handleError
+        onHandleError = viewModel::handleError,
+        onFormSubmit = onBackInvoked
     )
 }
 
@@ -90,7 +92,14 @@ fun CreateTradeScreen(
     onBackInvoked: () -> Unit,
     onCreateTradeClick: () -> Unit,
     onHandleError: ((errorMessage: String, handler: (String) -> Unit) -> Unit)? = null,
+    onFormSubmit: () -> Unit,
 ) {
+
+    LaunchedEffect(formState) {
+        if (formState is FormSubmittedState<*>) {
+            onFormSubmit()
+        }
+    }
 
     val saveText = stringResource(R.string.save)
 
@@ -235,6 +244,7 @@ fun CreateTradePreview() {
         hasChangesCheck = { true },
         onBackInvoked = {},
         onCreateTradeClick = {},
-        onPlantToGetNameChange = {}
+        onPlantToGetNameChange = {},
+        onFormSubmit = {}
     )
 }

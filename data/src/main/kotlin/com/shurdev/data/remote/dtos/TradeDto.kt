@@ -1,6 +1,8 @@
 package com.shurdev.data.remote.dtos
 
-data class GetTradeByIdDto(
+data class TradeDto(
+    val authorName: String,
+    val contactData: String,
     val description: String,
     val expiresAt: String,
     val flowerName: String,
@@ -8,6 +10,5 @@ data class GetTradeByIdDto(
     val isActive: Boolean,
     val location: String,
     val photoBase64: String,
-    val preferredTrade: String,
-    val userId: String
+    val preferredTrade: String
 )

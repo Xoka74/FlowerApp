@@ -44,13 +44,14 @@ fun PlantPickRoute(
             factory.create(plantPickType = plantPickType)
         }
     val uiState by viewModel.uiState.collectAsState()
+    val searchText by viewModel.searchText.collectAsState()
 
     PlantPickScreen(
         uiState = uiState,
+        searchText = searchText,
         plantPickType = plantPickType,
-        onSearchTextChange = viewModel::onSearchTextText,
+        onSearchTextChange = viewModel::onSearch,
         onPlantClick = {
-            println("Click plant $it")
             val plantTrade = PlantTrade(name = it.name, imageData = it.imageData)
             onPlantClicked(plantTrade)
         }
@@ -60,6 +61,7 @@ fun PlantPickRoute(
 @Composable
 fun PlantPickScreen(
     uiState: PlantPickUiState,
+    searchText: String,
     plantPickType: PlantPickType,
     onSearchTextChange: (String) -> Unit,
     onPlantClick: (MyPlantPresentation) -> Unit,
@@ -90,7 +92,8 @@ fun PlantPickScreen(
                         modifier = Modifier
                             .padding(top = 10.dp)
                             .padding(horizontal = 16.dp),
-                        hint = stringResource(R.string.search_hint),
+                        hint = stringResource(R.string.find_plant),
+                        searchText = searchText,
                         onSearchTextChange = onSearchTextChange,
                         debounceTimeMillis = 800L
                     )
